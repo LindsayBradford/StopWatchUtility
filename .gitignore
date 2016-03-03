@@ -1,0 +1,10 @@
+bin/*
+*.swp
+*.json
+*.~
+.gradle
+build/*
+dist/*
+libs/*
+javadocs/*
+.settings/*
