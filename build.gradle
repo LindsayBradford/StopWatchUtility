@@ -1,0 +1,76 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+defaultTasks 'distribute'
+
+// Start Project configuration
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+project.group = 'blacksmyth.stopwatch'
+project.version = '1.0'
+
+project.ext {
+  title = 'StopWatchUtility'
+  contact = 'Lindsay Willian Bradford (lindsay.w.bradford_at_gmail.com)'
+  distributionDirectory = 'dist'
+}
+
+mainClassName = project.group + '.' + project.title
+
+List testLibs = [
+  'junit:junit:4.12', 
+  'org.mockito:mockito-all:1.10.19'
+]
+
+dependencies {
+  testCompile testLibs
+}
+
+jar {
+  manifest {
+   attributes (
+      'Implementation-Title': project.title, 
+      'Implementation-Version': project.version,
+      'Contact':  project.contact,
+      'Built-With': "gradle-${project.getGradle().getGradleVersion()}, groovy-${GroovySystem.getVersion()}",
+      'Created-By': System.getProperty('java.version') + ' (' + System.getProperty('java.vendor') + ')',
+      'Main-Class' : mainClassName
+    )
+  }
+  
+  doLast {
+    file(jar.archivePath).setExecutable(true)
+    println "$jar.archiveName created and is executable."
+  }
+}
+
+
+task distribute(type: Copy) {
+  dependsOn jar 
+  from jar 
+  into project.distributionDirectory
+  doLast {
+    println "Distributed $project.title to directory ($project.distributionDirectory)."
+  }
+}
+
+// File: build.gradle
+
+test {
+  testLogging {
+    events 'passed', 'skipped', 'failed'
+  }
+}
+
+run {
+  dependsOn distribute 
+  doLast {
+    println "Running $project.title"
+  }
+}
+
+task full {
+  dependsOn clean, distribute 
+}
