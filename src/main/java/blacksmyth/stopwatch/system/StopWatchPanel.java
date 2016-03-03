@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,10 +21,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.SoftBevelBorder;
 
 import blacksmyth.stopwatch.domain.StopWatch;
-import blacksmyth.stopwatch.domain.ObservableTimer;
-import blacksmyth.stopwatch.domain.TimerObserver;
 
-class StopWatchPanel extends JPanel implements TimerObserver {
+@SuppressWarnings("serial")
+class StopWatchPanel extends JPanel implements Observer {
   private static final Font  BASE_TIME_FONT    = new Font("Monospaced", Font.BOLD, 20);
   private static final Font  MILLISECOND_FONT  = new Font("Monospaced", Font.BOLD, 15);
 
@@ -97,12 +98,8 @@ class StopWatchPanel extends JPanel implements TimerObserver {
     subscribeToStopWatch(this);
   }
   
-  public void subscribeToStopWatch(TimerObserver observer) {
-    stopWatch.subscribe(observer);
-  }
-
-  public void updateTime(final ObservableTimer stopWatch, final long elapsedTime) {
-    setDisplayTime(elapsedTime);
+  public void subscribeToStopWatch(Observer observer) {
+    stopWatch.addObserver(observer);
   }
 
   private void setDisplayTime(final long time) {
@@ -297,5 +294,11 @@ class StopWatchPanel extends JPanel implements TimerObserver {
   public void setTime(long time) {
     stopWatch.setTime(time);
     setDisplayTime(time);
+  }
+
+  @Override
+  public void update(Observable o, Object timeAsObject) {
+    long elapsedTime = ((Long) timeAsObject).longValue();
+    setDisplayTime(elapsedTime);
   }
 }

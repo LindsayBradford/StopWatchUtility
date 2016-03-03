@@ -2,6 +2,6 @@
 
 package blacksmyth.stopwatch.domain;
 
-public interface TimerObserver {
-  public void updateTime(ObservableTimer timer, long newTime);
-}
+import java.util.Observer;
+
+public interface TimerObserver extends Observer {}

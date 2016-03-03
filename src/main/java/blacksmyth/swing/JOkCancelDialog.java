@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 abstract public class JOkCancelDialog extends JDialog {
 
   private JButton okButton;
@@ -106,7 +107,7 @@ abstract public class JOkCancelDialog extends JDialog {
 
     getRootPane().setDefaultButton(okButton);
 
-    Vector buttons = new Vector();
+    Vector<JComponent> buttons = new Vector<JComponent>();
 
     buttons.add(okButton);
     buttons.add(cancelButton);

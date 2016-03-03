@@ -8,6 +8,7 @@ import java.text.*;
 import javax.swing.text.*;
 
 
+@SuppressWarnings("serial")
 public class JFormattedNumField extends JFormattedSelectField {
   protected double vDoubleValue;
   protected BoundVerifier pVerifier;
@@ -192,6 +193,7 @@ class DoubleParser {
   }
 }
 
+@SuppressWarnings("serial")
 class DecimalFormatter extends NumberFormatter {
   private DecimalFilter vFilter;
 
@@ -232,6 +234,7 @@ class DecimalFilter extends DocumentFilter {
   }
 }
 
+@SuppressWarnings("serial")
 class PercentFormatter extends NumberFormatter {
   private PercentFilter vFilter;
 

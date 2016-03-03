@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import blacksmyth.swing.JFormattedNumField;
 
+@SuppressWarnings("serial")
 public class JTimerPanel extends JPanel {
   private JFormattedNumField  hoursField;
   private JFormattedNumField  minutesField;

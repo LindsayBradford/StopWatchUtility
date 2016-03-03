@@ -5,6 +5,7 @@ package blacksmyth.swing;
 import javax.swing.*;
 import java.awt.event.*;
 
+@SuppressWarnings("serial")
 public class JUserNameableFrame extends JFrame {
   private String vBaseTitle = "";
   private String vUserTitle = "";

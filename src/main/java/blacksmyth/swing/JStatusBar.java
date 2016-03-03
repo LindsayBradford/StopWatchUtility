@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 /**
  * @author Lindsay Bradford
  */
+@SuppressWarnings("serial")
 public class JStatusBar extends JPanel {
   private static JLabel statusLabel = new JLabel();
 

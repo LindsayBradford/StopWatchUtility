@@ -8,6 +8,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.text.*;
 
+@SuppressWarnings("serial")
 public class JFormattedDateField extends JFormattedSelectField {
   protected Date vDateValue;
   protected BoundVerifier pVerifier;
@@ -135,7 +136,7 @@ public class JFormattedDateField extends JFormattedSelectField {
   }
 }
 
-
+@SuppressWarnings("serial")
 class StrictDateFormatter extends DateFormatter {
   private static final DateFilter vFilter = new DateFilter();
 

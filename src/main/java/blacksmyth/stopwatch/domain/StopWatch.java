@@ -2,20 +2,23 @@
 
 package blacksmyth.stopwatch.domain;
 
-public class StopWatch extends ObservableTimer {
+import java.util.Observable;
+import java.util.Observer;
 
-  private static final int DEFAULT_PERIOD = 50;
+public class StopWatch extends Observable {
+  
+  private static final int DEFAULT_PERIOD      = 50;
 
-  private static final int STOPPED    = 0;
-  private static final int TIMING     = 1;
+  private static final int STOPPED             = 0;
+  private static final int TIMING              = 1;
 
-  private long startTime  = 0;
-  private long stopTime   = 0;
-  private long previousElapsedTime = 0;
+  private long             startTime           = 0;
+  private long             stopTime            = 0;
+  private long             previousElapsedTime = 0;
 
-  private int status = STOPPED;
+  private int              status              = STOPPED;
 
-  private Ticker ticker;
+  private Ticker           ticker;
 
   public StopWatch(int millisecondsToSleep) {
     super();
@@ -41,14 +44,14 @@ public class StopWatch extends ObservableTimer {
     if (status == STOPPED) {
       return;
     }
-	stopTime = System.currentTimeMillis();
-	status = STOPPED;
-	previousElapsedTime += (stopTime - startTime);
+    stopTime = System.currentTimeMillis();
+    status = STOPPED;
+    previousElapsedTime += (stopTime - startTime);
     publishTime(previousElapsedTime);
   }
-  
+
   public void reset() {
-  	status = STOPPED;
+    status = STOPPED;
     startTime = 0;
     stopTime = 0;
     previousElapsedTime = 0;
@@ -58,7 +61,7 @@ public class StopWatch extends ObservableTimer {
   public boolean isRunning() {
     return (status == TIMING);
   }
-  
+
   public void die() {
     ticker.die();
   }
@@ -70,24 +73,34 @@ public class StopWatch extends ObservableTimer {
 
   public void receiveTick() {
     if (isRunning()) {
-        publishTime(getElapsedTime());
+      publishTime();
     }
   }
 
   public long getTime() {
     if (isRunning()) {
       return getElapsedTime();
-    } 
+    }
     return previousElapsedTime;
   }
-  
-  public void subscribe(final TimerObserver newObserver) {
-    super.subscribe(newObserver);
-    publishTime(newObserver, getTime());
+
+  @Override
+  public void addObserver(Observer o) {
+    super.addObserver(o);
+    publishTime();
   }
 
   public void setTime(long time) {
     previousElapsedTime = time;
-    publishTime(time);
+    publishTime();
+  }
+
+  private void publishTime() {
+    publishTime(getElapsedTime());
+  }
+
+  private void publishTime(long time) {
+    setChanged();
+    notifyObservers(new Long(time));
   }
 }

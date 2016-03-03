@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 
 import blacksmyth.utilities.ResourceLoader;
 
+@SuppressWarnings("serial")
 class JGoStopPanel extends JPanel {
 
   private static final GridBagLayout gbl      = new GridBagLayout();
@@ -77,6 +78,7 @@ class JGoStopPanel extends JPanel {
   }
 }
 
+@SuppressWarnings("serial")
 class JRedLed extends JLedPanel {
   public JRedLed() {
     super("/resources/LitRedLed.gif",
@@ -84,6 +86,7 @@ class JRedLed extends JLedPanel {
   }
 }
 
+@SuppressWarnings("serial")
 class JGreenLed extends JLedPanel {
   public JGreenLed() {
     super("/resources/LitGreenLed.gif",
@@ -91,6 +94,7 @@ class JGreenLed extends JLedPanel {
   }
 }
 
+@SuppressWarnings("serial")
 class JLedPanel extends JPanel {
 
   private JLabel onGif;

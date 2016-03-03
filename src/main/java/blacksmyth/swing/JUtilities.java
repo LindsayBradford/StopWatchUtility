@@ -56,7 +56,7 @@ public class JUtilities {
   }
 
 
-  public static void equalizeComponentSizes(List components) {
+  public static void equalizeComponentSizes(List<JComponent> components) {
     Dimension  maxComponentSize = new Dimension(0,0);
     for (int i = 0; i < components.size(); ++i) {
       setMaximumSize(maxComponentSize,(JComponent) components.get(i));

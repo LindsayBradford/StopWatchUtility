@@ -2,6 +2,7 @@
 
 package blacksmyth.swing;
 
+@SuppressWarnings("serial")
 public class JFormattedPercentField extends JFormattedNumField {
 
   public JFormattedPercentField(String pFormat, double pValue, int pColumns) {

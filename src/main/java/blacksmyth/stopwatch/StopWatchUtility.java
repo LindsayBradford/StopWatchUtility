@@ -342,6 +342,7 @@ public class StopWatchUtility extends JApplet {
   
 }
 
+@SuppressWarnings("serial")
 class StopWatchPopup extends JPopupMenu {
 
   private StopWatchController stopwatch;

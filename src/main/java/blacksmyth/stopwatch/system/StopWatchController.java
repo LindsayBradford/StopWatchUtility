@@ -13,13 +13,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.util.LinkedList;
+import java.util.Observable;
 import java.applet.AudioClip;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import blacksmyth.swing.JOkCancelDialog;
@@ -27,9 +28,9 @@ import blacksmyth.swing.JUtilities;
 
 import blacksmyth.utilities.ResourceLoader;
 
-import blacksmyth.stopwatch.domain.ObservableTimer;
 import blacksmyth.stopwatch.domain.TimerObserver;
 
+@SuppressWarnings("serial")
 public class StopWatchController extends JPanel {
 
   private final StopWatchPanel stopWatchPanel = new StopWatchPanel();
@@ -231,7 +232,7 @@ public class StopWatchController extends JPanel {
   }
 
   private void alignButtonSizes() {
-    LinkedList buttons = new LinkedList();
+    LinkedList<JComponent> buttons = new LinkedList<JComponent>();
 
     buttons.add(startStopButton);
     buttons.add(resetButton);
@@ -268,6 +269,7 @@ public class StopWatchController extends JPanel {
   
 }
 
+@SuppressWarnings("serial")
 class ResetButton extends JButton implements TimerObserver  {
   
   public ResetButton(final StopWatchController controller) {
@@ -282,10 +284,13 @@ class ResetButton extends JButton implements TimerObserver  {
     
     controller.getStopWatchPanel().subscribeToStopWatch(this);
   }
-  
-  public void updateTime(ObservableTimer timer, long newTime) {
+
+  @Override
+  public void update(Observable timer, Object newTimeAsObject) {
+    long newTime = ((Long) newTimeAsObject).longValue();
+
     if (newTime == 0) {
-        setEnabled(false);
+      setEnabled(false);
     } else if (!isEnabled()) {
       setEnabled(true);
     }
@@ -293,6 +298,7 @@ class ResetButton extends JButton implements TimerObserver  {
 
 }
 
+@SuppressWarnings("serial")
 class JTimerUpdateDialog extends JOkCancelDialog {
 
   private final JTimerPanel timerPanel = new JTimerPanel();
