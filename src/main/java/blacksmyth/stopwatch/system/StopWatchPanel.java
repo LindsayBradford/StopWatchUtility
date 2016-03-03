@@ -20,14 +20,15 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.SoftBevelBorder;
 
-import blacksmyth.stopwatch.domain.StopWatch;
+import blacksmyth.stopwatch.StopWatchBuilder;
+import blacksmyth.stopwatch.model.SimpleStopWatch;
 
 @SuppressWarnings("serial")
 class StopWatchPanel extends JPanel implements Observer {
   private static final Font  BASE_TIME_FONT    = new Font("Monospaced", Font.BOLD, 20);
   private static final Font  MILLISECOND_FONT  = new Font("Monospaced", Font.BOLD, 15);
 
-  private StopWatch stopWatch;
+  private SimpleStopWatch stopWatch;
 
   private boolean showMilliseconds;
 
@@ -94,7 +95,7 @@ class StopWatchPanel extends JPanel implements Observer {
   }
 
   private void bindStopWatch() {
-    stopWatch = new StopWatch();
+    stopWatch = StopWatchBuilder.buildModel();
     subscribeToStopWatch(this);
   }
   

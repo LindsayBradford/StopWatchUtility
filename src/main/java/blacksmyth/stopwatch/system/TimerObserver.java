@@ -1,6 +1,6 @@
 // (c) 2003 Lindsay Bradford
 
-package blacksmyth.stopwatch.domain;
+package blacksmyth.stopwatch.system;
 
 import java.util.Observer;
 

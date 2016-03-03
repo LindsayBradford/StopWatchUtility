@@ -28,8 +28,6 @@ import blacksmyth.swing.JUtilities;
 
 import blacksmyth.utilities.ResourceLoader;
 
-import blacksmyth.stopwatch.domain.TimerObserver;
-
 @SuppressWarnings("serial")
 public class StopWatchController extends JPanel {
 
