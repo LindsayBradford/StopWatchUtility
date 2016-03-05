@@ -1,11 +1,11 @@
-// (c) 20016 Lindsay Bradford
+// (c) 2016 Lindsay Bradford
 
 package blacksmyth.stopwatch.model;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class SimpleStopWatch extends Observable implements StopWatchModel, TickRecipient {
+public class BasicStopWatchModel extends Observable implements StopWatchModel, TickRecipient {
   
   private enum ModelState {
     Stopped, // Currently not measuring elapsed time (paused) 
@@ -19,12 +19,15 @@ public class SimpleStopWatch extends Observable implements StopWatchModel, TickR
 
   private boolean          needsTicks          = true;
   
-  public SimpleStopWatch() {
+  public BasicStopWatchModel() {
     super();
   }
 
   @Override
   public void start() {
+    if (status == ModelState.Running) {
+      return;
+    }
     startTime = System.currentTimeMillis();
     status = ModelState.Running;
   }

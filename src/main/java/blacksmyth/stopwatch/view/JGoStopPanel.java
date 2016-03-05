@@ -1,6 +1,6 @@
 // (c) 2003 - Lindsay Bradford -
 
-package blacksmyth.stopwatch.system;
+package blacksmyth.stopwatch.view;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;

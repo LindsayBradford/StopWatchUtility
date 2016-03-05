@@ -11,7 +11,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import blacksmyth.stopwatch.system.StopWatchController;
+import blacksmyth.stopwatch.view.StopWatchController;
 import blacksmyth.swing.JPopupMenuListener;
 
 @SuppressWarnings("serial")

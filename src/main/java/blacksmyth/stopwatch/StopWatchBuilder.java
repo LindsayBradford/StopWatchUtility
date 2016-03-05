@@ -6,15 +6,15 @@ public class StopWatchBuilder {
   
   private static int MILLISECONDS_BETWEEN_TICKS = 50;
   
-  public static SimpleStopWatch buildModel() {
+  public static BasicStopWatchModel buildModel() {
     
-    Ticker threadTicker = new SleepingThreadTicker();
-    threadTicker.setMillisecondsBetweenTicks(MILLISECONDS_BETWEEN_TICKS);
+    Ticker ticker = new SleepingThreadTicker();
+    ticker.setMillisecondsBetweenTicks(MILLISECONDS_BETWEEN_TICKS);
     
-    SimpleStopWatch stopwatch = new SimpleStopWatch();
+    BasicStopWatchModel stopwatch = new BasicStopWatchModel();
     
-    threadTicker.setRecipient(stopwatch);
-    threadTicker.startTicking();
+    ticker.setRecipient(stopwatch);
+    ticker.startTicking();
     
     return stopwatch;
   }

@@ -14,10 +14,18 @@ project.version = '1.0'
 project.ext {
   title = 'StopWatchUtility'
   contact = 'Lindsay Willian Bradford (lindsay.w.bradford_at_gmail.com)'
+  libsDirectory = 'libs'
   distributionDirectory = 'dist'
 }
 
 mainClassName = project.group + '.' + project.title
+
+repositories {
+   mavenCentral()
+   maven {
+     url 'http://mvn.erichseifert.de/maven2'
+   } 
+}
 
 List testLibs = [
   'junit:junit:4.12', 
@@ -46,17 +54,22 @@ jar {
   }
 }
 
+task syncLibs(type: Sync) {
+  from configurations.compile, configurations.testCompile
+  into project.libsDirectory
+  doLast {
+    println "Synchronised library dependencies into directory ($project.libsDirectory)."
+  }
+}
 
 task distribute(type: Copy) {
-  dependsOn jar 
+  dependsOn jar, syncLibs
   from jar 
   into project.distributionDirectory
   doLast {
     println "Distributed $project.title to directory ($project.distributionDirectory)."
   }
 }
-
-// File: build.gradle
 
 test {
   testLogging {

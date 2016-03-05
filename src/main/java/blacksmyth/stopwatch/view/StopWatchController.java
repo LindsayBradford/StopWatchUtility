@@ -1,6 +1,6 @@
 // (c) 2003 - Lindsay Bradford -
 
-package blacksmyth.stopwatch.system;
+package blacksmyth.stopwatch.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -268,7 +268,7 @@ public class StopWatchController extends JPanel {
 }
 
 @SuppressWarnings("serial")
-class ResetButton extends JButton implements TimerObserver  {
+class ResetButton extends JButton implements StopWatchObserver  {
   
   public ResetButton(final StopWatchController controller) {
     super("Reset");

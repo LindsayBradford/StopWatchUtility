@@ -1,6 +1,6 @@
 // (c) 2003 - Lindsay Bradford
 
-package blacksmyth.stopwatch.system;
+package blacksmyth.stopwatch.view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,14 +21,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.SoftBevelBorder;
 
 import blacksmyth.stopwatch.StopWatchBuilder;
-import blacksmyth.stopwatch.model.SimpleStopWatch;
+import blacksmyth.stopwatch.model.BasicStopWatchModel;
 
 @SuppressWarnings("serial")
 class StopWatchPanel extends JPanel implements Observer {
   private static final Font  BASE_TIME_FONT    = new Font("Monospaced", Font.BOLD, 20);
   private static final Font  MILLISECOND_FONT  = new Font("Monospaced", Font.BOLD, 15);
 
-  private SimpleStopWatch stopWatch;
+  private BasicStopWatchModel stopWatch;
 
   private boolean showMilliseconds;
 
