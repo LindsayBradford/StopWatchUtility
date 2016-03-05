@@ -1,10 +1,19 @@
+// (c) 2016 Lindsay Bradford
+
 package blacksmyth.stopwatch;
 
 import blacksmyth.stopwatch.model.*;
 import blacksmyth.stopwatch.presenter.*;
 import blacksmyth.stopwatch.view.*;
 
-public class StopWatchBuilder {
+/**
+ * An implementation of the Builder pattern that uses the MVP pattern and Dependency Injection
+ * to create a fully functional StopWatch application.
+ */
+
+// TODO: Replace this with Spring or Guice.
+
+public final class StopWatchBuilder {
   
   private static int MILLISECONDS_BETWEEN_TICKS = 50;
 

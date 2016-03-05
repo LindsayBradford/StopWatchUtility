@@ -8,6 +8,11 @@ import java.util.Observer;
  * An interface specifying the required methods for implementing a simple stopwatch. 
  * Allows for accumulating elapsed time over a succession of start & stop events.
  * The stopwatch may have its measured elapsed time reset or over-written by calling objects.
+ * 
+ * The StopWatchModel implementing this interface is expected to be a sub-type of an Observable object, allowing
+ * other to receive time change events.
+ * @see Observable
+ * @see Observer
  */
 public interface StopWatchModel {
 
@@ -48,8 +53,7 @@ public interface StopWatchModel {
   public void die();
   
   /**
-   * The StopWatchModel implementing this interface is expected to be a sub-type of an Observable object, allowing
-   * other objects to receive time change events.
+   * A method allow interested object to register for time update notifications.
    * @param o - An observer interested in receiving notification events from the Stopwatch.
    * @see Observable
    */

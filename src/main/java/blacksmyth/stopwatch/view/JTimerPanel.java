@@ -1,4 +1,4 @@
-// (c) 2003 - Lindsay Bradford
+// (c) 2016 - Lindsay Bradford
 
 package blacksmyth.stopwatch.view;
 
@@ -17,7 +17,12 @@ import javax.swing.border.EmptyBorder;
 import blacksmyth.swing.JFormattedNumField;
 
 @SuppressWarnings("serial")
-public class JTimerPanel extends JPanel {
+
+/**
+ * A JPanel that displays a long value of elapsed milliseconds in a
+ * more human-friendly manner (hours, minutes, seconds, etc).
+ */
+final class JTimerPanel extends JPanel {
   private JFormattedNumField  hoursField;
   private JFormattedNumField  minutesField;
   private JFormattedNumField  secondsField;

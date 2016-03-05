@@ -1,7 +1,14 @@
-// (c) 2003 - Lindsay Bradford
+// (c) 2016- Lindsay Bradford
 
 package blacksmyth.stopwatch.view;
 
+/**
+ * A utility class that takes a positive number and returns a 
+ * zero-filled string equivalent. 
+ * 
+ * It's been implemented as static constant arrays to stop 
+ * Java going crazy with short-lived string creation and garbage collection.
+ */
 final class DigitStringFactory {
   private static final String[] twoDigitStrings = 
      { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", 

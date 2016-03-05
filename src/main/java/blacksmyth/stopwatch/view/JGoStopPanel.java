@@ -1,4 +1,4 @@
-// (c) 2003 - Lindsay Bradford -
+// (c) 2016 - Lindsay Bradford -
 
 package blacksmyth.stopwatch.view;
 
@@ -12,8 +12,11 @@ import javax.swing.JLabel;
 
 import blacksmyth.utilities.ResourceLoader;
 
+/**
+ * A simple JPanel implementation showing a red and green led,  where the "lit" led can be toggled. 
+ */
 @SuppressWarnings("serial")
-class JGoStopPanel extends JPanel {
+final class JGoStopPanel extends JPanel {
 
   private static final GridBagLayout gbl      = new GridBagLayout();
   private static final GridBagConstraints gbc = new GridBagConstraints();
@@ -79,7 +82,7 @@ class JGoStopPanel extends JPanel {
 }
 
 @SuppressWarnings("serial")
-class JRedLed extends JLedPanel {
+final class JRedLed extends JLedPanel {
   public JRedLed() {
     super("/resources/LitRedLed.gif",
 	  "/resources/RedLed.gif");
@@ -87,7 +90,7 @@ class JRedLed extends JLedPanel {
 }
 
 @SuppressWarnings("serial")
-class JGreenLed extends JLedPanel {
+final class JGreenLed extends JLedPanel {
   public JGreenLed() {
     super("/resources/LitGreenLed.gif",
 	  "/resources/GreenLed.gif");
@@ -95,7 +98,7 @@ class JGreenLed extends JLedPanel {
 }
 
 @SuppressWarnings("serial")
-class JLedPanel extends JPanel {
+abstract class JLedPanel extends JPanel {
 
   private JLabel onGif;
   private JLabel offGif;

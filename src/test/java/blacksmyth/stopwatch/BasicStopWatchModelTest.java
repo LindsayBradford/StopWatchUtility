@@ -5,6 +5,7 @@ package blacksmyth.stopwatch;
 import static org.junit.Assert.*;
 
 import java.util.Observable;
+import java.util.Observer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,6 @@ import org.junit.Test;
 import blacksmyth.stopwatch.model.BasicStopWatchModel;
 import blacksmyth.stopwatch.model.TickRecipient;
 import blacksmyth.stopwatch.model.Ticker;
-import blacksmyth.stopwatch.view.StopWatchObserver;
 
 public class BasicStopWatchModelTest {
   
@@ -277,7 +277,7 @@ public class BasicStopWatchModelTest {
     }
   }
   
-  private class ModelHarness implements StopWatchObserver {
+  private class ModelHarness implements Observer {
 
     private int updatesReceived;
     

@@ -5,7 +5,10 @@ package blacksmyth.stopwatch.model;
 import java.util.Observable;
 import java.util.Observer;
 
-public class BasicStopWatchModel extends Observable implements StopWatchModel, TickRecipient {
+/**
+ * A basic implementation of a {@link StopWatchModel}, and {@link TickRecipient}.
+ */
+public final class BasicStopWatchModel extends Observable implements StopWatchModel, TickRecipient {
   
   private enum ModelState {
     Stopped, // Currently not measuring elapsed time (paused) 

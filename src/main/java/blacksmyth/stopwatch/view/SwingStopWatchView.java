@@ -1,3 +1,5 @@
+// (c) 2016 Lindsay Bradford
+
 package blacksmyth.stopwatch.view;
 
 import java.awt.BorderLayout;
@@ -41,7 +43,10 @@ import blacksmyth.swing.JUserNameableFrame;
 import blacksmyth.swing.JUtilities;
 import blacksmyth.utilities.ResourceLoader;
 
-public class SwingStopWatchView extends Observable implements StopWatchView {
+/**
+ * A Swing implementation of {@link StopWatchView}.
+ */
+public final class SwingStopWatchView extends Observable implements StopWatchView {
   
   private Preferences myPreferences;
   private JCheckBoxMenuItem showMillisecondsItem;

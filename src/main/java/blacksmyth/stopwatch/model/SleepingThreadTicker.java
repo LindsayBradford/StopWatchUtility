@@ -3,10 +3,10 @@
 package blacksmyth.stopwatch.model;
 
 /**
- * An implementation of the Ticker interface that is essentially 
- * A thread, configured to sleep between ticks.
+ * An implementation of the {@link Ticker} interface that is essentially 
+ * a thread, configured to sleep between ticks.
  */
-public class SleepingThreadTicker extends Thread implements Ticker {
+public final class SleepingThreadTicker extends Thread implements Ticker {
 
   private int millisecondsBetweenTicks;
   private TickRecipient recipient;

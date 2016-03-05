@@ -1,10 +1,9 @@
+// (c) 2016 Lindsay Bradford
+
 package blacksmyth.stopwatch;
 
-import blacksmyth.stopwatch.view.StopWatchView;
-
-public class StopWatchUtility {
+public final class StopWatchUtility {
   public static void main(String argv[]) {
-    StopWatchView view = StopWatchBuilder.buildUtility();
-    view.show();
+    StopWatchBuilder.buildUtility().show();
   }
 }
