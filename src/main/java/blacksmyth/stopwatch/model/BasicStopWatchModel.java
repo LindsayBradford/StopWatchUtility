@@ -89,7 +89,7 @@ public class BasicStopWatchModel extends Observable implements StopWatchModel, T
 
   private void publishTime(long time) {
     setChanged();
-    notifyObservers(new Long(time));
+    notifyObservers();
   }
   
   @Override

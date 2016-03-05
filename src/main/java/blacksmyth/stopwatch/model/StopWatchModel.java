@@ -2,6 +2,8 @@
 
 package blacksmyth.stopwatch.model;
 
+import java.util.Observer;
+
 /**
  * An interface specifying the required methods for implementing a simple stopwatch. 
  * Allows for accumulating elapsed time over a succession of start & stop events.
@@ -43,5 +45,13 @@ public interface StopWatchModel {
   /**
    * Instructs the stopwatch to die, releasing all running resources in preparation for its garbage collection.
    */
-  public void die(); 
+  public void die();
+  
+  /**
+   * The StopWatchModel implementing this interface is expected to be a sub-type of an Observable object, allowing
+   * other objects to receive time change events.
+   * @param o - An observer interested in receiving notification events from the Stopwatch.
+   * @see Observable
+   */
+  public void addObserver(Observer o);
 }
