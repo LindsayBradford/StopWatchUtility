@@ -1,7 +1,13 @@
-/*
- * Created on 18/10/2003
- *
+/**
+ * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+ * All rights reserved.
+ * 
+ * This program and the accompanying materials  are made available 
+ * under the terms of the BSD 3-Clause licence  which accompanies 
+ * this distribution, and is available at
+ * http://opensource.org/licenses/BSD-3-Clause
  */
+
 package blacksmyth.swing;
 
 import java.awt.BorderLayout;
@@ -11,10 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 
-
-/**
- * @author Lindsay Bradford
- */
 @SuppressWarnings("serial")
 public class JStatusBar extends JPanel {
   private static JLabel statusLabel = new JLabel();

@@ -1,4 +1,12 @@
-// (c) 2016 Lindsay Bradford
+/**
+ * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+ * All rights reserved.
+ * 
+ * This program and the accompanying materials  are made available 
+ * under the terms of the BSD 3-Clause licence  which accompanies 
+ * this distribution, and is available at
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
 
 package blacksmyth.stopwatch;
 
@@ -14,7 +22,7 @@ import blacksmyth.stopwatch.model.BasicStopWatchModel;
 import blacksmyth.stopwatch.model.TickRecipient;
 import blacksmyth.stopwatch.model.Ticker;
 
-public class BasicStopWatchModelTest {
+final public class BasicStopWatchModelTest {
   
   private static long SHORT_PAUSE_TIME = 5;
   private static long LONG_PAUSE_TIME = 10;
