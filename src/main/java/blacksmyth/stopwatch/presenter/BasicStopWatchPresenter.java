@@ -10,6 +10,8 @@
 
 package blacksmyth.stopwatch.presenter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Observable;
 
 import blacksmyth.stopwatch.model.StopWatchModel;
@@ -42,14 +44,18 @@ public final class BasicStopWatchPresenter implements StopWatchPresenter {
   }
 
   @Override
+  @Autowired
   public void setModel(StopWatchModel model) {
     this.model = model;
+    model.addObserver(this);
   }
 
   @Override
+  @Autowired
   public void setView(StopWatchView view) {
     assert this.model != null;  // Set model before view so we can issue commands to model based on view state.
-    
+
+    view.addObserver(this);
     this.view = view;
     
     // If the view remembers a time that it held on its last die event, we spoof a TimeSetRequested event here

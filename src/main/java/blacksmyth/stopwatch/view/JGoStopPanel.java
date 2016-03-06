@@ -21,16 +21,17 @@ import javax.swing.JLabel;
 import blacksmyth.utilities.ResourceLoader;
 
 /**
- * A simple JPanel implementation showing a red and green led,  where the "lit" led can be toggled. 
+ * A simple JPanel implementation showing a red and green led, where the "lit"
+ * led can be toggled.
  */
 @SuppressWarnings("serial")
 final class JGoStopPanel extends JPanel {
 
-  private static final GridBagLayout gbl      = new GridBagLayout();
+  private static final GridBagLayout      gbl = new GridBagLayout();
   private static final GridBagConstraints gbc = new GridBagConstraints();
 
-  private JLedPanel greenLed;
-  private JLedPanel redLed;
+  private JLedPanel                       greenLed;
+  private JLedPanel                       redLed;
 
   public JGoStopPanel() {
     super(gbl);
@@ -58,24 +59,24 @@ final class JGoStopPanel extends JPanel {
   private void buildPanel() {
     int ledRow = 0;
 
-    gbc.insets = new Insets(0,0,0,5);
+    gbc.insets = new Insets(0, 0, 0, 5);
 
-    gbc.gridwidth    = 1;
-    gbc.gridheight   = 1;
-    gbc.gridx        = 0;
-    gbc.gridy        = ledRow++;
-    gbc.weightx      = 0;
-    gbc.weighty      = 0.2;
-    gbc.anchor       = GridBagConstraints.SOUTH;
+    gbc.gridwidth = 1;
+    gbc.gridheight = 1;
+    gbc.gridx = 0;
+    gbc.gridy = ledRow++;
+    gbc.weightx = 0;
+    gbc.weighty = 0.2;
+    gbc.anchor = GridBagConstraints.SOUTH;
 
     greenLed = new JGreenLed();
     add(greenLed, gbc);
 
-    gbc.gridy        = ledRow;
-    gbc.anchor       = GridBagConstraints.NORTH;
+    gbc.gridy = ledRow;
+    gbc.anchor = GridBagConstraints.NORTH;
 
     redLed = new JRedLed();
-    add(redLed,gbc);
+    add(redLed, gbc);
   }
 
   public void activate() {
@@ -92,16 +93,14 @@ final class JGoStopPanel extends JPanel {
 @SuppressWarnings("serial")
 final class JRedLed extends JLedPanel {
   public JRedLed() {
-    super("/resources/LitRedLed.gif",
-	  "/resources/RedLed.gif");
+    super("/resources/LitRedLed.gif", "/resources/RedLed.gif");
   }
 }
 
 @SuppressWarnings("serial")
 final class JGreenLed extends JLedPanel {
   public JGreenLed() {
-    super("/resources/LitGreenLed.gif",
-	  "/resources/GreenLed.gif");
+    super("/resources/LitGreenLed.gif", "/resources/GreenLed.gif");
   }
 }
 
@@ -114,7 +113,7 @@ abstract class JLedPanel extends JPanel {
   public JLedPanel(String onGifPath, String offGifPath) {
     super();
     setBorder(null);
-    onGif  = ResourceLoader.loadImageAsJLabel(onGifPath);
+    onGif = ResourceLoader.loadImageAsJLabel(onGifPath);
     offGif = ResourceLoader.loadImageAsJLabel(offGifPath);
     deactivate();
   }

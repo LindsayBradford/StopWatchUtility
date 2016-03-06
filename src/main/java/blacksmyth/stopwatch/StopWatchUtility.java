@@ -9,8 +9,19 @@
  */
 package blacksmyth.stopwatch;
 
+import org.springframework.context.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import blacksmyth.stopwatch.view.StopWatchView;
+
 public final class StopWatchUtility {
   public static void main(String argv[]) {
-    StopWatchBuilder.buildUtility().show();
+    
+    @SuppressWarnings("resource")
+    ApplicationContext ctx = new AnnotationConfigApplicationContext(StopWatchConfig.class);
+        
+    StopWatchView utility = ctx.getBean(StopWatchView.class);
+        
+    utility.show();
   }
 }

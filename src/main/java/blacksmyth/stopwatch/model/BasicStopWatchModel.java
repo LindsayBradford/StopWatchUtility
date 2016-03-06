@@ -16,7 +16,7 @@ import java.util.Observer;
 /**
  * A basic implementation of a {@link StopWatchModel}, and {@link TickRecipient}.
  */
-public final class BasicStopWatchModel extends Observable implements StopWatchModel, TickRecipient {
+public final class BasicStopWatchModel extends Observable implements StopWatchModel {
   
   private enum ModelState {
     Stopped, // Currently not measuring elapsed time (paused) 

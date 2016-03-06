@@ -27,16 +27,31 @@ repositories {
    } 
 }
 
+List libsToMerge = [ 
+  'org.springframework:spring-context:4.2.5.RELEASE'
+]
+
 List testLibs = [
   'junit:junit:4.12', 
   'org.mockito:mockito-all:1.10.19'
 ]
 
+configurations {
+  mergeLibs
+}
+
 dependencies {
+  mergeLibs   libsToMerge
+  compile     libsToMerge
   testCompile testLibs
 }
 
 jar {
+
+  from {
+    configurations.mergeLibs.collect { zipTree(it) }
+  }
+
   manifest {
    attributes (
       'Implementation-Title': project.title, 

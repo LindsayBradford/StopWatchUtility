@@ -22,7 +22,7 @@ import java.util.Observer;
  * @see Observable
  * @see Observer
  */
-public interface StopWatchModel {
+public interface StopWatchModel extends TickRecipient  {
 
   /**
    * Resets the stopwatch timer to {@code time}, and stops the timer running if necessary.
