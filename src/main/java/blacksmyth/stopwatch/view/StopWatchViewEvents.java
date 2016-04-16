@@ -37,5 +37,5 @@ public enum StopWatchViewEvents {
   /**
    * An event requsting that the stopwatch die (release any running resources it has). 
    */
-  DeathRequested
+  DeathRequested;
 }

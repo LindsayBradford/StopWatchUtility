@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+Git * Copyright (c) 2016, Lindsay Bradford and other Contributors.
  * All rights reserved.
  * 
  * This program and the accompanying materials  are made available 

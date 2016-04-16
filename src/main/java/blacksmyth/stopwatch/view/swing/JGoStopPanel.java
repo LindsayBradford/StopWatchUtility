@@ -8,7 +8,7 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-package blacksmyth.stopwatch.view;
+package blacksmyth.stopwatch.view.swing;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -24,7 +24,7 @@ import blacksmyth.utilities.ResourceLoader;
  * A simple JPanel implementation showing a red and green led,  where the "lit" led can be toggled. 
  */
 @SuppressWarnings("serial")
-final class JGoStopPanel extends JPanel {
+final public class JGoStopPanel extends JPanel {
 
   private static final GridBagLayout gbl      = new GridBagLayout();
   private static final GridBagConstraints gbc = new GridBagConstraints();

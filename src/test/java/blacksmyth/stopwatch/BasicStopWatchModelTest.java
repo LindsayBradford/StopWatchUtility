@@ -18,7 +18,7 @@ import java.util.Observer;
 import org.junit.Before;
 import org.junit.Test;
 
-import blacksmyth.stopwatch.model.BasicStopWatchModel;
+import blacksmyth.stopwatch.model.DefaultStopWatchModel;
 import blacksmyth.stopwatch.model.TickRecipient;
 import blacksmyth.stopwatch.model.Ticker;
 
@@ -27,7 +27,7 @@ final public class BasicStopWatchModelTest {
   private static long SHORT_PAUSE_TIME = 5;
   private static long LONG_PAUSE_TIME = 10;
   
-  private BasicStopWatchModel testModel; 
+  private DefaultStopWatchModel testModel; 
   
   private MockTicker mockTicker;
   private ModelHarness modelHarness;
@@ -50,7 +50,7 @@ final public class BasicStopWatchModelTest {
   @Before
   public void testSetup() {
     modelHarness = new ModelHarness();
-    testModel = new BasicStopWatchModel();
+    testModel = new DefaultStopWatchModel();
     mockTicker = new MockTicker();
     
     mockTicker.setRecipient(testModel);

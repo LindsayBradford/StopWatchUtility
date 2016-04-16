@@ -14,7 +14,7 @@ package blacksmyth.stopwatch.view;
  * A simple class to extract time elements from an elapsed time value
  * expressed as number of elapsed milliseconds. 
  */
-final class TimeExtractor {
+public final class TimeExtractor {
   public static int getHours(long time) {
     return (int) (time / 3600000) % 100;
   }

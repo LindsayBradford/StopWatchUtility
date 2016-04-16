@@ -8,7 +8,7 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-package blacksmyth.stopwatch.view;
+package blacksmyth.stopwatch.view.swing;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 import javax.swing.border.EmptyBorder;
 
+import blacksmyth.stopwatch.view.TimeExtractor;
 import blacksmyth.swing.JFormattedNumField;
 
 @SuppressWarnings("serial")
@@ -30,7 +31,7 @@ import blacksmyth.swing.JFormattedNumField;
  * A JPanel that displays a long value of elapsed milliseconds in a
  * more human-friendly manner (hours, minutes, seconds, etc).
  */
-final class JTimerPanel extends JPanel {
+public final class JTimerPanel extends JPanel {
   private JFormattedNumField  hoursField;
   private JFormattedNumField  minutesField;
   private JFormattedNumField  secondsField;

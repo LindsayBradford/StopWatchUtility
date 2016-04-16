@@ -17,7 +17,7 @@ package blacksmyth.stopwatch.view;
  * It's been implemented as static constant arrays to stop 
  * Java going crazy with short-lived string creation and garbage collection.
  */
-final class DigitStringFactory {
+public final class DigitStringFactory {
   private static final String[] twoDigitStrings = 
      { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", 
        "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", 

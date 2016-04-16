@@ -10,16 +10,19 @@
 
 package blacksmyth.stopwatch;
 
-import blacksmyth.stopwatch.model.*;
-import blacksmyth.stopwatch.presenter.*;
-import blacksmyth.stopwatch.view.*;
+import blacksmyth.stopwatch.model.StopWatchModel;
+import blacksmyth.stopwatch.model.DefaultStopWatchModel;
+import blacksmyth.stopwatch.model.Ticker;
+import blacksmyth.stopwatch.model.SleepingThreadTicker;
+import blacksmyth.stopwatch.presenter.StopWatchPresenter;
+import blacksmyth.stopwatch.presenter.DefaultStopWatchPresenter;
+import blacksmyth.stopwatch.view.StopWatchView;
+import blacksmyth.stopwatch.view.swing.SwingViewBuilder;
 
 /**
  * An implementation of the Builder pattern that uses the MVP pattern and Dependency Injection
  * to create a fully functional StopWatch application.
  */
-
-// TODO: Replace this with Spring or Guice.
 
 public final class StopWatchBuilder {
   
@@ -29,7 +32,7 @@ public final class StopWatchBuilder {
     StopWatchView view = buildView();
     StopWatchModel model = buildModel();
     
-    StopWatchPresenter presenter = new BasicStopWatchPresenter();
+    StopWatchPresenter presenter = new DefaultStopWatchPresenter();
 
     presenter.setModel(model);
     model.addObserver(presenter);
@@ -45,16 +48,16 @@ public final class StopWatchBuilder {
     Ticker ticker = new SleepingThreadTicker();
     ticker.setMillisecondsBetweenTicks(MILLISECONDS_BETWEEN_TICKS);
     
-    BasicStopWatchModel stopwatch = new BasicStopWatchModel();
+    DefaultStopWatchModel stopwatch = new DefaultStopWatchModel();
     
     ticker.setRecipient(stopwatch);
     ticker.startTicking();
     
     return stopwatch;
   }
-  
+
   private static StopWatchView buildView() {
-    SwingStopWatchView view = new SwingStopWatchView();
-    return view;
+    return SwingViewBuilder.buildView();
   }
+
 }

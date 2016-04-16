@@ -23,7 +23,7 @@ import blacksmyth.stopwatch.view.StopWatchViewEvents;
  * @see StopWatchView
  * @see StopWatchModel
  */
-public final class BasicStopWatchPresenter implements StopWatchPresenter {
+public final class DefaultStopWatchPresenter implements StopWatchPresenter {
 
   private StopWatchModel model;
   private StopWatchView  view;
