@@ -14,7 +14,7 @@ import java.util.Observable;
 
 import blacksmyth.stopwatch.model.StopWatchModel;
 import blacksmyth.stopwatch.view.StopWatchView;
-import blacksmyth.stopwatch.view.StopWatchViewEvents;
+import blacksmyth.stopwatch.view.StopWatchViewEvent;
 
 /**
  * A simple implementation of the 'Presenter' part of the MVP pattern, allowing a 
@@ -36,7 +36,7 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
     
     if (eventSource == view) {
       processViewEvent(
-          (StopWatchViewEvents) eventDetail
+          (StopWatchViewEvent) eventDetail
       );
     }
   }
@@ -56,7 +56,7 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
     // to trigger the model synchronsing to that time..
     
     processViewEvent(
-        StopWatchViewEvents.TimeSetRequested
+        StopWatchViewEvent.TimeSetRequested
     );
   }
 
@@ -71,7 +71,7 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
     );
   }
   
-  private void processViewEvent(StopWatchViewEvents viewEvent) {
+  private void processViewEvent(StopWatchViewEvent viewEvent) {
     switch (viewEvent) {
       case ResetRequested:
         model.reset();

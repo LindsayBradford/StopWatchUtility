@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+ * All rights reserved.
+ * 
+ * This program and the accompanying materials  are made available 
+ * under the terms of the BSD 3-Clause licence  which accompanies 
+ * this distribution, and is available at
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
 package blacksmyth.stopwatch.view.swing;
 
 import java.awt.BorderLayout;
@@ -18,12 +28,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
-import blacksmyth.stopwatch.view.StopWatchViewEvents;
+import blacksmyth.stopwatch.view.StopWatchViewEvent;
 import blacksmyth.stopwatch.view.swing.JStopWatchPanel;
 import blacksmyth.swing.JUtilities;
 
+/**
+ *  An implementation of {@link JPanel} that renders a Swing StopWatch panel complete with 
+ *  start/stop button, reset button, and optionally visible {@link JGoStopPanel} to indicate when the
+ *  stopwatch is running.
+ */
+
 @SuppressWarnings("serial")
-public class JStopWatchControlPanel extends JPanel {
+final class JStopWatchControlPanel extends JPanel {
 
   private JPanel controlPanel;
   
@@ -81,7 +97,8 @@ public class JStopWatchControlPanel extends JPanel {
     controlPanel = getControlPanel();
     add(controlPanel, BorderLayout.SOUTH);
   }
-
+  
+  @Override
   public void setForeground(Color color) {
     if (controlPanel != null) {
       controlPanel.setForeground(color);
@@ -92,6 +109,7 @@ public class JStopWatchControlPanel extends JPanel {
     super.setForeground(color);
   }
 
+  @Override
   public void setBackground(Color color) {
     if (controlPanel != null) {
       controlPanel.setBackground(color);
@@ -101,31 +119,25 @@ public class JStopWatchControlPanel extends JPanel {
     }
     super.setBackground(color);
   }
-
-  public void setCounterForeground(Color color) {
-    getStopWatchPanel().setForeground(color);
-  }
-
-  public void setCounterBackground(Color color) {
-    getStopWatchPanel().setBackground(color);
-  }
-
-  public void setCounterBorderColors(Color foreground, Color background) {
-    getStopWatchPanel().setBorderColors(foreground, background);
-  }
-
-  public boolean showingLeds() {
-    return ledPanel.isVisible();
-  }
+  
+  /**
+   * Sets the elapsed time (as a long) to display to users.
+   * @param time
+   */
 
   public void setTime(long time) {
     getStopWatchPanel().setTime(time);
   }
   
-  public JStopWatchPanel getStopWatchPanel() {
+  private JStopWatchPanel getStopWatchPanel() {
     return stopWatchPanel;
   }
 
+  /**
+   * Allows builders to specify that the start/stop button of this control panel be the default button for the 
+   * supplied {@link JFrame}.
+   * @param frame
+   */
   public void setStartStopButtonAsDefault(JFrame frame) {
     frame.getRootPane().setDefaultButton(startStopButton);
   }
@@ -184,12 +196,12 @@ public class JStopWatchControlPanel extends JPanel {
         switch (startStopButton.getText()) {
           case "Start": 
             eventRaiser.raise(
-                StopWatchViewEvents.StartRequested
+                StopWatchViewEvent.StartRequested
             );
             break;
           case "Stop": 
             eventRaiser.raise(
-                StopWatchViewEvents.StopRequested
+                StopWatchViewEvent.StopRequested
             );
             break;
         }
@@ -208,7 +220,7 @@ public class JStopWatchControlPanel extends JPanel {
     resetButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ae) {
         eventRaiser.raise(
-            StopWatchViewEvents.ResetRequested
+            StopWatchViewEvent.ResetRequested
         );
       }
     });
@@ -216,7 +228,12 @@ public class JStopWatchControlPanel extends JPanel {
     return resetButton;
   }
   
-  public void processStopWatchEvent(StopWatchViewEvents event) {
+  /**
+   * If a {@link StopWatchViewEvent} is raised, calling this method with the event raised will see the 
+   * component appropriately alter its appearance to match the event. 
+   * @param event
+   */
+  public void processStopWatchEvent(StopWatchViewEvent event) {
     switch (event) {
       case StopRequested:
         stop();
@@ -230,7 +247,13 @@ public class JStopWatchControlPanel extends JPanel {
       default: // nothing to do with other events. 
     }
   }
-  
+
+  /**
+   * If a {@link SwingStopWatchViewEvent} is raised, calling this method with the event raised will see the 
+   * component appropriately alter its appearance to match the event. 
+   * @param event
+   */
+
   public void processSwingEvent(SwingStopWatchViewEvents event) {
     switch (event) {
       case ToggleMillisecondsRequested:

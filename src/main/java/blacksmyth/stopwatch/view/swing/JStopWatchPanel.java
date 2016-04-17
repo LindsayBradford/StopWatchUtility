@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+ * All rights reserved.
+ * 
+ * This program and the accompanying materials  are made available 
+ * under the terms of the BSD 3-Clause licence  which accompanies 
+ * this distribution, and is available at
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
 package blacksmyth.stopwatch.view.swing;
 
 import java.awt.Color;
@@ -18,8 +28,13 @@ import javax.swing.border.SoftBevelBorder;
 import blacksmyth.stopwatch.view.DigitStringFactory;
 import blacksmyth.stopwatch.view.TimeExtractor;
 
+/**
+ * A sub-class of {@link JPanel} that renders an elapsed time (supplied as a long) in a user-readable format of 
+ * hh:mm:ss, with the optional display of milliseconds.  
+ */
+
 @SuppressWarnings("serial")
-class JStopWatchPanel extends JPanel {
+final class JStopWatchPanel extends JPanel {
   private final Font  BASE_TIME_FONT    = new Font("Monospaced", Font.BOLD, 20);
   private final Font  MILLISECOND_FONT  = new Font("Monospaced", Font.BOLD, 15);
 

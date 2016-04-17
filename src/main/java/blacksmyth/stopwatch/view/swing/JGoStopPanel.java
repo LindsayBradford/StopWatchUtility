@@ -21,10 +21,11 @@ import javax.swing.JLabel;
 import blacksmyth.utilities.ResourceLoader;
 
 /**
- * A simple JPanel implementation showing a red and green led,  where the "lit" led can be toggled. 
+ * A simple {@link JPanel} implementation showing a red and green led. When activated the green led is lit, and
+ * red light is unlit. When deactivated, the leds switch lighting. 
  */
 @SuppressWarnings("serial")
-final public class JGoStopPanel extends JPanel {
+final class JGoStopPanel extends JPanel {
 
   private static final GridBagLayout gbl      = new GridBagLayout();
   private static final GridBagConstraints gbc = new GridBagConstraints();

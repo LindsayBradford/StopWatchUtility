@@ -25,13 +25,14 @@ import javax.swing.border.EmptyBorder;
 import blacksmyth.stopwatch.view.TimeExtractor;
 import blacksmyth.swing.JFormattedNumField;
 
-@SuppressWarnings("serial")
-
 /**
- * A JPanel that displays a long value of elapsed milliseconds in a
- * more human-friendly manner (hours, minutes, seconds, etc).
+ * A {@link JPanel} that displays a long value of elapsed milliseconds in a
+ * more human-friendly manner (hours, minutes, seconds, etc), and allows the user
+ * to input a different time in this format.
  */
-public final class JTimerPanel extends JPanel {
+
+@SuppressWarnings("serial")
+final class JTimerPanel extends JPanel {
   private JFormattedNumField  hoursField;
   private JFormattedNumField  minutesField;
   private JFormattedNumField  secondsField;

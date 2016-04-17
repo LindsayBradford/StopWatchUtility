@@ -1,11 +1,30 @@
+/**
+ * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+ * All rights reserved.
+ * 
+ * This program and the accompanying materials  are made available 
+ * under the terms of the BSD 3-Clause licence  which accompanies 
+ * this distribution, and is available at
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
 package blacksmyth.stopwatch.view.swing;
 
 import java.util.prefs.Preferences;
 
 import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
-import blacksmyth.stopwatch.view.StopWatchViewEvents;
+import blacksmyth.stopwatch.view.StopWatchViewEvent;
 
-public class UpdateStopWatchTimeCommand implements StopWatchCommand {
+/**
+ * An implementation of {@link StopWatchCommand} that raises a 
+ * {@link StopWatchViewEvents#StopRequested} event to stop a running stop watch, prompt the user for a new 
+ * elapsed time via the command's {@link JTimerUpdateDialog}, and informs listeners of a time-change via a
+ * {@link StopWatchViewEvents#TimeSetRequested} event. 
+ * Finally, it adjusts the supplied {@link Preferences} to remember the updated time between invocations of the 
+ * stop watch utility.
+ */
+
+final class UpdateStopWatchTimeCommand implements StopWatchCommand {
   
   private JTimerUpdateDialog dialog;
   private Preferences preferences;
@@ -27,7 +46,7 @@ public class UpdateStopWatchTimeCommand implements StopWatchCommand {
   @Override
   public void run() {
     eventRaiser.raise(
-        StopWatchViewEvents.StopRequested
+        StopWatchViewEvent.StopRequested
     );
     
     dialog.setTime(
@@ -44,7 +63,7 @@ public class UpdateStopWatchTimeCommand implements StopWatchCommand {
     );
     
     eventRaiser.raise(
-        StopWatchViewEvents.TimeSetRequested
+        StopWatchViewEvent.TimeSetRequested
     );
   }
 

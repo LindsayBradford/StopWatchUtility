@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+ * All rights reserved.
+ * 
+ * This program and the accompanying materials  are made available 
+ * under the terms of the BSD 3-Clause licence  which accompanies 
+ * this distribution, and is available at
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
 package blacksmyth.stopwatch.view.swing;
 
 import java.awt.event.ComponentAdapter;
@@ -7,11 +17,19 @@ import java.awt.event.WindowEvent;
 import java.util.prefs.Preferences;
 
 import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
-import blacksmyth.stopwatch.view.StopWatchViewEvents;
+import blacksmyth.stopwatch.view.StopWatchViewEvent;
 import blacksmyth.swing.JUserNameableFrame;
 
+/**
+ *  A sub-class of {@link JUserNameableFrame} that uses the supplied {@link Preferences} to store and retrieve
+ *  frame title, size and position information, allowing the frame to retain this detail across invocations.
+ *  
+ *  It will also raise an {@link StopWatchViewEvent#DeathRequested} event upon the user choosing to close the 
+ *  frame to allow the system to appropriately free up any resource needed before shutdow.
+ */
+
 @SuppressWarnings("serial")
-public class JStopWatchFrame extends JUserNameableFrame {
+final class JStopWatchFrame extends JUserNameableFrame {
   
   private Preferences prefs;
 
@@ -60,7 +78,7 @@ public class JStopWatchFrame extends JUserNameableFrame {
       @Override
       public void windowClosing(WindowEvent we) {
         eventRaiser.raise(
-            StopWatchViewEvents.DeathRequested
+            StopWatchViewEvent.DeathRequested
         );
       }
 

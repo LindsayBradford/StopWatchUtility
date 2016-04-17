@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+ * All rights reserved.
+ * 
+ * This program and the accompanying materials  are made available 
+ * under the terms of the BSD 3-Clause licence  which accompanies 
+ * this distribution, and is available at
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
 package blacksmyth.stopwatch.view.swing;
 
 import java.awt.event.ActionEvent;
@@ -9,9 +19,14 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
+/**
+ *  A sub-class of {@link JMenuBar} that builds a Swing-specific memu-bar. The processing of actions as a result
+ *  of the user selecting a menu item are delegated to a number of externally supplied 
+ *  {@link StopWatchCommand} objects,  allowing the menu-bar to remain unaware of implementation details outside
+ *  of the supply of a menu.
+ */
 @SuppressWarnings("serial")
-public class JStopWatchMenuBar extends JMenuBar {
+final class JStopWatchMenuBar extends JMenuBar {
 
   private StopWatchCommand updateTitleCommand;
   private StopWatchCommand updateTimeCommand;

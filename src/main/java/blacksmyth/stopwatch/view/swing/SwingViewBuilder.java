@@ -1,6 +1,17 @@
+/**
+ * Copyright (c) 2016, Lindsay Bradford and other Contributors.
+ * All rights reserved.
+ * 
+ * This program and the accompanying materials  are made available 
+ * under the terms of the BSD 3-Clause licence  which accompanies 
+ * this distribution, and is available at
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
 package blacksmyth.stopwatch.view.swing;
 
 import java.awt.BorderLayout;
+
 import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
@@ -11,7 +22,12 @@ import blacksmyth.stopwatch.view.StopWatchView;
 import blacksmyth.swing.JFrameFactory;
 import blacksmyth.utilities.ResourceLoader;
 
-public class SwingViewBuilder {
+/**
+ * A class based on the Builder design pattern for the construction of a Swing-based {@link StopWatchView} via
+ * dependency injection. 
+ */
+
+public final class SwingViewBuilder {
 
   private static Preferences getViewPreferences() {
     return Preferences.userNodeForPackage(SwingStopWatchView.class);
