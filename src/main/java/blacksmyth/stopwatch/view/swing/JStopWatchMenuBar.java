@@ -13,7 +13,6 @@ package blacksmyth.stopwatch.view.swing;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.prefs.Preferences;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -62,14 +61,16 @@ final class JStopWatchMenuBar extends JMenuBar {
     });
     return item;
   }
-  
-  public void setPreferences(Preferences preferences) {
-    this.showMillisecondsItem.setSelected(
-        preferences.getBoolean("showMilliseconds", true)
-    );
-    
-    this.showLedsItem.setSelected(
-        preferences.getBoolean("showLeds", true)
+
+  public void setPersistedToggleMilliseconds(PersistedSwingState toggleState) {
+    showMillisecondsItem.setSelected(
+        toggleState.getAsBoolean()
+    );    
+  }
+
+  public void setPersistedToggleLeds(PersistedSwingState toggleLeds) {
+    showLedsItem.setSelected(
+        toggleLeds.getAsBoolean()
     );
   }
   

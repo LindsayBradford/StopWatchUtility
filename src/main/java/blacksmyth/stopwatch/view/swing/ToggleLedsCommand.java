@@ -10,35 +10,33 @@
 
 package blacksmyth.stopwatch.view.swing;
 
-import java.util.prefs.Preferences;
-
 /**
  * An implementation of {@link StopWatchCommand} that raises a {@link SwingStopWatchViewEvents#ToggleLedsRequested}
- * event, and adjusts the supplied {@link Preferences} to remember the decisions between invocations of the 
+ * event, and adjusts the supplied {@link PersistedSwingState} to remember the decisions between invocations of the 
  * stop watch utility.
  */
 
 final class ToggleLedsCommand implements StopWatchCommand {
   
-  private Preferences preferences;
   private SwingStopWatchViewEventRaiser eventRaiser;
+  private PersistedSwingState toggleState;
   
   
   public void setSwingEventRaiser(SwingStopWatchViewEventRaiser eventRaiser) {
     this.eventRaiser = eventRaiser;
   }
   
-  public void setPreferences(Preferences preferences) {
-    this.preferences = preferences;
+  public void setPersistedToggleLeds(PersistedSwingState toggleState) {
+    this.toggleState = toggleState;
   }
 
   @Override
   public void run() {
     
-    boolean showLeds = preferences.getBoolean("showLeds",true);
-    showLeds = !showLeds;
-    preferences.putBoolean("showLeds", showLeds);
-    
+    this.toggleState.putAsBoolean(
+        !this.toggleState.getAsBoolean()
+    );
+
     eventRaiser.raise(
         SwingStopWatchViewEvents.ToggleLedsRequested
     );

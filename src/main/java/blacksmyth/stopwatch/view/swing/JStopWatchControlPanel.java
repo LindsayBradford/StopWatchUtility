@@ -18,7 +18,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.prefs.Preferences;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -57,7 +56,8 @@ final class JStopWatchControlPanel extends JPanel {
 
   private StopWatchViewEventRaiser eventRaiser;
 
-  private Preferences preferences;
+  private PersistedSwingState toggleMillisecondsState;
+  private PersistedSwingState toggleLedsState;
 
 //  private static final AudioClip soundClip = 
 //    ResourceLoader.loadAudioClip("/resources/stopwatch.wav");
@@ -70,11 +70,16 @@ final class JStopWatchControlPanel extends JPanel {
   public void setEventRaiser(StopWatchViewEventRaiser eventRaiser) {
     this.eventRaiser = eventRaiser;
   }
-  
-  public void setPreferences(Preferences preferences) {
-    this.preferences = preferences;
-    showMillisecondsAsPerPreferences();
-    showLedsAsPerPreferences();
+
+  public void setPersistedToggleMilliseconds(PersistedSwingState toggleMillisecondsState) {
+    this.toggleMillisecondsState = toggleMillisecondsState;
+    showMillisecondsAsPerPersistedState();
+
+  }
+
+  public void setPersistedToggleLeds(PersistedSwingState toggleLedsState) {
+    this.toggleLedsState = toggleLedsState;
+    showLedsAsPerPersistedState();
   }
   
   private void initialise() {
@@ -257,10 +262,10 @@ final class JStopWatchControlPanel extends JPanel {
   public void processSwingEvent(SwingStopWatchViewEvents event) {
     switch (event) {
       case ToggleMillisecondsRequested:
-        showMillisecondsAsPerPreferences();
+        showMillisecondsAsPerPersistedState();
         break;
       case ToggleLedsRequested:
-        showLedsAsPerPreferences();
+        showLedsAsPerPersistedState();
         break;
     }
   }
@@ -309,9 +314,9 @@ final class JStopWatchControlPanel extends JPanel {
     // soundClip.play();
   }
   
-  private void showMillisecondsAsPerPreferences() {
+  private void showMillisecondsAsPerPersistedState() {
     setMillisecondsVisible(
-        preferences.getBoolean("showMilliseconds", true)
+        this.toggleMillisecondsState.getAsBoolean()
     );
   }
 
@@ -319,9 +324,9 @@ final class JStopWatchControlPanel extends JPanel {
     getStopWatchPanel().setMillisecondsVisible(millisecondsVisible);
   }
   
-  private void showLedsAsPerPreferences() {
+  private void showLedsAsPerPersistedState() {
     setLedsVisible(
-        preferences.getBoolean("showLeds", true)
+        this.toggleLedsState.getAsBoolean()
     );
   }
   

@@ -31,13 +31,37 @@ import blacksmyth.swing.JUserNameableFrame;
 @SuppressWarnings("serial")
 final class JStopWatchFrame extends JUserNameableFrame {
   
-  private Preferences prefs;
+  private PersistedNvpState framePosX;
+  private PersistedNvpState framePosY;
+  private PersistedNvpState frameTitle;
+  
+  public JStopWatchFrame() {
+    super();
 
-  public void setPreferences(Preferences prefs) {
-    this.prefs = prefs;
-
-    processPreferences();
     addPreferencesEventHandler();
+  }
+  
+  public void setPersistedFramePosX(PersistedNvpState framePosX) {
+    this.framePosX = framePosX;
+    setLocation(
+        framePosX.getAsInt(), 
+        this.getY()
+     );
+  }
+
+  public void setPersistedFramePosY(PersistedNvpState framePosY) {
+    this.framePosY = framePosY;
+    setLocation(
+        this.getX(), 
+        framePosY.getAsInt()
+     );
+  }
+  
+  public void setPersistedFrameTitle(PersistedNvpState frameTitle) {
+    this.frameTitle = frameTitle;
+    setTitle(
+        frameTitle.getAsString()
+    );
   }
   
   private void addPreferencesEventHandler() {
@@ -45,8 +69,8 @@ final class JStopWatchFrame extends JUserNameableFrame {
         new ComponentAdapter() {
           @Override
           public void componentMoved(ComponentEvent event) {
-            prefs.putInt("posX",getX());
-            prefs.putInt("posY",getY());
+            framePosX.putAsInt(getX());
+            framePosY.putAsInt(getY());
           }
     });
   }
@@ -54,24 +78,9 @@ final class JStopWatchFrame extends JUserNameableFrame {
   @Override
   public void setTitle(String title) {
     super.setTitle(title);
-
-    prefs.put(
-        "frameTitle",
-        title
-    );
+    frameTitle.putAsString(title);
   }
 
-  private void processPreferences() {
-    setTitle(
-        prefs.get("frameTitle","StopWatch")
-    );
-
-    final int posX = prefs.getInt("posX",10);
-    final int posY = prefs.getInt("posY",10);
-
-    setLocation(posX, posY);
-  }
-  
   public void setEventRaiser(final StopWatchViewEventRaiser eventRaiser) {
     addWindowListener(new WindowAdapter() {
 

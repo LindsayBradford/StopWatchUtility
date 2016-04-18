@@ -19,29 +19,27 @@ import java.util.prefs.Preferences;
  */
 
 final class ToggleMillisecondsCommand implements StopWatchCommand {
-  
-  private Preferences preferences;
+
+  private PersistedSwingState toggleState;
   private SwingStopWatchViewEventRaiser eventRaiser;
     
   public void setSwingEventRaiser(SwingStopWatchViewEventRaiser eventRaiser) {
     this.eventRaiser = eventRaiser;
   }
-  
-  public void setPreferences(Preferences preferences) {
-    this.preferences = preferences;
+
+  public void setPersistedToggleMilliseconds(PersistedSwingState toggleState) {
+    this.toggleState = toggleState;
   }
 
   @Override
   public void run() {
     
-    boolean showMilliseconds = preferences.getBoolean("showMilliseconds",true);
-    showMilliseconds = !showMilliseconds;
-    preferences.putBoolean("showMilliseconds", showMilliseconds);
+    this.toggleState.putAsBoolean(
+        !this.toggleState.getAsBoolean()
+    );
     
     eventRaiser.raise(
         SwingStopWatchViewEvents.ToggleMillisecondsRequested
     );
   }
-
-
 }

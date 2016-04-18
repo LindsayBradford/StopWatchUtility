@@ -12,8 +12,6 @@ package blacksmyth.stopwatch.view.swing;
 
 import java.awt.BorderLayout;
 
-import java.util.prefs.Preferences;
-
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -29,10 +27,6 @@ import blacksmyth.utilities.ResourceLoader;
 
 public final class SwingViewBuilder {
 
-  private static Preferences getViewPreferences() {
-    return Preferences.userNodeForPackage(SwingStopWatchView.class);
-  }
-  
   private static final StopWatchEventDelegator stopWatchEventDeletagor = new StopWatchEventDelegator();
   
   private static StopWatchEventDelegator getStopWatchEventDelegator() {
@@ -61,8 +55,8 @@ public final class SwingViewBuilder {
     
     SwingStopWatchView view = new SwingStopWatchView();
     
-    view.setPreferences(
-        getViewPreferences()
+    view.setPersistedElapsedTime(
+        PersistedSwingState.ELAPSED_TIME
     );
     
     getStopWatchEventDelegator().setDelegate(view);
@@ -88,9 +82,17 @@ public final class SwingViewBuilder {
   
   private static JFrame buildFrame() {
     JStopWatchFrame frame = new JStopWatchFrame();
+    
+    frame.setPersistedFrameTitle(
+        PersistedSwingState.FRAME_TITLE
+    );
 
-    frame.setPreferences(
-        getViewPreferences()
+    frame.setPersistedFramePosX(
+        PersistedSwingState.FRAME_X_POS
+    );
+
+    frame.setPersistedFramePosY(
+        PersistedSwingState.FRAME_Y_POS
     );
 
     frame.setEventRaiser(
@@ -110,35 +112,47 @@ public final class SwingViewBuilder {
     UpdateFrameTitleCommand titleCommand = new UpdateFrameTitleCommand();
     titleCommand.setFrame(frame);
     menu.setUpdateTitleCommand(titleCommand);
-    menu.setPreferences(
-        getViewPreferences()
+    
+    menu.setPersistedToggleMilliseconds(
+        PersistedSwingState.TOGGLE_MILLISECONDS
+    );
+
+    menu.setPersistedToggleLeds(
+        PersistedSwingState.TOGGLE_LEDS
     );
     
     JTimerUpdateDialog updateDialog = new JTimerUpdateDialog(frame);
     
     UpdateStopWatchTimeCommand timeCommand = new UpdateStopWatchTimeCommand();
     timeCommand.setDialog(updateDialog);
-    timeCommand.setPreferences(
-        getViewPreferences()
+    
+    timeCommand.setPersistedElapsedTime(
+        PersistedSwingState.ELAPSED_TIME
     );
+    
     timeCommand.setEventRaiser(
         getStopWatchEventDelegator()
     );
     menu.setUpdateTimeCommand(timeCommand);
 
     ToggleMillisecondsCommand toggleMillisecondsCommand = new ToggleMillisecondsCommand();
-    toggleMillisecondsCommand.setPreferences(
-        getViewPreferences()
+
+    toggleMillisecondsCommand.setPersistedToggleMilliseconds(
+        PersistedSwingState.TOGGLE_MILLISECONDS
     );
+
     toggleMillisecondsCommand.setSwingEventRaiser(
         getSwingEventDelegator()
     );
+    
     menu.setToggleShowMillisecondsCommand(toggleMillisecondsCommand);
 
     ToggleLedsCommand toggleLedsCommand = new ToggleLedsCommand();
-    toggleLedsCommand.setPreferences(
-        getViewPreferences()
+    
+    toggleLedsCommand.setPersistedToggleLeds(
+        PersistedSwingState.TOGGLE_LEDS
     );
+    
     toggleLedsCommand.setSwingEventRaiser(
         getSwingEventDelegator()
     );
@@ -147,10 +161,14 @@ public final class SwingViewBuilder {
     frame.setJMenuBar(menu);
     
     JStopWatchControlPanel controlPanel = getControlPanel();
-    controlPanel.setPreferences(
-        getViewPreferences()
+
+    controlPanel.setPersistedToggleMilliseconds(
+        PersistedSwingState.TOGGLE_MILLISECONDS
     );
 
+    controlPanel.setPersistedToggleLeds(
+        PersistedSwingState.TOGGLE_LEDS
+    );
     
     frame.getContentPane().add(controlPanel, BorderLayout.CENTER);
     controlPanel.setStartStopButtonAsDefault(frame);

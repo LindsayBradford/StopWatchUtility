@@ -10,8 +10,6 @@
 
 package blacksmyth.stopwatch.view.swing;
 
-import java.util.prefs.Preferences;
-
 import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
 import blacksmyth.stopwatch.view.StopWatchViewEvent;
 
@@ -20,16 +18,17 @@ import blacksmyth.stopwatch.view.StopWatchViewEvent;
  * {@link StopWatchViewEvents#StopRequested} event to stop a running stop watch, prompt the user for a new 
  * elapsed time via the command's {@link JTimerUpdateDialog}, and informs listeners of a time-change via a
  * {@link StopWatchViewEvents#TimeSetRequested} event. 
- * Finally, it adjusts the supplied {@link Preferences} to remember the updated time between invocations of the 
+ * Finally, it adjusts the supplied {@link PersistedNvpState} to remember the updated time between invocations of the 
  * stop watch utility.
  */
 
 final class UpdateStopWatchTimeCommand implements StopWatchCommand {
   
   private JTimerUpdateDialog dialog;
-  private Preferences preferences;
+
   private StopWatchViewEventRaiser eventRaiser;
-  
+
+  private PersistedNvpState elapsedTimeState;
   
   public void setDialog(JTimerUpdateDialog dialog) {
     this.dialog = dialog;
@@ -39,8 +38,8 @@ final class UpdateStopWatchTimeCommand implements StopWatchCommand {
     this.eventRaiser = eventRaiser;
   }
   
-  public void setPreferences(Preferences preferences) {
-    this.preferences = preferences;
+  public void setPersistedElapsedTime(PersistedNvpState elapsedTimeState) {
+    this.elapsedTimeState = elapsedTimeState;
   }
   
   @Override
@@ -50,15 +49,12 @@ final class UpdateStopWatchTimeCommand implements StopWatchCommand {
     );
     
     dialog.setTime(
-        preferences.getLong(
-            "elapsedTime",0
-        )
+        elapsedTimeState.getAsLong()
     );
     
     dialog.setVisible(true);
     
-    preferences.putLong(
-        "elapsedTime",
+    elapsedTimeState.putAsLong(
         dialog.getTime()
     );
     
