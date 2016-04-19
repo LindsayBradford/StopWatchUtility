@@ -45,7 +45,7 @@ public final class SwingViewBuilder {
     return controlPanel;
   }
   
-  public static StopWatchView buildView() {
+  public static StopWatchView build() {
 
     try {
       UIManager.setLookAndFeel(
@@ -67,20 +67,31 @@ public final class SwingViewBuilder {
     view.setFrame(
         buildFrame()
     );
-    
-    JStopWatchControlPanel controlPanel = getControlPanel();
-
-    controlPanel.setEventRaiser(
-        getStopWatchEventDelegator()
-    );
 
     view.setControlPanel(
-        controlPanel
+        buildControlPanel()
    );
     
     return view;
   }
   
+  private static JStopWatchControlPanel buildControlPanel() {
+    JStopWatchControlPanel controlPanel = getControlPanel();
+
+    controlPanel.setEventRaiser(
+        getStopWatchEventDelegator()
+    );
+    
+    controlPanel.setPersistedToggleMilliseconds(
+        PersistedSwingState.TOGGLE_MILLISECONDS
+    );
+
+    controlPanel.setPersistedToggleLeds(
+        PersistedSwingState.TOGGLE_LEDS
+    );
+    
+    return controlPanel;
+  }
   
   private static JFrame buildFrame() {
     JStopWatchFrame frame = new JStopWatchFrame();
@@ -109,11 +120,25 @@ public final class SwingViewBuilder {
         ).getImage()
     );
     
-    JStopWatchMenuBar menu = new JStopWatchMenuBar();
+    frame.setJMenuBar(
+        buildMenuBar(frame)
+    );
     
-    UpdateFrameTitleCommand titleCommand = new UpdateFrameTitleCommand();
-    titleCommand.setFrame(frame);
-    menu.setUpdateTitleCommand(titleCommand);
+    frame.getContentPane().add(
+        getControlPanel(), 
+        BorderLayout.CENTER
+    );
+
+    getControlPanel().setStartStopButtonAsDefault(frame);
+    
+    frame.pack();
+    frame.setResizable(false);
+
+    return frame;
+  }
+  
+  private static JStopWatchMenuBar buildMenuBar(JStopWatchFrame frame) {
+    JStopWatchMenuBar menu = new JStopWatchMenuBar();
     
     menu.setPersistedToggleMilliseconds(
         PersistedSwingState.TOGGLE_MILLISECONDS
@@ -123,61 +148,73 @@ public final class SwingViewBuilder {
         PersistedSwingState.TOGGLE_LEDS
     );
     
-    JTimerUpdateDialog updateDialog = new JTimerUpdateDialog(frame);
+    menu.setUpdateTitleCommand(
+        buildUpdateTitleCmd(frame)
+    );
     
-    UpdateStopWatchTimeCommand timeCommand = new UpdateStopWatchTimeCommand();
-    timeCommand.setDialog(updateDialog);
+    menu.setUpdateTimeCommand(
+        buildUpdateTimeCmd(
+            new JTimerUpdateDialog(frame)    
+        )
+    );
     
-    timeCommand.setPersistedElapsedTime(
+    menu.setToggleShowMillisecondsCommand(
+        buildToggleMillisecondsCmd()
+    );
+    
+    menu.setToggleShowLedsCommand(
+        buildToggleLedsCmd()
+    );
+    
+    return menu;
+  }
+
+  private static UpdateFrameTitleCommand buildUpdateTitleCmd(JStopWatchFrame frame) {
+    UpdateFrameTitleCommand cmd = new UpdateFrameTitleCommand();
+    cmd.setFrame(frame);
+    return cmd;
+  }
+  
+  private static UpdateStopWatchTimeCommand buildUpdateTimeCmd(JTimerUpdateDialog dialog) {
+    UpdateStopWatchTimeCommand cmd = new UpdateStopWatchTimeCommand();
+    cmd.setDialog(dialog);
+    
+    cmd.setPersistedElapsedTime(
         PersistedSwingState.ELAPSED_TIME
     );
     
-    timeCommand.setEventRaiser(
+    cmd.setEventRaiser(
         getStopWatchEventDelegator()
     );
-    menu.setUpdateTimeCommand(timeCommand);
+    
+    return cmd;
+  }
+  
+  private static ToggleMillisecondsCommand buildToggleMillisecondsCmd() {
+    ToggleMillisecondsCommand cmd = new ToggleMillisecondsCommand();
 
-    ToggleMillisecondsCommand toggleMillisecondsCommand = new ToggleMillisecondsCommand();
-
-    toggleMillisecondsCommand.setPersistedToggleMilliseconds(
+    cmd.setPersistedToggleMilliseconds(
         PersistedSwingState.TOGGLE_MILLISECONDS
     );
 
-    toggleMillisecondsCommand.setSwingEventRaiser(
+    cmd.setSwingEventRaiser(
         getSwingEventDelegator()
     );
     
-    menu.setToggleShowMillisecondsCommand(toggleMillisecondsCommand);
-
-    ToggleLedsCommand toggleLedsCommand = new ToggleLedsCommand();
+    return cmd;
+  }
+  
+  private static ToggleLedsCommand buildToggleLedsCmd() {
+    ToggleLedsCommand cmd = new ToggleLedsCommand();
     
-    toggleLedsCommand.setPersistedToggleLeds(
+    cmd.setPersistedToggleLeds(
         PersistedSwingState.TOGGLE_LEDS
     );
     
-    toggleLedsCommand.setSwingEventRaiser(
+    cmd.setSwingEventRaiser(
         getSwingEventDelegator()
     );
-    menu.setToggleShowLedsCommand(toggleLedsCommand);
     
-    frame.setJMenuBar(menu);
-    
-    JStopWatchControlPanel controlPanel = getControlPanel();
-
-    controlPanel.setPersistedToggleMilliseconds(
-        PersistedSwingState.TOGGLE_MILLISECONDS
-    );
-
-    controlPanel.setPersistedToggleLeds(
-        PersistedSwingState.TOGGLE_LEDS
-    );
-    
-    frame.getContentPane().add(controlPanel, BorderLayout.CENTER);
-    controlPanel.setStartStopButtonAsDefault(frame);
-    
-    frame.pack();
-    frame.setResizable(false);
-
-    return frame;
+    return cmd;
   }
 }

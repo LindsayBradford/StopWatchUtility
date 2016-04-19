@@ -11,11 +11,9 @@
 package blacksmyth.stopwatch;
 
 import blacksmyth.stopwatch.model.StopWatchModel;
-import blacksmyth.stopwatch.model.DefaultStopWatchModel;
-import blacksmyth.stopwatch.model.Ticker;
-import blacksmyth.stopwatch.model.SleepingThreadTicker;
+import blacksmyth.stopwatch.model.StopWatchModelBuilder;
 import blacksmyth.stopwatch.presenter.StopWatchPresenter;
-import blacksmyth.stopwatch.presenter.DefaultStopWatchPresenter;
+import blacksmyth.stopwatch.presenter.StopWatchPresenterBuilder;
 import blacksmyth.stopwatch.view.StopWatchView;
 import blacksmyth.stopwatch.view.swing.SwingViewBuilder;
 
@@ -26,38 +24,18 @@ import blacksmyth.stopwatch.view.swing.SwingViewBuilder;
 
 public final class StopWatchBuilder {
   
-  private static int MILLISECONDS_BETWEEN_TICKS = 50;
+  public static StopWatchView build()  {
+    StopWatchPresenter presenter = StopWatchPresenterBuilder.build();
 
-  public static StopWatchView buildUtility()  {
-    StopWatchView view = buildView();
-    StopWatchModel model = buildModel();
-    
-    StopWatchPresenter presenter = new DefaultStopWatchPresenter();
-
+    StopWatchModel model = StopWatchModelBuilder.build();
     presenter.setModel(model);
     model.addObserver(presenter);
-    
+
+    StopWatchView view = SwingViewBuilder.build();
     presenter.setView(view);
     view.addObserver(presenter);
     
     return view;
-  }
-  
-  private static StopWatchModel buildModel() {
-    
-    Ticker ticker = new SleepingThreadTicker();
-    ticker.setMillisecondsBetweenTicks(MILLISECONDS_BETWEEN_TICKS);
-    
-    DefaultStopWatchModel stopwatch = new DefaultStopWatchModel();
-    
-    ticker.setRecipient(stopwatch);
-    ticker.startTicking();
-    
-    return stopwatch;
-  }
-
-  private static StopWatchView buildView() {
-    return SwingViewBuilder.buildView();
   }
 
 }
