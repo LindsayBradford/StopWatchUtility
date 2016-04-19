@@ -38,6 +38,7 @@ final public class JFrameFactory {
   public static void makeSystemExitJFrame(JFrame frame) {
     makeCloseableJFrame(frame);
     frame.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent we) {
         System.exit(0);
       }
@@ -53,7 +54,7 @@ final public class JFrameFactory {
       case USER_NAMEABLE: {
         JUserNameableFrame frame = new JUserNameableFrame(pTitle);
         frame.bindPopupMenu();
-        returnFrame = (JFrame) frame;
+        returnFrame = frame;
         break;
       }
       default: {
@@ -71,11 +72,13 @@ final public class JFrameFactory {
 
     frame.addComponentListener(
       new ComponentAdapter() {
-          public void componentResized(ComponentEvent ce) {
-            frame.setSize(Math.max(minimumSize.width,  frame.getSize().width ), 
-                          Math.max(minimumSize.height, frame.getSize().height )
-                         );
-          }
+        @Override
+        public void componentResized(ComponentEvent ce) {
+          frame.setSize(
+              Math.max(minimumSize.width,  frame.getSize().width ), 
+              Math.max(minimumSize.height, frame.getSize().height)
+          );
+        }
       }
     );
   }

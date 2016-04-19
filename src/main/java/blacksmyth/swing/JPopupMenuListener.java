@@ -17,20 +17,22 @@ public class JPopupMenuListener extends MouseAdapter {
   private JPopupMenu vMenu;
 
   public JPopupMenuListener(JPopupMenu pMenu) {
-    vMenu = pMenu;    
+    this.vMenu = pMenu;    
   }
 
+  @Override
   public void mouseReleased(MouseEvent e) {
     processMouseEvent(e);
   }
 
+  @Override
   public void mousePressed(MouseEvent e) {
     processMouseEvent(e);
   }
   
   private void processMouseEvent(MouseEvent e) {
     if (e.isPopupTrigger()) {
-      vMenu.show(e.getComponent(), e.getX(), e.getY());
+      this.vMenu.show(e.getComponent(), e.getX(), e.getY());
     }
   }
 }

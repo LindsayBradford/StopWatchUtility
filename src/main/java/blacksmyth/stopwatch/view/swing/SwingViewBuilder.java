@@ -51,7 +51,9 @@ public final class SwingViewBuilder {
       UIManager.setLookAndFeel(
           "javax.swing.plaf.metal.MetalLookAndFeel"
         );
-    } catch (Exception e) {}
+    } catch (@SuppressWarnings("unused") Exception e) {
+      // Doesn't matter - whatever it defaults to will do if MetalLookAndFeel fails.
+    }
     
     SwingStopWatchView view = new SwingStopWatchView();
     

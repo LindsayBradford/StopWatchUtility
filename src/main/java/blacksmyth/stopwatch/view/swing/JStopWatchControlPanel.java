@@ -46,7 +46,7 @@ final class JStopWatchControlPanel extends JPanel {
 
   private JGoStopPanel ledPanel;
 
-  private JButton startStopButton;
+  JButton startStopButton;
   private JButton resetButton;
   
   private boolean running = false;
@@ -54,7 +54,7 @@ final class JStopWatchControlPanel extends JPanel {
   private GridBagLayout gbl      = new GridBagLayout();
   private GridBagConstraints gbc = new GridBagConstraints();
 
-  private StopWatchViewEventRaiser eventRaiser;
+  StopWatchViewEventRaiser eventRaiser;
 
   private PersistedSwingState toggleMillisecondsState;
   private PersistedSwingState toggleLedsState;
@@ -94,33 +94,33 @@ final class JStopWatchControlPanel extends JPanel {
 
   private void addTimerView() {
     add(getStopWatchPanel(), BorderLayout.CENTER);
-    ledPanel = new JGoStopPanel();
-    add(ledPanel, BorderLayout.WEST);
+    this.ledPanel = new JGoStopPanel();
+    add(this.ledPanel, BorderLayout.WEST);
   }
 
   private void addControls() {
-    controlPanel = getControlPanel();
-    add(controlPanel, BorderLayout.SOUTH);
+    this.controlPanel = getControlPanel();
+    add(this.controlPanel, BorderLayout.SOUTH);
   }
   
   @Override
   public void setForeground(Color color) {
-    if (controlPanel != null) {
-      controlPanel.setForeground(color);
-      ledPanel.setForeground(color);
-      startStopButton.setForeground(color);
-      resetButton.setForeground(color);
+    if (this.controlPanel != null) {
+      this.controlPanel.setForeground(color);
+      this.ledPanel.setForeground(color);
+      this.startStopButton.setForeground(color);
+      this.resetButton.setForeground(color);
     }
     super.setForeground(color);
   }
 
   @Override
   public void setBackground(Color color) {
-    if (controlPanel != null) {
-      controlPanel.setBackground(color);
-      ledPanel.setBackground(color);
-      startStopButton.setBackground(color);
-      resetButton.setBackground(color);
+    if (this.controlPanel != null) {
+      this.controlPanel.setBackground(color);
+      this.ledPanel.setBackground(color);
+      this.startStopButton.setBackground(color);
+      this.resetButton.setBackground(color);
     }
     super.setBackground(color);
   }
@@ -135,7 +135,7 @@ final class JStopWatchControlPanel extends JPanel {
   }
   
   private JStopWatchPanel getStopWatchPanel() {
-    return stopWatchPanel;
+    return this.stopWatchPanel;
   }
 
   /**
@@ -144,47 +144,47 @@ final class JStopWatchControlPanel extends JPanel {
    * @param frame
    */
   public void setStartStopButtonAsDefault(JFrame frame) {
-    frame.getRootPane().setDefaultButton(startStopButton);
+    frame.getRootPane().setDefaultButton(this.startStopButton);
   }
 
   private JPanel getControlPanel() {
-    JPanel panel = new JPanel(gbl);
+    JPanel panel = new JPanel(this.gbl);
 
     int buttonCol = 0;
 
-    gbc.gridwidth    = 1;
-    gbc.gridheight   = 1;
-    gbc.gridx        = buttonCol++;
-    gbc.gridy        = 0;
-    gbc.ipadx        = 11;
-    gbc.ipady        = 3;
-    gbc.weightx      = 1;
-    gbc.weighty      = 1;
-    gbc.fill         = GridBagConstraints.BOTH;
+    this.gbc.gridwidth    = 1;
+    this.gbc.gridheight   = 1;
+    this.gbc.gridx        = buttonCol++;
+    this.gbc.gridy        = 0;
+    this.gbc.ipadx        = 11;
+    this.gbc.ipady        = 3;
+    this.gbc.weightx      = 1;
+    this.gbc.weighty      = 1;
+    this.gbc.fill         = GridBagConstraints.BOTH;
 
-    gbc.insets = new Insets(17,0,0,0);
+    this.gbc.insets = new Insets(17,0,0,0);
 
-    panel.add(new JLabel(""), gbc);
+    panel.add(new JLabel(""), this.gbc);
 
-    gbc.insets = new Insets(17,0,0,5);
+    this.gbc.insets = new Insets(17,0,0,5);
 
-    gbc.gridx        = buttonCol++;
-    gbc.weightx = 0;
-    gbc.fill         = GridBagConstraints.VERTICAL;
+    this.gbc.gridx        = buttonCol++;
+    this.gbc.weightx = 0;
+    this.gbc.fill         = GridBagConstraints.VERTICAL;
 
-    panel.add(getStartStopButton(),gbc);
+    panel.add(getStartStopButton(),this.gbc);
 
-    gbc.insets = new Insets(17,0,0,0);
+    this.gbc.insets = new Insets(17,0,0,0);
 
-    gbc.gridx        = buttonCol++;
+    this.gbc.gridx        = buttonCol++;
 
-    panel.add(getResetButton(), gbc);
+    panel.add(getResetButton(), this.gbc);
 
-    gbc.gridx        = buttonCol++;
-    gbc.weightx      = 1;
-    gbc.fill         = GridBagConstraints.BOTH;
+    this.gbc.gridx        = buttonCol++;
+    this.gbc.weightx      = 1;
+    this.gbc.fill         = GridBagConstraints.BOTH;
 
-    panel.add(new JLabel(""), gbc);
+    panel.add(new JLabel(""), this.gbc);
 
     alignButtonSizes();
 
@@ -192,20 +192,21 @@ final class JStopWatchControlPanel extends JPanel {
   }
 
   private JButton getStartStopButton() {
-    startStopButton = new JButton("Start"); 
+    this.startStopButton = new JButton("Start"); 
 
-    startStopButton.setMnemonic('S');
+    this.startStopButton.setMnemonic('S');
 
-    startStopButton.addActionListener(new ActionListener(){
+    this.startStopButton.addActionListener(new ActionListener(){
+      @Override
       public void actionPerformed(ActionEvent ae) {
-        switch (startStopButton.getText()) {
+        switch (JStopWatchControlPanel.this.startStopButton.getText()) {
           case "Start": 
-            eventRaiser.raise(
+            JStopWatchControlPanel.this.eventRaiser.raise(
                 StopWatchViewEvent.StartRequested
             );
             break;
           case "Stop": 
-            eventRaiser.raise(
+            JStopWatchControlPanel.this.eventRaiser.raise(
                 StopWatchViewEvent.StopRequested
             );
             break;
@@ -213,24 +214,25 @@ final class JStopWatchControlPanel extends JPanel {
       }
     });
 
-    return startStopButton;
+    return this.startStopButton;
   }
 
   private JButton getResetButton() {
-    resetButton = new JButton();
+    this.resetButton = new JButton();
 
-    resetButton.setText("Reset");
-    resetButton.setMnemonic('R');
+    this.resetButton.setText("Reset");
+    this.resetButton.setMnemonic('R');
 
-    resetButton.addActionListener(new ActionListener() {
+    this.resetButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent ae) {
-        eventRaiser.raise(
+        JStopWatchControlPanel.this.eventRaiser.raise(
             StopWatchViewEvent.ResetRequested
         );
       }
     });
 
-    return resetButton;
+    return this.resetButton;
   }
   
   /**
@@ -271,25 +273,25 @@ final class JStopWatchControlPanel extends JPanel {
   }
 
   private void start() {
-    if (running) {
+    if (this.running) {
       return;
     }
 
-    running = true;
+    this.running = true;
     playClickSound();
-    startStopButton.setText("Stop");
-    ledPanel.activate();
+    this.startStopButton.setText("Stop");
+    this.ledPanel.activate();
   }
 
   private void stop() {
-    if (!running) {
+    if (!this.running) {
       return;
     }
     
-    running = false;
+    this.running = false;
     playClickSound();
-    ledPanel.deactivate();
-    startStopButton.setText("Start");
+    this.ledPanel.deactivate();
+    this.startStopButton.setText("Start");
   }
   
   private void reset() {
@@ -299,8 +301,8 @@ final class JStopWatchControlPanel extends JPanel {
   private void alignButtonSizes() {
     LinkedList<JComponent> buttons = new LinkedList<JComponent>();
 
-    buttons.add(startStopButton);
-    buttons.add(resetButton);
+    buttons.add(this.startStopButton);
+    buttons.add(this.resetButton);
 
     JUtilities.equalizeComponentSizes(buttons);
 
@@ -331,6 +333,6 @@ final class JStopWatchControlPanel extends JPanel {
   }
   
   private void setLedsVisible(boolean ledsVisible) {
-    ledPanel.setVisible(ledsVisible);
+    this.ledPanel.setVisible(ledsVisible);
   }
 }

@@ -27,10 +27,10 @@ import javax.swing.JMenuItem;
 @SuppressWarnings("serial")
 final class JStopWatchMenuBar extends JMenuBar {
 
-  private StopWatchCommand updateTitleCommand;
-  private StopWatchCommand updateTimeCommand;
-  private StopWatchCommand toggleShowMillisecondsCommand;
-  private StopWatchCommand toggleShowLedsCommand;
+  StopWatchCommand updateTitleCommand;
+  StopWatchCommand updateTimeCommand;
+  StopWatchCommand toggleShowMillisecondsCommand;
+  StopWatchCommand toggleShowLedsCommand;
   
   private JCheckBoxMenuItem showMillisecondsItem;
   private JCheckBoxMenuItem showLedsItem;
@@ -55,21 +55,22 @@ final class JStopWatchMenuBar extends JMenuBar {
     item.setMnemonic(KeyEvent.VK_S);
 
     item.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent pEvent) {
-        updateTimeCommand.run();
+        JStopWatchMenuBar.this.updateTimeCommand.run();
       }
     });
     return item;
   }
 
   public void setPersistedToggleMilliseconds(PersistedSwingState toggleState) {
-    showMillisecondsItem.setSelected(
+    this.showMillisecondsItem.setSelected(
         toggleState.getAsBoolean()
     );    
   }
 
   public void setPersistedToggleLeds(PersistedSwingState toggleLeds) {
-    showLedsItem.setSelected(
+    this.showLedsItem.setSelected(
         toggleLeds.getAsBoolean()
     );
   }
@@ -106,35 +107,38 @@ final class JStopWatchMenuBar extends JMenuBar {
     item.setMnemonic(KeyEvent.VK_C);
 
     item.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent pEvent) {
-        updateTitleCommand.run();
+        JStopWatchMenuBar.this.updateTitleCommand.run();
       }
     });
     return item;
   }
   
   private JCheckBoxMenuItem buildShowMillisecondsItem() {
-    showMillisecondsItem = new JCheckBoxMenuItem("Show Milliseconds",true);
-    showMillisecondsItem.setMnemonic(KeyEvent.VK_S);
+    this.showMillisecondsItem = new JCheckBoxMenuItem("Show Milliseconds",true);
+    this.showMillisecondsItem.setMnemonic(KeyEvent.VK_S);
 
-    showMillisecondsItem.addActionListener(new ActionListener() {
+    this.showMillisecondsItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent pEvent) {
-        toggleShowMillisecondsCommand.run();
+        JStopWatchMenuBar.this.toggleShowMillisecondsCommand.run();
       }
     });
-    return showMillisecondsItem;
+    return this.showMillisecondsItem;
   }
 
   private JCheckBoxMenuItem buildShowLedsItem() {
-    showLedsItem = new JCheckBoxMenuItem("Show Leds",true);
-    showLedsItem.setMnemonic(KeyEvent.VK_L);
+    this.showLedsItem = new JCheckBoxMenuItem("Show Leds",true);
+    this.showLedsItem.setMnemonic(KeyEvent.VK_L);
 
-    showLedsItem.addActionListener(new ActionListener() {
+    this.showLedsItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent pEvent) {
-        toggleShowLedsCommand.run();
+        JStopWatchMenuBar.this.toggleShowLedsCommand.run();
       }
     });
-    return showLedsItem;
+    return this.showLedsItem;
   }
 
 }

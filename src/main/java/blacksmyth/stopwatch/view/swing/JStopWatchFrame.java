@@ -31,9 +31,9 @@ import blacksmyth.swing.JUserNameableFrame;
 @SuppressWarnings("serial")
 final class JStopWatchFrame extends JUserNameableFrame {
   
-  private PersistedNvpState framePosX;
-  private PersistedNvpState framePosY;
-  private PersistedNvpState frameTitle;
+  PersistedNvpState framePosX;
+  PersistedNvpState framePosY;
+  PersistedNvpState frameTitle;
   
   public JStopWatchFrame() {
     super();
@@ -69,8 +69,8 @@ final class JStopWatchFrame extends JUserNameableFrame {
         new ComponentAdapter() {
           @Override
           public void componentMoved(ComponentEvent event) {
-            framePosX.putAsInt(getX());
-            framePosY.putAsInt(getY());
+            JStopWatchFrame.this.framePosX.putAsInt(getX());
+            JStopWatchFrame.this.framePosY.putAsInt(getY());
           }
     });
   }
@@ -78,7 +78,7 @@ final class JStopWatchFrame extends JUserNameableFrame {
   @Override
   public void setTitle(String title) {
     super.setTitle(title);
-    frameTitle.putAsString(title);
+    this.frameTitle.putAsString(title);
   }
 
   public void setEventRaiser(final StopWatchViewEventRaiser eventRaiser) {

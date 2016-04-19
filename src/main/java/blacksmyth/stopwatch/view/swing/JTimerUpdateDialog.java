@@ -30,42 +30,46 @@ final class JTimerUpdateDialog extends JOkCancelDialog {
   long time;
 
   public JTimerUpdateDialog(Component owner) {
-    super(null, "Set Time", true);
+    super(null, "Set Time");
     this.owner = owner;
-    setContent(timerPanel);
+    setContent(this.timerPanel);
     setLocationRelativeTo(owner);
   }
 
+  @Override
   public void setForeground(Color color) {
-    if (timerPanel != null) {
-      timerPanel.setForeground(color);
+    if (this.timerPanel != null) {
+      this.timerPanel.setForeground(color);
     }
     super.setForeground(color);
   }
 
+  @Override
   public void setVisible(boolean b) {
-    setLocationRelativeTo(owner);
+    setLocationRelativeTo(this.owner);
     super.setVisible(b);
   }
 
+  @Override
   public void setBackground(Color color) {
-    if (timerPanel != null) {
-      timerPanel.setBackground(color);
+    if (this.timerPanel != null) {
+      this.timerPanel.setBackground(color);
     }
     super.setBackground(color);
   }
 
+  @Override
   protected void doOkAction() {
-    time = timerPanel.getTime(); 
+    this.time = this.timerPanel.getTime(); 
     super.doOkAction();
   }
 
   public long getTime() {
-    return time;
+    return this.time;
   }
 
   public void setTime(long time) {
     this.time = time;
-    timerPanel.setTime(time);
+    this.timerPanel.setTime(time);
   }
 }

@@ -16,8 +16,8 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class JFormattedSelectField extends JFormattedTextField {
-  private Color vNormalBackground;
-  private Color vNormalForeground;
+  protected Color vNormalBackground;
+  protected Color vNormalForeground;
 
   public JFormattedSelectField(AbstractFormatter pFormatter) {
     super(pFormatter);
@@ -25,10 +25,11 @@ public class JFormattedSelectField extends JFormattedTextField {
     setDisabledTextColor(Color.BLACK);
     setFont(new Font("Monospaced", Font.PLAIN, 11));
 
-    vNormalBackground = getBackground();
-    vNormalForeground = getForeground();
+    this.vNormalBackground = getBackground();
+    this.vNormalForeground = getForeground();
   }
 
+  @Override
   protected void processFocusEvent(FocusEvent e) {
     super.processFocusEvent(e);
     if (e.getID() == FocusEvent.FOCUS_GAINED) {
@@ -36,20 +37,23 @@ public class JFormattedSelectField extends JFormattedTextField {
     }
   }
 
+  @Override
   public void postActionEvent() {
     super.postActionEvent();
     selectAll();
   }
   
+  @Override
   public void setEnabled(boolean vEnabledFlag) {
     super.setEnabled(vEnabledFlag);
     if (vEnabledFlag == false) {
       setBackground(Color.LIGHT_GRAY);
     } else {
-      setBackground(vNormalBackground);
+      setBackground(this.vNormalBackground);
     }
   }
 
+  @Override
   protected void invalidEdit() {
 
     super.invalidEdit();
@@ -57,12 +61,12 @@ public class JFormattedSelectField extends JFormattedTextField {
     setBackground(Color.RED);
     setForeground(Color.WHITE);
     
-    final JFormattedSelectField vField = this;
     
     ActionListener vColorChanger = new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent ae) {
-        vField.setBackground(vNormalBackground);
-        vField.setForeground(vNormalForeground);
+        setBackground(JFormattedSelectField.this.vNormalBackground);
+        setForeground(JFormattedSelectField.this.vNormalForeground);
       }
     };
     

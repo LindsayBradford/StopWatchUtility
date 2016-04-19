@@ -32,72 +32,71 @@ final public class BasicStopWatchModelTest {
   private MockTicker mockTicker;
   private ModelHarness modelHarness;
 
-  private void shortPause() {
+  private static void shortPause() {
     pause(SHORT_PAUSE_TIME);
   }
 
-  private void longPause() {
+  private static void longPause() {
     pause(LONG_PAUSE_TIME);
   }
 
-  private void pause(long pauseTime) {
+  private static void pause(long pauseTime) {
     try {
       Thread.sleep(pauseTime);
-    } catch (InterruptedException e) {}
+    } catch (@SuppressWarnings("unused") InterruptedException e) {}
   }
   
-  @SuppressWarnings({"cast"})
   @Before
   public void testSetup() {
-    modelHarness = new ModelHarness();
-    testModel = new DefaultStopWatchModel();
-    mockTicker = new MockTicker();
+    this.modelHarness = new ModelHarness();
+    this.testModel = new DefaultStopWatchModel();
+    this.mockTicker = new MockTicker();
     
-    mockTicker.setRecipient(testModel);
-    testModel.addObserver(modelHarness);
+    this.mockTicker.setRecipient(this.testModel);
+    this.testModel.addObserver(this.modelHarness);
   }
   
   @Test
   public void Start_FromInitialState_IsRunning() {
 
-    long firstTime = testModel.getTime();
+    long firstTime = this.testModel.getTime();
 
     assertFalse(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
     
     assertTrue(firstTime == 0);
     
-    testModel.start();
+    this.testModel.start();
     
     assertTrue(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
 
     shortPause();
     
-    long secondTime = testModel.getTime();
+    long secondTime = this.testModel.getTime();
     
     assertTrue(secondTime > firstTime);
   }
 
   @Test
   public void Start_FromRunningState_RunningAndNotReset() {
-    testModel.start();
+    this.testModel.start();
     
     longPause();
 
-    long firstTime = testModel.getTime();
+    long firstTime = this.testModel.getTime();
     
-    testModel.start();
+    this.testModel.start();
 
     assertTrue(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
 
     shortPause();
     
-    long secondTime = testModel.getTime();
+    long secondTime = this.testModel.getTime();
     
     assertTrue(secondTime > firstTime);
   }
@@ -106,15 +105,15 @@ final public class BasicStopWatchModelTest {
   public void Stop_FromInitialState_NotRunning() {
 
     assertFalse(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
 
-    testModel.stop();
+    this.testModel.stop();
 
-    long stopTime = testModel.getTime();
+    long stopTime = this.testModel.getTime();
     
     assertFalse(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
     
     assertTrue(stopTime == 0);
@@ -123,25 +122,25 @@ final public class BasicStopWatchModelTest {
   @Test
   public void Stop_FromRunningState_NotRunning() {
 
-    testModel.start();
+    this.testModel.start();
 
-    long startTime = testModel.getTime();
+    long startTime = this.testModel.getTime();
     
     shortPause();
     
-    testModel.stop();
+    this.testModel.stop();
 
-    long stopTime1 = testModel.getTime();
+    long stopTime1 = this.testModel.getTime();
 
     assertFalse(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
     
     assertTrue(stopTime1 > startTime);
     
     shortPause();
 
-    long stopTime2 = testModel.getTime();
+    long stopTime2 = this.testModel.getTime();
 
     assertTrue(stopTime1 == stopTime2);
   }
@@ -149,17 +148,17 @@ final public class BasicStopWatchModelTest {
   @Test
   public void Reset_FromInitialState_NotRunning() {
 
-    long initialTime = testModel.getTime();
+    long initialTime = this.testModel.getTime();
     
-    testModel.reset();
+    this.testModel.reset();
 
     assertFalse(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
     
     shortPause();
 
-    long resetTime = testModel.getTime();
+    long resetTime = this.testModel.getTime();
 
     assertTrue(initialTime == resetTime);
     assertTrue(resetTime == 0);
@@ -168,17 +167,17 @@ final public class BasicStopWatchModelTest {
   @Test
   public void Reset_FromRunningState_NotRunning() {
 
-    long initialTime = testModel.getTime();
+    long initialTime = this.testModel.getTime();
     
-    testModel.start();
+    this.testModel.start();
 
     shortPause();
 
-    long preResetTime = testModel.getTime();
+    long preResetTime = this.testModel.getTime();
     
-    testModel.reset();
+    this.testModel.reset();
 
-    long resetTime = testModel.getTime();
+    long resetTime = this.testModel.getTime();
     
     assertTrue(preResetTime > initialTime);
     assertTrue(initialTime == resetTime);
@@ -189,32 +188,33 @@ final public class BasicStopWatchModelTest {
   public void SetTime_FromInitialState_NotRunning() {
     int TEST_TIME = 100; 
 
-    testModel.setTime(TEST_TIME);
+    this.testModel.setTime(TEST_TIME);
     
     assertFalse(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
     
-    assertTrue(testModel.getTime() == TEST_TIME);
+    assertTrue(this.testModel.getTime() == TEST_TIME);
   }
 
   @Test
   public void SetTime_FromRunningState_NotRunning() {
     int TEST_TIME = 100; 
     
-    testModel.start();
+    this.testModel.start();
     
     shortPause();
     
-    testModel.setTime(TEST_TIME);
+    this.testModel.setTime(TEST_TIME);
     
     assertFalse(
-        testModel.isRunning()
+        this.testModel.isRunning()
     );
     
-    assertTrue(testModel.getTime() == TEST_TIME);
+    assertTrue(this.testModel.getTime() == TEST_TIME);
   }
 
+  @SuppressWarnings("unqualified-field-access")
   @Test
   public void update_FromRunningState_triggeredFromTicker() {
 
@@ -230,19 +230,19 @@ final public class BasicStopWatchModelTest {
     // From this point on, manual ticks should trigger an Observable.update(), 
     // and consequently report an extra update.
     
-    mockTicker.doManualTick();
+    this.mockTicker.doManualTick();
     
     assertTrue(
         modelHarness.getUpdatesReceived() == 2
     );
 
-    mockTicker.doManualTick();
+    this.mockTicker.doManualTick();
     
     assertTrue(
         modelHarness.getUpdatesReceived() == 3
     );
 
-    mockTicker.doManualTick();
+    this.mockTicker.doManualTick();
     
     assertTrue(
         modelHarness.getUpdatesReceived() == 4
@@ -259,7 +259,7 @@ final public class BasicStopWatchModelTest {
     // However, as model state isn't changing when stopped, we don't expect to 
     // receive tick-triggered updates.
     
-    mockTicker.doManualTick();
+    this.mockTicker.doManualTick();
 
     assertTrue(
         modelHarness.getUpdatesReceived() == 5
@@ -269,6 +269,10 @@ final public class BasicStopWatchModelTest {
   private class MockTicker implements Ticker {
     private TickRecipient recipient;
     
+    public MockTicker() {
+      // TODO Auto-generated constructor stub
+    }
+
     @Override
     public void setRecipient(TickRecipient recipient) {
       this.recipient = recipient;
@@ -281,7 +285,7 @@ final public class BasicStopWatchModelTest {
     public void startTicking() {}
     
     public void doManualTick() {
-      recipient.receiveTick();
+      this.recipient.receiveTick();
     }
   }
   
@@ -290,16 +294,16 @@ final public class BasicStopWatchModelTest {
     private int updatesReceived;
     
     public ModelHarness() {
-      updatesReceived = 0;
+      this.updatesReceived = 0;
     }
     
     @Override
     public void update(Observable o, Object arg) {
-      updatesReceived++;
+      this.updatesReceived++;
     }
     
     public int getUpdatesReceived() {
-      return updatesReceived;
+      return this.updatesReceived;
     }
   }
 }

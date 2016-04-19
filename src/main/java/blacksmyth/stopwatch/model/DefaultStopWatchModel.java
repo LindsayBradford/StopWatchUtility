@@ -36,35 +36,35 @@ public final class DefaultStopWatchModel extends Observable implements StopWatch
 
   @Override
   public void start() {
-    if (status == ModelState.Running) {
+    if (this.status == ModelState.Running) {
       return;
     }
-    startTime = System.currentTimeMillis();
-    status = ModelState.Running;
+    this.startTime = System.currentTimeMillis();
+    this.status = ModelState.Running;
   }
 
   @Override
   public void stop() {
-    if (status == ModelState.Stopped) {
+    if (this.status == ModelState.Stopped) {
       return;
     }
     long stopTime = System.currentTimeMillis();
-    status = ModelState.Stopped;
-    previousElapsedTime += (stopTime - startTime);
-    publishTime(previousElapsedTime);
+    this.status = ModelState.Stopped;
+    this.previousElapsedTime += (stopTime - this.startTime);
+    publishElapsedTime();
   }
 
   @Override
   public void reset() {
-    status = ModelState.Stopped;
-    startTime = 0;
-    previousElapsedTime = 0;
-    publishTime(0);
+    this.status = ModelState.Stopped;
+    this.startTime = 0;
+    this.previousElapsedTime = 0;
+    publishElapsedTime();
   }
 
   @Override
   public boolean isRunning() {
-    return (status == ModelState.Running);
+    return (this.status == ModelState.Running);
   }
 
   @Override
@@ -72,19 +72,19 @@ public final class DefaultStopWatchModel extends Observable implements StopWatch
     if (isRunning()) {
       return getElapsedTime();
     }
-    return previousElapsedTime;
+    return this.previousElapsedTime;
   }
 
   private long getElapsedTime() {
     long rightNow = System.currentTimeMillis();
-    return previousElapsedTime + rightNow - startTime;
+    return this.previousElapsedTime + rightNow - this.startTime;
   }
   
   @Override
   public void setTime(long time) {
-    status = ModelState.Stopped;
-    startTime = 0;
-    previousElapsedTime = time;
+    this.status = ModelState.Stopped;
+    this.startTime = 0;
+    this.previousElapsedTime = time;
     publishElapsedTime();
   }
   
@@ -95,10 +95,6 @@ public final class DefaultStopWatchModel extends Observable implements StopWatch
   }
 
   private void publishElapsedTime() {
-    publishTime(getElapsedTime());
-  }
-
-  private void publishTime(long time) {
     setChanged();
     notifyObservers();
   }

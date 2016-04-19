@@ -18,8 +18,7 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import blacksmyth.stopwatch.view.TimeExtractor;
@@ -51,7 +50,7 @@ final class JTimerPanel extends JPanel {
 
   public JTimerPanel() {
     super();
-    setLayout(gbl);
+    setLayout(this.gbl);
     setBorder(new EmptyBorder(10,0,0,5));
     getContents();
   }
@@ -61,43 +60,45 @@ final class JTimerPanel extends JPanel {
     calculateWidgetTimes(); 
   }
 
+  @Override
   public void setForeground(Color color) {
-    if (hourMinuteSeparator!= null) {
-      hourMinuteSeparator.setForeground(color);
-      minuteSecondSeparator.setForeground(color);
-      secondMillisecondSeparator.setForeground(color);
+    if (this.hourMinuteSeparator!= null) {
+      this.hourMinuteSeparator.setForeground(color);
+      this.minuteSecondSeparator.setForeground(color);
+      this.secondMillisecondSeparator.setForeground(color);
     }
     super.setForeground(color);
   }
 
+  @Override
   public void setBackground(Color color) {
-    if (hourMinuteSeparator!= null) {
-      hourMinuteSeparator.setBackground(color);
-      minuteSecondSeparator.setBackground(color);
-      secondMillisecondSeparator.setBackground(color);
+    if (this.hourMinuteSeparator!= null) {
+      this.hourMinuteSeparator.setBackground(color);
+      this.minuteSecondSeparator.setBackground(color);
+      this.secondMillisecondSeparator.setBackground(color);
     }
     super.setBackground(color);
   }
 
   private void calculateWidgetTimes() {
-    millisecondsField.setDouble(TimeExtractor.getMilliseconds(time));
-    secondsField.setDouble(TimeExtractor.getSeconds(time));
-    minutesField.setDouble(TimeExtractor.getMinutes(time));
-    hoursField.setDouble(TimeExtractor.getHours(time));
+    this.millisecondsField.setDouble(TimeExtractor.getMilliseconds(this.time));
+    this.secondsField.setDouble(TimeExtractor.getSeconds(this.time));
+    this.minutesField.setDouble(TimeExtractor.getMinutes(this.time));
+    this.hoursField.setDouble(TimeExtractor.getHours(this.time));
   }
 
   public long getTime() {
     calculateTimeFromWidgets();
-    return time;
+    return this.time;
   }
 
   private void calculateTimeFromWidgets() {
-    double hoursValue = hoursField.getDouble();
-    double minutesValue = minutesField.getDouble();
-    double secondsValue = secondsField.getDouble();
-    double millisecondsValue = millisecondsField.getDouble();
+    double hoursValue = this.hoursField.getDouble();
+    double minutesValue = this.minutesField.getDouble();
+    double secondsValue = this.secondsField.getDouble();
+    double millisecondsValue = this.millisecondsField.getDouble();
 
-    time = (long) millisecondsValue + 
+    this.time = (long) millisecondsValue + 
            (long) secondsValue * 1000 +
 	   (long) minutesValue * 1000 * 60 + 
 	   (long) hoursValue   * 1000 * 60 * 60;
@@ -106,114 +107,114 @@ final class JTimerPanel extends JPanel {
   private void getContents() {
     int labelCol = 0;
 
-    gbc.gridwidth    = 1;
-    gbc.gridheight   = 1;
-    gbc.gridx        = labelCol++;
-    gbc.gridy        = 0;
-    gbc.ipadx        = 0;
-    gbc.ipady        = 0;
-    gbc.weightx      = 1;
-    gbc.weighty      = 0;
-    gbc.fill         = GridBagConstraints.HORIZONTAL;
+    this.gbc.gridwidth    = 1;
+    this.gbc.gridheight   = 1;
+    this.gbc.gridx        = labelCol++;
+    this.gbc.gridy        = 0;
+    this.gbc.ipadx        = 0;
+    this.gbc.ipady        = 0;
+    this.gbc.weightx      = 1;
+    this.gbc.weighty      = 0;
+    this.gbc.fill         = GridBagConstraints.HORIZONTAL;
 
-    gbc.insets = new Insets(0,2,0,2);
+    this.gbc.insets = new Insets(0,2,0,2);
 
-    add(new JLabel(""), gbc);
+    add(new JLabel(""), this.gbc);
 
-    gbc.gridx        = labelCol++;
-    gbc.weightx = 0;
-    gbc.anchor       = GridBagConstraints.SOUTH;
+    this.gbc.gridx        = labelCol++;
+    this.gbc.weightx = 0;
+    this.gbc.anchor       = GridBagConstraints.SOUTH;
 
-    add(getHoursField(),gbc);
+    add(getHoursField(),this.gbc);
 
-    gbc.gridx        = labelCol++;
+    this.gbc.gridx        = labelCol++;
 
-    hourMinuteSeparator = getTimeSeparator();
-    add(hourMinuteSeparator,gbc);
+    this.hourMinuteSeparator = getTimeSeparator();
+    add(this.hourMinuteSeparator,this.gbc);
 
-    gbc.gridx        = labelCol++;
+    this.gbc.gridx        = labelCol++;
 
-    add(getMinutesField(),gbc);
+    add(getMinutesField(),this.gbc);
 
-    gbc.gridx        = labelCol++;
+    this.gbc.gridx        = labelCol++;
 
-    minuteSecondSeparator = getTimeSeparator();
-    add(minuteSecondSeparator,gbc);
+    this.minuteSecondSeparator = getTimeSeparator();
+    add(this.minuteSecondSeparator,this.gbc);
 
-    gbc.gridx        = labelCol++;
+    this.gbc.gridx        = labelCol++;
 
-    add(getSecondsField(),gbc);
+    add(getSecondsField(),this.gbc);
 
-    gbc.gridx        = labelCol++;
-    gbc.anchor       = GridBagConstraints.NORTH;
+    this.gbc.gridx        = labelCol++;
+    this.gbc.anchor       = GridBagConstraints.NORTH;
 
-    secondMillisecondSeparator = getMillisecondTimeSeparator();
+    this.secondMillisecondSeparator = getMillisecondTimeSeparator();
 
-    add(secondMillisecondSeparator,gbc);
+    add(this.secondMillisecondSeparator,this.gbc);
 
-    gbc.gridx        = labelCol++;
+    this.gbc.gridx        = labelCol++;
 
-    add(getMillisecondsField(), gbc);
+    add(getMillisecondsField(), this.gbc);
 
-    gbc.gridx        = labelCol++;
-    gbc.weightx      = 1;
-    gbc.fill         = GridBagConstraints.HORIZONTAL;
+    this.gbc.gridx        = labelCol++;
+    this.gbc.weightx      = 1;
+    this.gbc.fill         = GridBagConstraints.HORIZONTAL;
 
-    add(new JLabel(""), gbc);
+    add(new JLabel(""), this.gbc);
   }
 
   private JFormattedNumField getHoursField() {
-    hoursField = getBasicField();
-    hoursField.setUpperBound(99);
-    hoursField.setToolTipText(" Enter elapsed hours. ");
-    return hoursField;
+    this.hoursField = getBasicField();
+    this.hoursField.setUpperBound(99);
+    this.hoursField.setToolTipText(" Enter elapsed hours. ");
+    return this.hoursField;
   }
 
   private JFormattedNumField getMinutesField() {
-    minutesField = getBasicField();
-    minutesField.setToolTipText(" Enter elapsed minutes. ");
-    return minutesField;
+    this.minutesField = getBasicField();
+    this.minutesField.setToolTipText(" Enter elapsed minutes. ");
+    return this.minutesField;
   }
 
   private JFormattedNumField getSecondsField() {
-    secondsField = getBasicField();
-    secondsField.setToolTipText(" Enter elapsed seconds. ");
-    return secondsField;
+    this.secondsField = getBasicField();
+    this.secondsField.setToolTipText(" Enter elapsed seconds. ");
+    return this.secondsField;
   }
 
   private JFormattedNumField getMillisecondsField() {
-    millisecondsField = getField("000", 4);
-    millisecondsField.setBounds(0,999);
-    millisecondsField.setHorizontalAlignment(JTextField.CENTER);
-    millisecondsField.setToolTipText(" Enter elapsed milliseconds. ");
-    return millisecondsField;
+    this.millisecondsField = getField("000", 4);
+    this.millisecondsField.setBounds(0,999);
+    this.millisecondsField.setHorizontalAlignment(SwingConstants.CENTER);
+    this.millisecondsField.setToolTipText(" Enter elapsed milliseconds. ");
+    return this.millisecondsField;
   }
 
-  private JFormattedNumField getBasicField() {
+  private static JFormattedNumField getBasicField() {
     JFormattedNumField field = getField("00", 3); 
     field.setFont(getDoubleSizeFont(field.getFont()));
-    field.setHorizontalAlignment(JTextField.CENTER);
+    field.setHorizontalAlignment(SwingConstants.CENTER);
     field.setBounds(0,59);
     return field;
   }
 
-  private JFormattedNumField getField(String format, int columns) {
+  private static JFormattedNumField getField(String format, int columns) {
     JFormattedNumField field = new JFormattedNumField(format, 0, columns);
     return field;
-
   }
 
-  private JLabel getTimeSeparator() {
+  private static JLabel getTimeSeparator() {
     JLabel label = getMillisecondTimeSeparator();
     label.setFont(getDoubleSizeFont(label.getFont()));
     return label;
   }
 
-  private Font getDoubleSizeFont(Font font) {
+  
+  static private Font getDoubleSizeFont(Font font) {
     return font.deriveFont((float) font.getSize()*3/2);
   }
 
-  private JLabel getMillisecondTimeSeparator() {
+  private static JLabel getMillisecondTimeSeparator() {
     return new JLabel(timeSeparator);
   }
 }

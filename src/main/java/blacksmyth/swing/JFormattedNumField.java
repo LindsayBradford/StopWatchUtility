@@ -36,8 +36,8 @@ public class JFormattedNumField extends JFormattedSelectField {
     super ((isPercentFormat(pFormat) ? (AbstractFormatter) new PercentFormatter(new DecimalFormat(pFormat)) :
                                        (AbstractFormatter) new DecimalFormatter(new DecimalFormat(pFormat))) );
 
-    pVerifier = new BoundVerifier();
-    setInputVerifier(pVerifier);
+    this.pVerifier = new BoundVerifier();
+    setInputVerifier(this.pVerifier);
 
     setDouble(pValue);
     setColumns(pColumns);
@@ -68,22 +68,22 @@ public class JFormattedNumField extends JFormattedSelectField {
     double vValue;
     try {
       vValue = DoubleParser.toDouble(getText());
-    } catch (NullPointerException npe) {
+    } catch (@SuppressWarnings("unused") NullPointerException npe) {
       return 0;
     }
     return vValue;
   }
 
   public void setLowerBound(double pLowerBound) {
-    pVerifier.setLowerBound(pLowerBound);
+    this.pVerifier.setLowerBound(pLowerBound);
   }
 
   public void setUpperBound(double pUpperBound) {
-    pVerifier.setUpperBound(pUpperBound);
+    this.pVerifier.setUpperBound(pUpperBound);
   }
 
   public void setBounds(double pLowerBound, double pUpperBound) {
-    pVerifier.setBounds(pLowerBound, pUpperBound);
+    this.pVerifier.setBounds(pLowerBound, pUpperBound);
   }
 
   public static final boolean isPercentFormat(String pFormat) {
@@ -107,7 +107,8 @@ public class JFormattedNumField extends JFormattedSelectField {
       super();
       setBounds(pLowerBound, pUpperBound);
     }
-
+    
+    @Override
     public boolean verify(JComponent pComponent) {
       // pre: pComponent of type JFormattedNumField
       double vValue;
@@ -121,22 +122,23 @@ public class JFormattedNumField extends JFormattedSelectField {
       try {
          vValueAsText = vField.getText();
          vValue = DoubleParser.toDouble(vValueAsText);
-       } catch (NullPointerException npe) {
+       } catch (@SuppressWarnings("unused") NullPointerException npe) {
            return false;
        }
        return verifyBounds(vValue);
     }
 
     protected boolean verifyBounds(double pNumber) {
-      if (pNumber < vLowerBound) {
+      if (pNumber < this.vLowerBound) {
         return false;
       }
-      if (pNumber > vUpperBound) {
+      if (pNumber > this.vUpperBound) {
         return false;
       }
       return true;
     }
 
+    @Override
     public boolean shouldYieldFocus(JComponent pComponent) {
       boolean vValid = verify(pComponent);
       if (vValid == false) {
@@ -147,11 +149,11 @@ public class JFormattedNumField extends JFormattedSelectField {
     }
 
     public void setLowerBound(double pLowerBound) {
-      vLowerBound = pLowerBound;
+      this.vLowerBound = pLowerBound;
     }
 
     public void setUpperBound(double pUpperBound) {
-      vUpperBound = pUpperBound;
+      this.vUpperBound = pUpperBound;
     }
 
     public void setBounds(double pLowerBound, double pUpperBound) {
@@ -206,16 +208,18 @@ class DecimalFormatter extends NumberFormatter {
 
   public DecimalFormatter(DecimalFormat pFormat) {
     super(pFormat);
-    vFilter = new DecimalFilter();
+    this.vFilter = new DecimalFilter();
   }
 
+  @Override
   protected DocumentFilter getDocumentFilter() {
-    return  vFilter;
+    return  this.vFilter;
   }
 }
 
 class DecimalFilter extends DocumentFilter {
 
+  @Override
   public void replace(DocumentFilter.FilterBypass pBypass,
                       int pOffset,
                       int pLength,
@@ -225,11 +229,12 @@ class DecimalFilter extends DocumentFilter {
       super.replace(pBypass,pOffset,pLength,pString,pAttribs);
   }
 
+  @SuppressWarnings("static-method")
   protected boolean isValidText(String pString) {
     return validateText("-0123456789,.", pString);
-  }
+  } 
 
-  protected boolean validateText(String pValidChars, String pString) {
+  protected static boolean validateText(String pValidChars, String pString) {
     // separated into another method so I can switch in a new one for differing
     // valid character sets.
     for (int i = 0; i < pString.length(); i++) {
@@ -247,15 +252,17 @@ class PercentFormatter extends NumberFormatter {
 
   public PercentFormatter(DecimalFormat pFormat) {
     super(pFormat);
-    vFilter = new PercentFilter();
+    this.vFilter = new PercentFilter();
   }
 
+  @Override
   protected DocumentFilter getDocumentFilter() {
-    return  vFilter;
+    return  this.vFilter;
   }
 }
 
 class PercentFilter extends DecimalFilter {
+  @Override
   protected boolean isValidText(String pString) {
     return validateText("-0123456789,.%", pString);
   }

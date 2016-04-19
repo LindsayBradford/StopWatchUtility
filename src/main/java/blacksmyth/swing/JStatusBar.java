@@ -40,11 +40,11 @@ public class JStatusBar extends JPanel {
     add(statusLabel, BorderLayout.CENTER);
   }
 
-  public String getStatus() {
+  public static String getStatus() {
     return statusLabel.getText() ;
   }
 
-  public void setStatus(String message) {
+  public static void setStatus(String message) {
     statusLabel.setText(message);
   }
 }

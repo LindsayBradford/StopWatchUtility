@@ -38,16 +38,17 @@ public final class SleepingThreadTicker extends Thread implements Ticker {
     this.start();
   }
   
+  @Override
   public void run() {
-    assert recipient != null;
+    assert this.recipient != null;
     
-    while(recipient.needsTicks()) {
+    while(this.recipient.needsTicks()) {
       try {
-        sleep(millisecondsBetweenTicks);
+        sleep(this.millisecondsBetweenTicks);
       } catch (Exception e) {
         e.printStackTrace();
       }
-      recipient.receiveTick();
+      this.recipient.receiveTick();
     }
   }
 }

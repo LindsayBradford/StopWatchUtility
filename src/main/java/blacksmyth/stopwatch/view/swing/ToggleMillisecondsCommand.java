@@ -38,7 +38,7 @@ final class ToggleMillisecondsCommand implements StopWatchCommand {
         !this.toggleState.getAsBoolean()
     );
     
-    eventRaiser.raise(
+    this.eventRaiser.raise(
         SwingStopWatchViewEvents.ToggleMillisecondsRequested
     );
   }

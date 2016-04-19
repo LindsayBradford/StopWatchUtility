@@ -39,7 +39,7 @@ public class StopWatchEventDelegator implements StopWatchViewEventRaiser {
   
   @Override
   public void raise(StopWatchViewEvent event) {
-    delegate.raise(event);
+    this.delegate.raise(event);
   }
 
 }

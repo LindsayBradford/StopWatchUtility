@@ -25,8 +25,7 @@ public class ResourceLoader {
   }
 
   public static ImageIcon loadImageAsIcon(String imageFile) {
-    try {
-      InputStream in = ResourceLoader.class.getResourceAsStream(imageFile);
+    try (InputStream in = ResourceLoader.class.getResourceAsStream(imageFile)) {
       final byte[] imageByteBuffer = loadAsByteArray(in);
       in.close();
       return new ImageIcon(imageByteBuffer);
@@ -51,7 +50,7 @@ public class ResourceLoader {
       while ((read = is.read(byteArray, totalRead, ARRAY_SIZE - totalRead)) >= 0) {
         totalRead += read;
       }
-    } catch (Exception e) {
+    } catch (@SuppressWarnings("unused") Exception e) {
       return null;
     }
 

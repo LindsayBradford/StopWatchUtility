@@ -27,7 +27,7 @@ final class UpdateFrameTitleCommand implements StopWatchCommand {
 
   @Override
   public void run() {
-    frame.showTitleDialog();
+    this.frame.showTitleDialog();
   }
 
 }

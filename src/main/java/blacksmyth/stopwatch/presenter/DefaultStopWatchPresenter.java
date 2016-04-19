@@ -30,11 +30,11 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
   
   @Override
   public void update(Observable eventSource, Object eventDetail) {
-    if (eventSource == model) {
+    if (eventSource == this.model) {
       processModelEvent();  
     } 
     
-    if (eventSource == view) {
+    if (eventSource == this.view) {
       processViewEvent(
           (StopWatchViewEvent) eventDetail
       );
@@ -64,31 +64,31 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
     // The only events issued by a StopWatchModel are notifications that elapsed time has changed. 
     // All we need do here it update the view with the new time.
     
-    if (view == null) return;
+    if (this.view == null) return;
     
-    view.setTime(
-        model.getTime()
+    this.view.setTime(
+        this.model.getTime()
     );
   }
   
   private void processViewEvent(StopWatchViewEvent viewEvent) {
     switch (viewEvent) {
       case ResetRequested:
-        model.reset();
+        this.model.reset();
         break;
       case StartRequested:
-        model.start();
+        this.model.start();
         break;
       case StopRequested:
-        model.stop();
+        this.model.stop();
         break;
       case TimeSetRequested:
-        model.setTime(
-            view.getRequestedSetTime()
+        this.model.setTime(
+            this.view.getRequestedSetTime()
         );
         break;
       case DeathRequested:
-        model.die();
+        this.model.die();
         break;
     }
   }

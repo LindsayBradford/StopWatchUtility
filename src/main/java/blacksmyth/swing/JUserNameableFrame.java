@@ -33,26 +33,27 @@ public class JUserNameableFrame extends JFrame {
   }
   
   public void setBaseTitle(String pBaseTitle) {
-    vBaseTitle = pBaseTitle.trim();
+    this.vBaseTitle = pBaseTitle.trim();
     setTitle(getUserTitle());
   }
   
   public String getBaseTitle() {
-    return vBaseTitle;
+    return this.vBaseTitle;
   }
   
   public String getUserTitle() {
-    return vUserTitle;
+    return this.vUserTitle;
   }
   
+  @Override
   public void setTitle(String pUserTitle) {
     String vFinalTitle;
-    vUserTitle  = pUserTitle.trim();
-    if (vUserTitle.equals("")) {
-      vFinalTitle = vBaseTitle;
+    this.vUserTitle  = pUserTitle.trim();
+    if (this.vUserTitle.equals("")) {
+      vFinalTitle = this.vBaseTitle;
     }
     else {
-      vFinalTitle = vUserTitle + " - " + vBaseTitle;
+      vFinalTitle = this.vUserTitle + " - " + this.vBaseTitle;
     }
     super.setTitle(vFinalTitle);
   }
@@ -80,6 +81,7 @@ class UserNameablePopupMenuFactory {
     JMenuItem vSetTitleItem = new JMenuItem("Change Title...",'C');
 
     vSetTitleItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent pEvent) {
         pFrame.showTitleDialog();
       }
