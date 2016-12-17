@@ -25,10 +25,10 @@ public interface StopWatchObserver extends Observer {
   
   default void update(Observable o, Object arg) {
     if (isStopWatchModel(o)) {
-      updateFromModel((StopWatchEventSource) o);
+      updateFromModel();
     }
     if (isStopWatchView(o)) {
-      updateFromView((StopWatchEventSource) o, (StopWatchViewEvent) arg);
+      updateFromView((StopWatchViewEvent) arg);
     }
   }
   
@@ -40,7 +40,7 @@ public interface StopWatchObserver extends Observer {
     return (StopWatchView.class.isAssignableFrom(o.getClass()));
   }
 
-  void updateFromView(StopWatchEventSource o, StopWatchViewEvent event);
+  void updateFromView(StopWatchViewEvent event);
   
-  void updateFromModel(StopWatchEventSource o); 
+  void updateFromModel(); 
 }

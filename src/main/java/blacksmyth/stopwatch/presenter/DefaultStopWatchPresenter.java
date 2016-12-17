@@ -29,12 +29,12 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
   private StopWatchView  view;
   
   @Override
-  public void updateFromModel(StopWatchEventSource eventSource) {
+  public void updateFromModel() {
     processModelTimeUpdateEvent();  
   }
   
   @Override
-  public void updateFromView(StopWatchEventSource eventSource, StopWatchViewEvent eventDetail) {
+  public void updateFromView(StopWatchViewEvent eventDetail) {
     processViewEvent(eventDetail);
   }
 
