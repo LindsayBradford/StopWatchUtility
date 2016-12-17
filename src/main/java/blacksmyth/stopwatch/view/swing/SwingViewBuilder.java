@@ -99,6 +99,8 @@ public final class SwingViewBuilder {
     frame.setPersistedFrameTitle(
         PersistedSwingState.FRAME_TITLE
     );
+    
+    frame.setBaseFrameTitle("Stopwatch");
 
     frame.setPersistedFramePosX(
         PersistedSwingState.FRAME_X_POS

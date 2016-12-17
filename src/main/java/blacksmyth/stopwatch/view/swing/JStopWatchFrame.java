@@ -36,8 +36,7 @@ final class JStopWatchFrame extends JUserNameableFrame {
   PersistedNvpState frameTitle;
   
   public JStopWatchFrame() {
-    super();
-
+    super();  
     addPreferencesEventHandler();
   }
   
