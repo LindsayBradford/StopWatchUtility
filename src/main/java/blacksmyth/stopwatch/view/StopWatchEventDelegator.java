@@ -20,7 +20,7 @@ package blacksmyth.stopwatch.view;
 
 public class StopWatchEventDelegator implements StopWatchViewEventRaiser {
   
-  private StopWatchViewEventRaiser delegate;
+  private StopWatchViewEventRaiser eventDelegate;
   
   /**
    * Specifies the delegate which should raise events on behalf of this object.
@@ -28,7 +28,7 @@ public class StopWatchEventDelegator implements StopWatchViewEventRaiser {
    */
   
   public void setDelegate(StopWatchViewEventRaiser delegate) {
-    this.delegate = delegate;
+    eventDelegate = delegate;
   }
 
   /**
@@ -39,7 +39,7 @@ public class StopWatchEventDelegator implements StopWatchViewEventRaiser {
   
   @Override
   public void raise(StopWatchViewEvent event) {
-    this.delegate.raise(event);
+    eventDelegate.raise(event);
   }
 
 }
