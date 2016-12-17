@@ -10,17 +10,17 @@
 
 package blacksmyth.stopwatch;
 
-import static org.junit.Assert.*;
+import blacksmyth.stopwatch.model.DefaultStopWatchModel;
+import blacksmyth.stopwatch.model.Ticker;
+import blacksmyth.stopwatch.model.TickRecipient;
 
-import java.util.Observable;
-import java.util.Observer;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import blacksmyth.stopwatch.model.DefaultStopWatchModel;
-import blacksmyth.stopwatch.model.TickRecipient;
-import blacksmyth.stopwatch.model.Ticker;
+import java.util.Observable;
+import java.util.Observer;
 
 final public class BasicStopWatchModelTest {
   
@@ -198,6 +198,19 @@ final public class BasicStopWatchModelTest {
   }
 
   @Test
+  public void SetTime_FromStoppedState_Running() {
+    int TEST_TIME = 100; 
+
+    testModel.setTime(TEST_TIME);
+    testModel.start();
+    
+    shortPause();
+        
+    assertTrue(testModel.isMeasuringTime());
+    assertTrue(testModel.getTime() > TEST_TIME);
+  }
+  
+  @Test
   public void SetTime_FromRunningState_NotRunning() {
     int TEST_TIME = 100; 
     
@@ -213,6 +226,7 @@ final public class BasicStopWatchModelTest {
     
     assertTrue(this.testModel.getTime() == TEST_TIME);
   }
+
 
   @SuppressWarnings("unqualified-field-access")
   @Test

@@ -10,14 +10,15 @@
 
 package blacksmyth.stopwatch.model;
 
+import static blacksmyth.stopwatch.model.DefaultStopWatchModel.ModelState.*;
+
 import java.util.Observable;
 import java.util.Observer;
-import static blacksmyth.stopwatch.model.DefaultStopWatchModel.ModelState.*;
 
 /**
  * A basic implementation of a {@link StopWatchModel}, and {@link TickRecipient}.
  */
-public final class DefaultStopWatchModel extends Observable implements StopWatchModel, TickRecipient {
+public final class DefaultStopWatchModel extends Observable implements StopWatchModel {
   
   enum ModelState {
     NotMeasuringElapsedTime,
@@ -76,7 +77,7 @@ public final class DefaultStopWatchModel extends Observable implements StopWatch
   }
 
   private long sampleElapsingTime() {
-    return now() - startTime;
+    return lastElapsedTime - startTime + now() ;
   }
   
   @Override
