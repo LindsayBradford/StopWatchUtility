@@ -18,7 +18,7 @@ import java.applet.*;
  * A utility class for retrieving resources that have been packed into 
  * an accompanying JAR/WAR.
  */
-public class ResourceLoader {
+public final class ResourceLoader {
 
   public static JLabel loadImageAsJLabel(String imageFile) {
     return new JLabel(loadImageAsIcon(imageFile));
