@@ -12,6 +12,8 @@ package blacksmyth.stopwatch.model;
 
 import java.util.Observer;
 
+import blacksmyth.stopwatch.presenter.StopWatchEventSource;
+
 /**
  * An interface specifying the required methods for implementing a simple stopwatch. 
  * Allows for accumulating elapsed time over a succession of start & stop events.
@@ -22,7 +24,7 @@ import java.util.Observer;
  * @see Observable
  * @see Observer
  */
-public interface StopWatchModel extends TickRecipient {
+public interface StopWatchModel extends TickRecipient, StopWatchEventSource {
 
   /**
    * Resets the stopwatch timer to {@code milliseconds}, and stops the timer running if necessary.

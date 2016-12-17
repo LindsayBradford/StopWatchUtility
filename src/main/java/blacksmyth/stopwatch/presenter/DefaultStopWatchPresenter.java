@@ -10,11 +10,11 @@
 
 package blacksmyth.stopwatch.presenter;
 
-import java.util.Observable;
 
 import blacksmyth.stopwatch.model.StopWatchModel;
 import blacksmyth.stopwatch.view.StopWatchView;
 import blacksmyth.stopwatch.view.StopWatchViewEvent;
+import static blacksmyth.stopwatch.view.StopWatchViewEvent.TimeSetRequested;
 
 /**
  * A simple implementation of the 'Presenter' part of the MVP pattern, allowing a 
@@ -29,16 +29,13 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
   private StopWatchView  view;
   
   @Override
-  public void update(Observable eventSource, Object eventDetail) {
-    if (eventSource == this.model) {
-      processModelEvent();  
-    } 
-    
-    if (eventSource == this.view) {
-      processViewEvent(
-          (StopWatchViewEvent) eventDetail
-      );
-    }
+  public void updateFromModel(StopWatchEventSource eventSource) {
+    processModelTimeUpdateEvent();  
+  }
+  
+  @Override
+  public void updateFromView(StopWatchEventSource eventSource, StopWatchViewEvent eventDetail) {
+    processViewEvent(eventDetail);
   }
 
   @Override
@@ -48,48 +45,44 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
 
   @Override
   public void setView(StopWatchView view) {
-    assert this.model != null;  // Set model before view so we can issue commands to model based on view state.
+    assert model != null;  // Set model before view so we can issue commands to model based on view state.
     
     this.view = view;
     
-    // If the view remembers a time that it held on its last die event, we spoof a TimeSetRequested event here
-    // to trigger the model synchronsing to that time..
-    
-    processViewEvent(
-        StopWatchViewEvent.TimeSetRequested
-    );
+    syncModelToCurrentTime();
+  }
+  
+  private void syncModelToCurrentTime() {
+    processViewEvent(TimeSetRequested);
   }
 
-  private void processModelEvent() {
-    // The only events issued by a StopWatchModel are notifications that elapsed time has changed. 
-    // All we need do here it update the view with the new time.
+  private void processModelTimeUpdateEvent() {
+    if (view == null) return;
     
-    if (this.view == null) return;
-    
-    this.view.setTime(
-        this.model.getTime()
+    view.setTime(
+        model.getTime()
     );
   }
   
   private void processViewEvent(StopWatchViewEvent viewEvent) {
     switch (viewEvent) {
       case ResetRequested:
-        this.model.reset();
-        break;
+        model.reset();
+      break;
       case StartRequested:
-        this.model.start();
-        break;
+        model.start();
+      break;
       case StopRequested:
-        this.model.stop();
-        break;
+        model.stop();
+      break;
       case TimeSetRequested:
-        this.model.setTime(
-            this.view.getRequestedSetTime()
+        model.setTime(
+            view.getRequestedSetTime()
         );
-        break;
+      break;
       case DeathRequested:
-        this.model.die();
-        break;
+        model.die();
+      break;
     }
   }
 }

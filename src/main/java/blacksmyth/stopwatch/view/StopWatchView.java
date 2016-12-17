@@ -12,6 +12,8 @@ package blacksmyth.stopwatch.view;
 
 import java.util.Observer;
 
+import blacksmyth.stopwatch.presenter.StopWatchEventSource;
+
 /**
  * An interface specifying the methods required for a StopWatchView to implement.  
  *
@@ -19,7 +21,7 @@ import java.util.Observer;
  * allowing watching objects to receive stopwatch specific view events. 
  * @see StopWatchViewEvent
  */
-public interface StopWatchView {
+public interface StopWatchView extends StopWatchEventSource {
   /**
    * This method instructs the view to be shown to an end-user. 
    */
