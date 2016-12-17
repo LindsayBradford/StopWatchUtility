@@ -43,7 +43,7 @@ final public class BasicStopWatchModelTest {
   private static void pause(long pauseTime) {
     try {
       Thread.sleep(pauseTime);
-    } catch (@SuppressWarnings("unused") InterruptedException e) {}
+    } catch (InterruptedException e) {}
   }
   
   @Before
@@ -62,7 +62,7 @@ final public class BasicStopWatchModelTest {
     long firstTime = this.testModel.getTime();
 
     assertFalse(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
     
     assertTrue(firstTime == 0);
@@ -70,7 +70,7 @@ final public class BasicStopWatchModelTest {
     this.testModel.start();
     
     assertTrue(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
 
     shortPause();
@@ -91,7 +91,7 @@ final public class BasicStopWatchModelTest {
     this.testModel.start();
 
     assertTrue(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
 
     shortPause();
@@ -105,7 +105,7 @@ final public class BasicStopWatchModelTest {
   public void Stop_FromInitialState_NotRunning() {
 
     assertFalse(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
 
     this.testModel.stop();
@@ -113,7 +113,7 @@ final public class BasicStopWatchModelTest {
     long stopTime = this.testModel.getTime();
     
     assertFalse(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
     
     assertTrue(stopTime == 0);
@@ -133,7 +133,7 @@ final public class BasicStopWatchModelTest {
     long stopTime1 = this.testModel.getTime();
 
     assertFalse(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
     
     assertTrue(stopTime1 > startTime);
@@ -153,7 +153,7 @@ final public class BasicStopWatchModelTest {
     this.testModel.reset();
 
     assertFalse(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
     
     shortPause();
@@ -191,7 +191,7 @@ final public class BasicStopWatchModelTest {
     this.testModel.setTime(TEST_TIME);
     
     assertFalse(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
     
     assertTrue(this.testModel.getTime() == TEST_TIME);
@@ -208,7 +208,7 @@ final public class BasicStopWatchModelTest {
     this.testModel.setTime(TEST_TIME);
     
     assertFalse(
-        this.testModel.isRunning()
+        this.testModel.isMeasuringTime()
     );
     
     assertTrue(this.testModel.getTime() == TEST_TIME);

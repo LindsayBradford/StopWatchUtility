@@ -68,7 +68,7 @@ public class JFormattedNumField extends JFormattedSelectField {
     double vValue;
     try {
       vValue = DoubleParser.toDouble(getText());
-    } catch (@SuppressWarnings("unused") NullPointerException npe) {
+    } catch (NullPointerException npe) {
       return 0;
     }
     return vValue;
@@ -122,7 +122,7 @@ public class JFormattedNumField extends JFormattedSelectField {
       try {
          vValueAsText = vField.getText();
          vValue = DoubleParser.toDouble(vValueAsText);
-       } catch (@SuppressWarnings("unused") NullPointerException npe) {
+       } catch (NullPointerException npe) {
            return false;
        }
        return verifyBounds(vValue);

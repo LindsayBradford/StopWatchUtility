@@ -12,23 +12,24 @@ package blacksmyth.stopwatch.model;
 
 import java.util.Observable;
 import java.util.Observer;
+import static blacksmyth.stopwatch.model.DefaultStopWatchModel.ModelState.*;
 
 /**
  * A basic implementation of a {@link StopWatchModel}, and {@link TickRecipient}.
  */
 public final class DefaultStopWatchModel extends Observable implements StopWatchModel, TickRecipient {
   
-  private enum ModelState {
-    Stopped, // Currently not measuring elapsed time (paused) 
-    Running  // Currently measuring elapsed time
+  enum ModelState {
+    NotMeasuringElapsedTime,
+    MeasuringElapsedTime
   }
   
-  private long             startTime           = 0;
-  private long             previousElapsedTime = 0;
+  private long             startTime = 0;
+  private long             lastElapsedTime = 0;
 
-  private ModelState       status              = ModelState.Stopped;
+  private ModelState       modelState = NotMeasuringElapsedTime;
 
-  private boolean          needsTicks          = true;
+  private boolean          needsTicks = true;
   
   public DefaultStopWatchModel() {
     super();
@@ -36,83 +37,81 @@ public final class DefaultStopWatchModel extends Observable implements StopWatch
 
   @Override
   public void start() {
-    if (this.status == ModelState.Running) {
-      return;
-    }
-    this.startTime = System.currentTimeMillis();
-    this.status = ModelState.Running;
+    if (isMeasuringTime()) { return; }
+    modelState = MeasuringElapsedTime;
+    startTime = now();
   }
 
   @Override
   public void stop() {
-    if (this.status == ModelState.Stopped) {
-      return;
-    }
-    long stopTime = System.currentTimeMillis();
-    this.status = ModelState.Stopped;
-    this.previousElapsedTime += (stopTime - this.startTime);
-    publishElapsedTime();
+    if (modelState == NotMeasuringElapsedTime) { return; }
+    lastElapsedTime = sampleElapsingTime();
+    modelState = NotMeasuringElapsedTime;
+    notiftObserversOfTime();
   }
 
   @Override
   public void reset() {
-    this.status = ModelState.Stopped;
-    this.startTime = 0;
-    this.previousElapsedTime = 0;
-    publishElapsedTime();
+    startTime = 0;
+    lastElapsedTime = 0;
+    modelState = NotMeasuringElapsedTime;
+    notiftObserversOfTime();
+  }
+  
+  private long now() {
+	  return System.currentTimeMillis();
   }
 
   @Override
-  public boolean isRunning() {
-    return (this.status == ModelState.Running);
+  public boolean isMeasuringTime() {
+    return (modelState == MeasuringElapsedTime);
   }
 
   @Override
   public long getTime() {
-    if (isRunning()) {
-      return getElapsedTime();
+    if (isMeasuringTime()) {
+      return sampleElapsingTime();
     }
-    return this.previousElapsedTime;
+    return lastElapsedTime;
   }
 
-  private long getElapsedTime() {
-    long rightNow = System.currentTimeMillis();
-    return this.previousElapsedTime + rightNow - this.startTime;
+  private long sampleElapsingTime() {
+    return now() - startTime;
   }
   
   @Override
   public void setTime(long time) {
-    this.status = ModelState.Stopped;
-    this.startTime = 0;
-    this.previousElapsedTime = time;
-    publishElapsedTime();
+    modelState = NotMeasuringElapsedTime;
+    startTime = 0;
+    lastElapsedTime = time;
+    notiftObserversOfTime();
   }
   
   @Override
   public void addObserver(Observer o) {
     super.addObserver(o);
-    publishElapsedTime();
+    notiftObserversOfTime();
   }
 
-  private void publishElapsedTime() {
+  private void notiftObserversOfTime() {
     setChanged();
     notifyObservers();
   }
   
   @Override
   public void die() {
-    this.needsTicks = false;
+    needsTicks = false;
   }
 
   @Override
   public void receiveTick() {
-    if (isRunning()) {
-      publishElapsedTime();
+    if (isMeasuringTime()) {
+      notiftObserversOfTime();
     }
   }
 
   @Override
   public boolean needsTicks() {
-    return this.needsTicks;
+    return needsTicks;
   }
 }

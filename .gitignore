@@ -8,3 +8,7 @@ dist/*
 libs/*
 javadocs/*
 .settings/*
+/build/
+
+*.project
+*.classpath

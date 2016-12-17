@@ -50,7 +50,7 @@ public class ResourceLoader {
       while ((read = is.read(byteArray, totalRead, ARRAY_SIZE - totalRead)) >= 0) {
         totalRead += read;
       }
-    } catch (@SuppressWarnings("unused") Exception e) {
+    } catch (Exception e) {
       return null;
     }
 
