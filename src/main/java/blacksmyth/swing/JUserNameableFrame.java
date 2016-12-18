@@ -46,20 +46,20 @@ public class JUserNameableFrame extends JFrame {
   }
   
   @Override
-  public void setTitle(String userExtensionToFrameTitle) {
-    if (userExtensionToFrameTitle == null) { 
-      userExtensionToFrameTitle = "";
-    }
+  public void setTitle(String userExtension) {
+    userExtensionToFrameTitle = userExtension == null ? null : userExtension.trim();
     
-    String frameTitleForDisplay;
-    this.userExtensionToFrameTitle  = userExtensionToFrameTitle.trim();
-    if (userExtensionToFrameTitle.equals("")) {
-      frameTitleForDisplay = baseFrameTitle;
+    super.setTitle(
+        buildDisplayTitle()
+    );
+  }
+  
+  private String buildDisplayTitle() {
+    if (userExtensionToFrameTitle == null || userExtensionToFrameTitle.equals("")) {
+      return  baseFrameTitle;
     }
-    else {
-      frameTitleForDisplay = this.userExtensionToFrameTitle + " - " + baseFrameTitle;
-    }
-    super.setTitle(frameTitleForDisplay);
+
+    return userExtensionToFrameTitle + " - " + baseFrameTitle;
   }
   
   public void showTitleDialog() {
