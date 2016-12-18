@@ -44,14 +44,14 @@ final class JStopWatchFrame extends JUserNameableFrame {
     this.framePosX = framePosX;
     setLocation(
         framePosX.getAsInt(), 
-        this.getY()
+        getY()
      );
   }
 
   public void setPersistedFramePosY(PersistedNvpState framePosY) {
     this.framePosY = framePosY;
     setLocation(
-        this.getX(), 
+        getX(), 
         framePosY.getAsInt()
      );
   }
@@ -68,8 +68,8 @@ final class JStopWatchFrame extends JUserNameableFrame {
         new ComponentAdapter() {
           @Override
           public void componentMoved(ComponentEvent event) {
-            JStopWatchFrame.this.framePosX.putAsInt(getX());
-            JStopWatchFrame.this.framePosY.putAsInt(getY());
+            framePosX.putAsInt(getX());
+            framePosY.putAsInt(getY());
           }
     });
   }
@@ -77,7 +77,7 @@ final class JStopWatchFrame extends JUserNameableFrame {
   @Override
   public void setTitle(String title) {
     super.setTitle(title);
-    this.frameTitle.putAsString(title);
+    frameTitle.putAsString(title);
   }
 
   public void setEventRaiser(final StopWatchViewEventRaiser eventRaiser) {

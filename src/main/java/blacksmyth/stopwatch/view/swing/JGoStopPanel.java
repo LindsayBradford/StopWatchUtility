@@ -42,18 +42,18 @@ final class JGoStopPanel extends JPanel {
 
   @Override
   public void setForeground(Color color) {
-    if (this.greenLed != null) {
-      this.greenLed.setForeground(color);
-      this.redLed.setForeground(color);
+    if (greenLed != null) {
+      greenLed.setForeground(color);
+      redLed.setForeground(color);
     }
     super.setForeground(color);
   }
 
   @Override
   public void setBackground(Color color) {
-    if (this.greenLed != null) {
-      this.greenLed.setBackground(color);
-      this.redLed.setBackground(color);
+    if (greenLed != null) {
+      greenLed.setBackground(color);
+      redLed.setBackground(color);
     }
     super.setBackground(color);
   }
@@ -71,24 +71,24 @@ final class JGoStopPanel extends JPanel {
     gbc.weighty      = 0.2;
     gbc.anchor       = GridBagConstraints.SOUTH;
 
-    this.greenLed = new JGreenLed();
-    add(this.greenLed, gbc);
+    greenLed = new JGreenLed();
+    add(greenLed, gbc);
 
     gbc.gridy        = ledRow;
     gbc.anchor       = GridBagConstraints.NORTH;
 
-    this.redLed = new JRedLed();
-    add(this.redLed,gbc);
+    redLed = new JRedLed();
+    add(redLed,gbc);
   }
 
   public void activate() {
-    this.redLed.deactivate();
-    this.greenLed.activate();
+    redLed.deactivate();
+    greenLed.activate();
   }
 
   public void deactivate() {
-    this.greenLed.deactivate();
-    this.redLed.activate();
+    greenLed.deactivate();
+    redLed.activate();
   }
 }
 
@@ -117,20 +117,20 @@ abstract class JLedPanel extends JPanel {
   public JLedPanel(String onGifPath, String offGifPath) {
     super();
     setBorder(null);
-    this.onGif  = ResourceLoader.loadImageAsJLabel(onGifPath);
-    this.offGif = ResourceLoader.loadImageAsJLabel(offGifPath);
+    onGif  = ResourceLoader.loadImageAsJLabel(onGifPath);
+    offGif = ResourceLoader.loadImageAsJLabel(offGifPath);
     deactivate();
   }
 
   public void deactivate() {
-    remove(this.onGif);
-    add(this.offGif);
+    remove(onGif);
+    add(offGif);
     repaint();
   }
 
   public void activate() {
-    remove(this.offGif);
-    add(this.onGif);
+    remove(offGif);
+    add(onGif);
     repaint();
   }
 }

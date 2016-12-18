@@ -39,7 +39,7 @@ final class SwingStopWatchEventDelegator implements SwingStopWatchViewEventRaise
 
   @Override
   public void raise(SwingStopWatchViewEvents event) {
-    this.delegate.raise(event);
+    delegate.raise(event);
   }
 
 }

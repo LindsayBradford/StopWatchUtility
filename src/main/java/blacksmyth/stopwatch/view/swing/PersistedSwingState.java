@@ -66,51 +66,51 @@ public enum PersistedSwingState implements PersistedNvpState {
 
   @Override
   public String getAsString() {
-    return preferences.get(this.key, this.defaultValue);
+    return preferences.get(key, defaultValue);
   }
 
   @Override
   public int getAsInt() {
-    return preferences.getInt(this.key, Integer.parseInt(this.defaultValue));
+    return preferences.getInt(key, Integer.parseInt(defaultValue));
   }
 
   @Override
   public long getAsLong() {
-    return preferences.getLong(this.key, Long.parseLong(this.defaultValue));
+    return preferences.getLong(key, Long.parseLong(defaultValue));
   }
   
   @Override
   public double getAsDouble() {
-    return preferences.getDouble(this.key, Double.parseDouble(this.defaultValue));
+    return preferences.getDouble(key, Double.parseDouble(defaultValue));
   }
 
   @Override
   public boolean getAsBoolean() {
-    return preferences.getBoolean(this.key, Boolean.parseBoolean(this.defaultValue));
+    return preferences.getBoolean(key, Boolean.parseBoolean(defaultValue));
   }
 
   @Override
   public void putAsString(String value) {
-    preferences.put(this.key, value);
+    preferences.put(key, value);
   }
 
   @Override
   public void putAsInt(int value) {
-    preferences.putInt(this.key, value);
+    preferences.putInt(key, value);
   }
 
   @Override
   public void putAsLong(long value) {
-    preferences.putLong(this.key, value);
+    preferences.putLong(key, value);
   }
   
   @Override
   public void putAsDouble(double value) {
-    preferences.putDouble(this.key, value);
+    preferences.putDouble(key, value);
   }
 
   @Override
   public void putAsBoolean(boolean value) {
-    preferences.putBoolean(this.key, value);
+    preferences.putBoolean(key, value);
   }
 }

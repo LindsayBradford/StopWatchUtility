@@ -57,24 +57,24 @@ final class JStopWatchPanel extends JPanel {
 
   public JStopWatchPanel() {
     super();
-    setLayout(this.gbl);
+    setLayout(gbl);
     resetBorder(new SoftBevelBorder(BevelBorder.LOWERED));
 
     drawPanel();
-    setTime(0);
-    this.isInitializing = false;
+    setTimeFieldsInChangeFrequencyOrder(0);
+    isInitializing = false;
   }
 
   @Override
   public void setForeground(Color color) {
-    if (this.hourLabel != null) {
-      this.hourLabel.setForeground(color);
-      this.minuteLabel.setForeground(color);
-      this.secondLabel.setForeground(color);
-      this.millisecondLabel.setForeground(color);
-      this.millisecondTimeSeparatorLabel.setForeground(color);
-      this.minuteSeparatorLabel.setForeground(color);
-      this.secondSeparatorLabel.setForeground(color);
+    if (hourLabel != null) {
+      hourLabel.setForeground(color);
+      minuteLabel.setForeground(color);
+      secondLabel.setForeground(color);
+      millisecondLabel.setForeground(color);
+      millisecondTimeSeparatorLabel.setForeground(color);
+      minuteSeparatorLabel.setForeground(color);
+      secondSeparatorLabel.setForeground(color);
     }
     super.setForeground(color);
   }
@@ -89,75 +89,77 @@ final class JStopWatchPanel extends JPanel {
 
   @Override
   public void setBackground(Color color) {
-    if (this.hourLabel != null) {
-      this.hourLabel.setBackground(color);
-      this.minuteLabel.setBackground(color);
-      this.secondLabel.setBackground(color);
-      this.millisecondLabel.setBackground(color);
-      this.millisecondTimeSeparatorLabel.setBackground(color);
-      this.minuteSeparatorLabel.setBackground(color);
-      this.secondSeparatorLabel.setBackground(color);
+    if (hourLabel != null) {
+      hourLabel.setBackground(color);
+      minuteLabel.setBackground(color);
+      secondLabel.setBackground(color);
+      millisecondLabel.setBackground(color);
+      millisecondTimeSeparatorLabel.setBackground(color);
+      minuteSeparatorLabel.setBackground(color);
+      secondSeparatorLabel.setBackground(color);
     }
     super.setBackground(color);
   }
  
   private void updateHoursFieldIfNecessary(long time) {
     final int newHours = TimeExtractor.getHours(time);
-    if (newHours != this.hours || this.isInitializing) {
-      this.hourLabel.setText(DigitStringFactory.getTwoDigitNumber(newHours));
-      this.hours = newHours;
+    if (newHours != hours || isInitializing) {
+      hourLabel.setText(DigitStringFactory.getTwoDigitNumber(newHours));
+      hours = newHours;
     }
   }
 
   private void updateMinutesFieldIfNecessary(long time) {
     final int newMinutes = TimeExtractor.getMinutes(time);
-    if (newMinutes != this.minutes || this.isInitializing) {
-      this.minuteLabel.setText(DigitStringFactory.getTwoDigitNumber(newMinutes));
-      this.minutes = newMinutes;
+    if (newMinutes != minutes || isInitializing) {
+      minuteLabel.setText(DigitStringFactory.getTwoDigitNumber(newMinutes));
+      minutes = newMinutes;
     }
   }
 
   private void updateSecondsFieldIfNecessary(long time) {
     final int newSeconds = TimeExtractor.getSeconds(time);
-    if (newSeconds != this.seconds || this.isInitializing) {
-      this.secondLabel.setText(DigitStringFactory.getTwoDigitNumber(newSeconds));
-      this.seconds = newSeconds;
+    if (newSeconds != seconds || isInitializing) {
+      secondLabel.setText(DigitStringFactory.getTwoDigitNumber(newSeconds));
+      seconds = newSeconds;
     }
   }
 
   private void updateMillisecondsFieldIfNecessary(long time) {
-      this.millisecondLabel.setText(DigitStringFactory.getThreeDigitNumber(
-       TimeExtractor.getMilliseconds(time)));
+    millisecondLabel.setText(
+        DigitStringFactory.getThreeDigitNumber(
+            TimeExtractor.getMilliseconds(time)
+        )
+    );
   }
   
   private JLabel getHourLabel() {
-    this.hourLabel = new JLabel();
-    setBaseLabelCharacteristics(this.hourLabel);
-    return  this.hourLabel;
+    hourLabel = new JLabel();
+    setBaseLabelCharacteristics(hourLabel);
+    return  hourLabel;
   }
 
   private JLabel getMinuteLabel() {
-    this.minuteLabel = new JLabel();
-    setBaseLabelCharacteristics(this.minuteLabel);
-    return this.minuteLabel;
+    minuteLabel = new JLabel();
+    setBaseLabelCharacteristics(minuteLabel);
+    return minuteLabel;
   }
 
   private JLabel getSecondLabel() {
-    this.secondLabel = new JLabel();
-    setBaseLabelCharacteristics(this.secondLabel);
-    return this.secondLabel;
+    secondLabel = new JLabel();
+    setBaseLabelCharacteristics(secondLabel);
+    return secondLabel;
   }
 
-
   private JLabel getMillisecondLabel() {
-    this.millisecondLabel = new JLabel();
-    setMillisecondLabelCharacteristics(this.millisecondLabel);
-    return this.millisecondLabel;
+    millisecondLabel = new JLabel();
+    setMillisecondLabelCharacteristics(millisecondLabel);
+    return millisecondLabel;
   }
 
   private void setMillisecondLabelCharacteristics(JLabel label) {
     setLabelAlignment(label);
-    label.setFont(this.MILLISECOND_FONT);
+    label.setFont(MILLISECOND_FONT);
   }
 
   private static void setLabelAlignment(JLabel label) {
@@ -173,13 +175,13 @@ final class JStopWatchPanel extends JPanel {
 
   private void setBaseLabelCharacteristics(JLabel label) {
     setLabelAlignment(label);
-    label.setFont(this.BASE_TIME_FONT);
+    label.setFont(BASE_TIME_FONT);
   }
 
   private JLabel getMillisecondTimeSeparator() {
-    this.millisecondTimeSeparatorLabel = new JLabel(":");
-    setMillisecondLabelCharacteristics(this.millisecondTimeSeparatorLabel);
-    return this.millisecondTimeSeparatorLabel;
+    millisecondTimeSeparatorLabel = new JLabel(":");
+    setMillisecondLabelCharacteristics(millisecondTimeSeparatorLabel);
+    return millisecondTimeSeparatorLabel;
   }
 
   private void drawPanel() {
@@ -187,67 +189,67 @@ final class JStopWatchPanel extends JPanel {
 
     setBackground(Color.WHITE);
 
-    this.minuteSeparatorLabel = getBaseTimeSeparator();
-    this.secondSeparatorLabel = getBaseTimeSeparator();
+    minuteSeparatorLabel = getBaseTimeSeparator();
+    secondSeparatorLabel = getBaseTimeSeparator();
 
-    this.gbc.gridwidth    = 1;
-    this.gbc.gridheight   = 1;
-    this.gbc.gridx        = labelCol++;
-    this.gbc.gridy        = 0;
-    this.gbc.ipadx        = 0;
-    this.gbc.ipady        = 0;
-    this.gbc.weightx      = 1;
-    this.gbc.weighty      = 0;
-    this.gbc.fill         = GridBagConstraints.HORIZONTAL;
+    gbc.gridwidth    = 1;
+    gbc.gridheight   = 1;
+    gbc.gridx        = labelCol++;
+    gbc.gridy        = 0;
+    gbc.ipadx        = 0;
+    gbc.ipady        = 0;
+    gbc.weightx      = 1;
+    gbc.weighty      = 0;
+    gbc.fill         = GridBagConstraints.HORIZONTAL;
 
-    this.gbc.insets = new Insets(0,0,0,0);
+    gbc.insets = new Insets(0,0,0,0);
 
-    add(new JLabel(""), this.gbc);
+    add(new JLabel(""), gbc);
 
-    this.gbc.gridx        = labelCol++;
-    this.gbc.weightx = 0;
-    this.gbc.anchor       = GridBagConstraints.NORTH;
+    gbc.gridx        = labelCol++;
+    gbc.weightx = 0;
+    gbc.anchor       = GridBagConstraints.NORTH;
 
-    add(getHourLabel(),this.gbc);
+    add(getHourLabel(), gbc);
 
-    this.gbc.gridx        = labelCol++;
+    gbc.gridx        = labelCol++;
 
-    add(this.minuteSeparatorLabel,this.gbc);
+    add(minuteSeparatorLabel, gbc);
 
-    this.gbc.gridx        = labelCol++;
+    gbc.gridx        = labelCol++;
 
-    add(getMinuteLabel(),this.gbc);
+    add(getMinuteLabel(), gbc);
 
-    this.gbc.gridx        = labelCol++;
+    gbc.gridx        = labelCol++;
 
-    add(this.secondSeparatorLabel,this.gbc);
+    add(secondSeparatorLabel, gbc);
 
-    this.gbc.gridx        = labelCol++;
+    gbc.gridx        = labelCol++;
 
-    add(getSecondLabel(),this.gbc);
+    add(getSecondLabel(), gbc);
 
-    this.gbc.gridx        = labelCol++;
+    gbc.gridx        = labelCol++;
 
-    this.gbc.insets = new Insets(0,0,0,0);
+    gbc.insets = new Insets(0,0,0,0);
 
-    add(getMillisecondTimeSeparator(),this.gbc);
+    add(getMillisecondTimeSeparator(), gbc);
 
-    this.gbc.gridx        = labelCol++;
+    gbc.gridx        = labelCol++;
 
-    add(getMillisecondLabel(), this.gbc);
+    add(getMillisecondLabel(), gbc);
 
-    this.gbc.gridx        = labelCol++;
-    this.gbc.weightx      = 1;
-    this.gbc.fill         = GridBagConstraints.HORIZONTAL;
+    gbc.gridx        = labelCol++;
+    gbc.weightx      = 1;
+    gbc.fill         = GridBagConstraints.HORIZONTAL;
 
-    add(new JLabel(""), this.gbc);
+    add(new JLabel(""), gbc);
+  }
+  
+  public void setTime(long time) {
+    setTimeFieldsInChangeFrequencyOrder(time);
   }
 
-  public void setTime(long time) {
-
-    // following calls deliberately in this order to ensure
-    // that the most frequently changing fields are refreshed onscreen first.
-
+  public void setTimeFieldsInChangeFrequencyOrder(long time) {
     updateMillisecondsFieldIfNecessary(time);  
     updateSecondsFieldIfNecessary(time);
     updateMinutesFieldIfNecessary(time);

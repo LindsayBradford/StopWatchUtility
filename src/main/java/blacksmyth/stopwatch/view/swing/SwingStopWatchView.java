@@ -39,18 +39,18 @@ public class SwingStopWatchView extends Observable implements
 
   @Override
   public void show() {
-    this.frame.setVisible(true);
+    frame.setVisible(true);
   }
 
   @Override
   public void setTime(long time) {
-    this.elapsedTimeState.putAsLong(time);
-    this.controlPanel.setTime(time);
+    elapsedTimeState.putAsLong(time);
+    controlPanel.setTime(time);
   }
 
   @Override
   public long getRequestedSetTime() {
-    return this.elapsedTimeState.getAsInt();
+    return elapsedTimeState.getAsInt();
   }
 
   @Override
@@ -61,11 +61,11 @@ public class SwingStopWatchView extends Observable implements
   }
   
   private void processStopWatchEvent(StopWatchViewEvent event) {
-    this.controlPanel.processStopWatchEvent(event);
+    controlPanel.processStopWatchEvent(event);
   }
 
   @Override
   public void raise(SwingStopWatchViewEvents event) {
-    this.controlPanel.processSwingEvent(event);
+    controlPanel.processSwingEvent(event);
   }
 }

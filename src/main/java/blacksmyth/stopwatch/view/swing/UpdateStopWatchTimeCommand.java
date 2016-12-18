@@ -44,21 +44,21 @@ final class UpdateStopWatchTimeCommand implements StopWatchCommand {
   
   @Override
   public void run() {
-    this.eventRaiser.raise(
+    eventRaiser.raise(
         StopWatchViewEvent.StopRequested
     );
     
-    this.dialog.setTime(
-        this.elapsedTimeState.getAsLong()
+    dialog.setTime(
+        elapsedTimeState.getAsLong()
     );
     
-    this.dialog.setVisible(true);
+    dialog.setVisible(true);
     
-    this.elapsedTimeState.putAsLong(
-        this.dialog.getTime()
+    elapsedTimeState.putAsLong(
+        dialog.getTime()
     );
     
-    this.eventRaiser.raise(
+    eventRaiser.raise(
         StopWatchViewEvent.TimeSetRequested
     );
   }

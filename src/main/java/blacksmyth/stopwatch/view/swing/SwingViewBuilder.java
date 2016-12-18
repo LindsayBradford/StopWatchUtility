@@ -46,7 +46,17 @@ public final class SwingViewBuilder {
   }
   
   public static StopWatchView build() {
+    assignLookAndFeel();
+    
+    SwingStopWatchView view = new SwingStopWatchView();
+    
+    buildAndBindViewEventHandlers(view);
+    buildAndBindViewSwingComponents(view);
+    
+    return view;
+  }
 
+  private static void assignLookAndFeel() {
     try {
       UIManager.setLookAndFeel(
           "javax.swing.plaf.metal.MetalLookAndFeel"
@@ -54,25 +64,25 @@ public final class SwingViewBuilder {
     } catch (Exception e) {
       // Doesn't matter - whatever it defaults to will do if MetalLookAndFeel fails.
     }
-    
-    SwingStopWatchView view = new SwingStopWatchView();
-    
+  }
+  
+  private static void buildAndBindViewEventHandlers(SwingStopWatchView view) {
     view.setPersistedElapsedTime(
         PersistedSwingState.ELAPSED_TIME
     );
     
     getStopWatchEventDelegator().setDelegate(view);
     getSwingEventDelegator().setDelegate(view);
-    
+  }
+  
+  private static void buildAndBindViewSwingComponents(SwingStopWatchView view) {
     view.setFrame(
         buildFrame()
     );
 
     view.setControlPanel(
         buildControlPanel()
-   );
-    
-    return view;
+    );
   }
   
   private static JStopWatchControlPanel buildControlPanel() {
@@ -96,6 +106,18 @@ public final class SwingViewBuilder {
   private static JFrame buildFrame() {
     JStopWatchFrame frame = new JStopWatchFrame();
     
+    buildFramePersistedSwingState(frame);
+
+    frame.setEventRaiser(
+        getStopWatchEventDelegator()
+    );
+    
+    buildAndBindFrameContent(frame);
+
+    return frame;
+  }
+  
+  private static void buildFramePersistedSwingState(JStopWatchFrame frame) {
     frame.setPersistedFrameTitle(
         PersistedSwingState.FRAME_TITLE
     );
@@ -109,11 +131,9 @@ public final class SwingViewBuilder {
     frame.setPersistedFramePosY(
         PersistedSwingState.FRAME_Y_POS
     );
-
-    frame.setEventRaiser(
-        getStopWatchEventDelegator()
-    );
-    
+  }
+  
+  private static void buildAndBindFrameContent(JStopWatchFrame frame) {
     JFrameFactory.makeCloseableJFrame(frame);
 
     frame.setIconImage(
@@ -135,13 +155,18 @@ public final class SwingViewBuilder {
     
     frame.pack();
     frame.setResizable(false);
-
-    return frame;
   }
   
   private static JStopWatchMenuBar buildMenuBar(JStopWatchFrame frame) {
     JStopWatchMenuBar menu = new JStopWatchMenuBar();
     
+    buildAndBindMenuPersistedSwingState(menu);
+    buildAndBindMenuCommands(menu, frame);
+    
+    return menu;
+  }
+  
+  private static void buildAndBindMenuPersistedSwingState(JStopWatchMenuBar menu) {
     menu.setPersistedToggleMilliseconds(
         PersistedSwingState.TOGGLE_MILLISECONDS
     );
@@ -149,7 +174,9 @@ public final class SwingViewBuilder {
     menu.setPersistedToggleLeds(
         PersistedSwingState.TOGGLE_LEDS
     );
-    
+  }
+
+  private static void buildAndBindMenuCommands(JStopWatchMenuBar menu, JStopWatchFrame frame) {
     menu.setUpdateTitleCommand(
         buildUpdateTitleCmd(frame)
     );
@@ -167,10 +194,9 @@ public final class SwingViewBuilder {
     menu.setToggleShowLedsCommand(
         buildToggleLedsCmd()
     );
-    
-    return menu;
   }
 
+  
   private static UpdateFrameTitleCommand buildUpdateTitleCmd(JStopWatchFrame frame) {
     UpdateFrameTitleCommand cmd = new UpdateFrameTitleCommand();
     cmd.setFrame(frame);
