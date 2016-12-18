@@ -133,6 +133,7 @@ final class JStopWatchControlPanel extends JPanel {
 
   public void setTime(long time) {
     getStopWatchPanel().setTime(time);
+    resetButton.setEnabled(time == 0 ? false : true);
   }
   
   private JStopWatchPanel getStopWatchPanel() {
@@ -274,19 +275,19 @@ final class JStopWatchControlPanel extends JPanel {
   }
 
   private void start() {
+    playClickSound();
     if (running) { return; }
 
     running = true;
-    playClickSound();
     startStopButton.setText("Stop");
     ledPanel.activate();
   }
 
   private void stop() {
+    playClickSound();
     if (!running) { return; }
     
     running = false;
-    playClickSound();
     ledPanel.deactivate();
     startStopButton.setText("Start");
   }
