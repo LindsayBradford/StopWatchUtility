@@ -10,6 +10,7 @@
 
 package blacksmyth.stopwatch.view.swing;
 
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -30,6 +31,7 @@ import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
 import blacksmyth.stopwatch.view.StopWatchViewEvent;
 import blacksmyth.stopwatch.view.swing.JStopWatchPanel;
 import blacksmyth.swing.JUtilities;
+import blacksmyth.utilities.ResourceLoader;
 
 /**
  *  An implementation of {@link JPanel} that renders a Swing StopWatch panel complete with 
@@ -59,8 +61,7 @@ final class JStopWatchControlPanel extends JPanel {
   private PersistedSwingState toggleMillisecondsState;
   private PersistedSwingState toggleLedsState;
 
-//  private static final AudioClip soundClip = 
-//    ResourceLoader.loadAudioClip("/resources/stopwatch.wav");
+  private static final AudioClip soundClip = ResourceLoader.loadAudioClip("/resources/stopwatch.wav");
 
   public JStopWatchControlPanel() {
     super(new BorderLayout());
@@ -313,7 +314,7 @@ final class JStopWatchControlPanel extends JPanel {
     // TODO: Bug: pulseAudio thread is created to play the clip, but continues running once done.
     //       Looks like this: https://bugs.openjdk.java.net/browse/JDK-8077019
 
-    // soundClip.play();
+     soundClip.play();
   }
   
   private void showMillisecondsAsPerPersistedState() {
