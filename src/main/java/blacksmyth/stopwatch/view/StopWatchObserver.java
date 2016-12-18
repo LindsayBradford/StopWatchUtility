@@ -14,7 +14,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import blacksmyth.stopwatch.model.StopWatchModel;
-import blacksmyth.stopwatch.presenter.StopWatchEventSource;
 
 /**
  * A wrapper interface around Observer to enforce stricter type casting upon Observer.update() calls
