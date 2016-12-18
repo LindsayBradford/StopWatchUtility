@@ -16,7 +16,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -145,24 +144,18 @@ abstract public class JOkCancelDialog extends JDialog {
   private JButton getCancelButton() {
     this.cancelButton = new JButton("Cancel");
     this.cancelButton.setMnemonic(KeyEvent.VK_C);
-    this.cancelButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent pEvent) {
-        doCancelAction();
-      }
-    });
+    this.cancelButton.addActionListener(
+        (ActionEvent ae) -> doCancelAction()
+    );
     return this.cancelButton;
   }
 
   private JButton getOkButton() {
     this.okButton = new JButton("Ok");
     this.okButton.setMnemonic(KeyEvent.VK_O);
-    this.okButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent pEvent) {
-        doOkAction();
-      }
-    });
+    this.okButton.addActionListener(
+        (ActionEvent ae) -> doOkAction()
+    );
     return this.okButton;
   }
 }

@@ -11,7 +11,6 @@
 package blacksmyth.swing;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JMenuItem;
@@ -90,12 +89,7 @@ class UserNameablePopupMenuFactory {
     JMenuItem changeTitleMenuItem = new JMenuItem("Change Title...",'C');
 
     changeTitleMenuItem.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent pEvent) {
-            frame.showTitleDialog();
-          }
-        }
+        (ActionEvent ae) -> frame.showTitleDialog() 
     );
 
     return changeTitleMenuItem;

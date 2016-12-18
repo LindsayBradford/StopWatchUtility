@@ -17,7 +17,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -198,24 +197,22 @@ final class JStopWatchControlPanel extends JPanel {
 
     startStopButton.setMnemonic('S');
 
-    startStopButton.addActionListener(new ActionListener(){
-      @Override
-      public void actionPerformed(ActionEvent ae) {
-        switch (startStopButton.getText()) {
-          case "Start": 
-            eventRaiser.raise(
-                StopWatchViewEvent.StartRequested
-            );
-          break;
-          case "Stop": 
-            eventRaiser.raise(
-                StopWatchViewEvent.StopRequested
-            );
-          break;
+    startStopButton.addActionListener(
+        (ActionEvent ae) -> { 
+          switch (startStopButton.getText()) {
+            case "Start": 
+              eventRaiser.raise(
+                  StopWatchViewEvent.StartRequested
+              );
+            break;
+            case "Stop": 
+              eventRaiser.raise(
+                  StopWatchViewEvent.StopRequested
+              );
+            break;
+          }
         }
-      }
-    });
-
+    );
     return startStopButton;
   }
 
@@ -225,14 +222,9 @@ final class JStopWatchControlPanel extends JPanel {
     resetButton.setText("Reset");
     resetButton.setMnemonic('R');
 
-    resetButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent ae) {
-        eventRaiser.raise(
-            StopWatchViewEvent.ResetRequested
-        );
-      }
-    });
+    resetButton.addActionListener(
+        (ActionEvent ae) ->  eventRaiser.raise(StopWatchViewEvent.ResetRequested) 
+    );
 
     return resetButton;
   }

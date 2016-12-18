@@ -11,7 +11,6 @@
 package blacksmyth.stopwatch.view.swing;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -54,12 +53,9 @@ final class JStopWatchMenuBar extends JMenuBar {
     JMenuItem item = new JMenuItem("Set Time...");
     item.setMnemonic(KeyEvent.VK_S);
 
-    item.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent pEvent) {
-        updateTimeCommand.run();
-      }
-    });
+    item.addActionListener(
+       (ActionEvent ae) -> { updateTimeCommand.run(); }
+    );
     return item;
   }
 
@@ -106,12 +102,9 @@ final class JStopWatchMenuBar extends JMenuBar {
     JMenuItem item = new JMenuItem("Change Title...");
     item.setMnemonic(KeyEvent.VK_C);
 
-    item.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent pEvent) {
-        updateTitleCommand.run();
-      }
-    });
+    item.addActionListener(
+        (ActionEvent ae) -> updateTitleCommand.run()
+    );
     return item;
   }
   
@@ -119,12 +112,9 @@ final class JStopWatchMenuBar extends JMenuBar {
     showMillisecondsItem = new JCheckBoxMenuItem("Show Milliseconds",true);
     showMillisecondsItem.setMnemonic(KeyEvent.VK_S);
 
-    showMillisecondsItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent pEvent) {
-        toggleShowMillisecondsCommand.run();
-      }
-    });
+    showMillisecondsItem.addActionListener(
+        (ActionEvent ae) -> toggleShowMillisecondsCommand.run()
+    );
     return showMillisecondsItem;
   }
 
@@ -132,12 +122,9 @@ final class JStopWatchMenuBar extends JMenuBar {
     showLedsItem = new JCheckBoxMenuItem("Show Leds",true);
     showLedsItem.setMnemonic(KeyEvent.VK_L);
 
-    showLedsItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent pEvent) {
-        toggleShowLedsCommand.run();
-      }
-    });
+    showLedsItem.addActionListener(
+        (ActionEvent ae) -> toggleShowLedsCommand.run()
+     );
     return showLedsItem;
   }
 }

@@ -66,15 +66,13 @@ public class JFormattedSelectField extends JFormattedTextField {
     setForeground(Color.WHITE);
     
     
-    ActionListener vColorChanger = new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent ae) {
+    ActionListener colorChanger = 
+      (ActionEvent ae) -> {
         setBackground(JFormattedSelectField.this.vNormalBackground);
         setForeground(JFormattedSelectField.this.vNormalForeground);
-      }
-    };
+      };
     
-    Timer vTimer = new Timer(75, vColorChanger);
+    Timer vTimer = new Timer(75, colorChanger);
     vTimer.setRepeats(false);
     vTimer.start();
   }

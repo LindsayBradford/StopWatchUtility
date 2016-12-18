@@ -32,7 +32,6 @@ final class ToggleLedsCommand implements StopWatchCommand {
 
   @Override
   public void run() {
-    
     toggleState.putAsBoolean(
         !toggleState.getAsBoolean()
     );
@@ -41,6 +40,4 @@ final class ToggleLedsCommand implements StopWatchCommand {
         SwingStopWatchViewEvents.ToggleLedsRequested
     );
   }
-
-
 }
