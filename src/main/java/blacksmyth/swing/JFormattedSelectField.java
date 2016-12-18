@@ -10,9 +10,13 @@
 
 package blacksmyth.swing;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import javax.swing.JFormattedTextField;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class JFormattedSelectField extends JFormattedTextField {

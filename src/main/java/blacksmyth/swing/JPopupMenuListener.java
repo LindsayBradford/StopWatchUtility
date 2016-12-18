@@ -10,14 +10,15 @@
 
 package blacksmyth.swing;
 
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
 
 public class JPopupMenuListener extends MouseAdapter {
-  private JPopupMenu vMenu;
+  private JPopupMenu popupMenu;
 
-  public JPopupMenuListener(JPopupMenu pMenu) {
-    this.vMenu = pMenu;    
+  public JPopupMenuListener(JPopupMenu menu) {
+    popupMenu = menu;    
   }
 
   @Override
@@ -32,7 +33,11 @@ public class JPopupMenuListener extends MouseAdapter {
   
   private void processMouseEvent(MouseEvent e) {
     if (e.isPopupTrigger()) {
-      this.vMenu.show(e.getComponent(), e.getX(), e.getY());
+      popupMenu.show(
+          e.getComponent(), 
+          e.getX(), 
+          e.getY()
+      );
     }
   }
 }

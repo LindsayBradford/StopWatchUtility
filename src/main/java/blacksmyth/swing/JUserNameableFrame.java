@@ -10,8 +10,12 @@
 
 package blacksmyth.swing;
 
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 @SuppressWarnings("serial")
 public class JUserNameableFrame extends JFrame {

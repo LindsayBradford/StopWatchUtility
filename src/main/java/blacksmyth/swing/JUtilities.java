@@ -10,9 +10,12 @@
 
 package blacksmyth.swing;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.JComponent;
 
 public class JUtilities {
 

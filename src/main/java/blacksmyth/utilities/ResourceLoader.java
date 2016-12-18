@@ -10,9 +10,11 @@
 
 package blacksmyth.utilities;
 
-import java.io.*;
-import javax.swing.*;
-import java.applet.*;
+import java.io.InputStream;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  * A utility class for retrieving resources that have been packed into 

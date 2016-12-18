@@ -10,10 +10,14 @@
 
 package blacksmyth.swing;
 
-import javax.swing.*;
 import java.text.DecimalFormat;
-import java.text.*;
-import javax.swing.text.*;
+import java.text.ParsePosition;
+import javax.swing.JComponent;
+import javax.swing.InputVerifier;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.NumberFormatter;
 
 @SuppressWarnings("serial")
 public class JFormattedNumField extends JFormattedSelectField {
