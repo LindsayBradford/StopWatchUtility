@@ -16,7 +16,6 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -198,7 +197,7 @@ final class JStopWatchControlPanel extends JPanel {
     startStopButton.setMnemonic('S');
 
     startStopButton.addActionListener(
-        (ActionEvent ae) -> { 
+        (actionEvent) -> { 
           switch (startStopButton.getText()) {
             case "Start": 
               eventRaiser.raise(
@@ -223,7 +222,7 @@ final class JStopWatchControlPanel extends JPanel {
     resetButton.setMnemonic('R');
 
     resetButton.addActionListener(
-        (ActionEvent ae) ->  eventRaiser.raise(StopWatchViewEvent.ResetRequested) 
+        (actionEvent) ->  eventRaiser.raise(StopWatchViewEvent.ResetRequested) 
     );
 
     return resetButton;

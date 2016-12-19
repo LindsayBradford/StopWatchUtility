@@ -12,7 +12,6 @@ package blacksmyth.swing;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import javax.swing.JFormattedTextField;
@@ -67,7 +66,7 @@ public class JFormattedSelectField extends JFormattedTextField {
     
     
     ActionListener colorChanger = 
-      (ActionEvent ae) -> {
+      (actionEvent) -> {
         setBackground(JFormattedSelectField.this.vNormalBackground);
         setForeground(JFormattedSelectField.this.vNormalForeground);
       };

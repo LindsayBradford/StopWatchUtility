@@ -10,7 +10,6 @@
 
 package blacksmyth.stopwatch.view.swing;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -54,7 +53,7 @@ final class JStopWatchMenuBar extends JMenuBar {
     item.setMnemonic(KeyEvent.VK_S);
 
     item.addActionListener(
-       (ActionEvent ae) -> { updateTimeCommand.run(); }
+       (actionEvent) -> { updateTimeCommand.run(); }
     );
     return item;
   }
@@ -103,7 +102,7 @@ final class JStopWatchMenuBar extends JMenuBar {
     item.setMnemonic(KeyEvent.VK_C);
 
     item.addActionListener(
-        (ActionEvent ae) -> updateTitleCommand.run()
+        (actionEvent) -> updateTitleCommand.run()
     );
     return item;
   }
@@ -113,7 +112,7 @@ final class JStopWatchMenuBar extends JMenuBar {
     showMillisecondsItem.setMnemonic(KeyEvent.VK_S);
 
     showMillisecondsItem.addActionListener(
-        (ActionEvent ae) -> toggleShowMillisecondsCommand.run()
+        (actionEvent) -> toggleShowMillisecondsCommand.run()
     );
     return showMillisecondsItem;
   }
@@ -123,7 +122,7 @@ final class JStopWatchMenuBar extends JMenuBar {
     showLedsItem.setMnemonic(KeyEvent.VK_L);
 
     showLedsItem.addActionListener(
-        (ActionEvent ae) -> toggleShowLedsCommand.run()
+        (actionEvent) -> toggleShowLedsCommand.run()
      );
     return showLedsItem;
   }

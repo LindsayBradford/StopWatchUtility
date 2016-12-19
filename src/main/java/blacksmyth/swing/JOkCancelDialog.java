@@ -145,7 +145,7 @@ abstract public class JOkCancelDialog extends JDialog {
     this.cancelButton = new JButton("Cancel");
     this.cancelButton.setMnemonic(KeyEvent.VK_C);
     this.cancelButton.addActionListener(
-        (ActionEvent ae) -> doCancelAction()
+        (actionEvent) -> doCancelAction()
     );
     return this.cancelButton;
   }
@@ -154,7 +154,7 @@ abstract public class JOkCancelDialog extends JDialog {
     this.okButton = new JButton("Ok");
     this.okButton.setMnemonic(KeyEvent.VK_O);
     this.okButton.addActionListener(
-        (ActionEvent ae) -> doOkAction()
+        (actionEvent) -> doOkAction()
     );
     return this.okButton;
   }
