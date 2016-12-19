@@ -95,16 +95,14 @@ final class JGoStopPanel extends JPanel {
 @SuppressWarnings("serial")
 final class JRedLed extends JLedPanel {
   public JRedLed() {
-    super("/resources/LitRedLed.gif",
-	  "/resources/RedLed.gif");
+    super("/resources/LitRedLed.gif","/resources/RedLed.gif");
   }
 }
 
 @SuppressWarnings("serial")
 final class JGreenLed extends JLedPanel {
   public JGreenLed() {
-    super("/resources/LitGreenLed.gif",
-	  "/resources/GreenLed.gif");
+    super("/resources/LitGreenLed.gif","/resources/GreenLed.gif");
   }
 }
 

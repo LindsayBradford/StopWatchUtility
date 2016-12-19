@@ -29,5 +29,4 @@ final class UpdateFrameTitleCommand implements StopWatchCommand {
   public void run() {
     frame.showTitleDialog();
   }
-
 }
