@@ -38,34 +38,38 @@ public class JUtilities {
   }
 
   public static void equalizeComponentSizes(List<JComponent> components) {
-    resizeAllComponents(
+    resizeAllComponentsToSize(
         components,
         findMaxComponentSize(components)
     );    
   }
   
+  
   private static Dimension findMaxComponentSize(List<JComponent> components) {
-    Dimension  maxComponentSize = new Dimension(0,0);
-    
-    for(JComponent component : components) {
-      updateMaxComponentSize(maxComponentSize, component);
-    }
-    
-    return maxComponentSize;
+    return new Dimension(
+        getMaxComponentWidth(components), 
+        getMaxComponentHeight(components)
+    );
+  }
+
+  private static int getMaxComponentWidth(List<JComponent> components) {
+    return components.stream()
+        .max( (c1, c2) -> Integer.compare(c1.getPreferredSize().width, c2.getPreferredSize().width) )
+        .get().getPreferredSize().width;
   }
   
-  private static void resizeAllComponents(List<JComponent> components, Dimension maxComponentSize) {
-    for(JComponent component : components) {
-      resize(component, maxComponentSize);
-    }
+  private static int getMaxComponentHeight(List<JComponent> components) {
+    return components.stream()
+            .max( (c1, c2) -> Integer.compare(c1.getPreferredSize().height, c2.getPreferredSize().height) )
+            .get().getPreferredSize().height;
   }
 
-  private static void updateMaxComponentSize(Dimension maxComponentSize, JComponent component) {
-    final Dimension componentSize = component.getPreferredSize();
-    maxComponentSize.width  = Math.max(maxComponentSize.width,  (int) componentSize.getWidth());
-    maxComponentSize.height = Math.max(maxComponentSize.height, (int) componentSize.getHeight());
+  private static void resizeAllComponentsToSize(List<JComponent> components, Dimension newSize) {
+    components.stream().forEach(
+        (component) -> resize(component, newSize)
+    );
   }
-
+  
   private static void resize(JComponent component, Dimension size) {
     component.setPreferredSize(size);
     component.setMaximumSize(size);
