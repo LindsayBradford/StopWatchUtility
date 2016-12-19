@@ -200,10 +200,14 @@ final class JStopWatchControlPanel extends JPanel {
         (actionEvent) -> { 
           switch (startStopButton.getText()) {
             case "Start": 
-              eventRaiser.raise(StopWatchViewEvent.StartRequested);
+              eventRaiser.raise(
+                  StopWatchViewEvent.StartRequested
+              );
             break;
             case "Stop": 
-              eventRaiser.raise(StopWatchViewEvent.StopRequested);
+              eventRaiser.raise(
+                  StopWatchViewEvent.StopRequested
+              );
             break;
           }
         }
@@ -254,10 +258,10 @@ final class JStopWatchControlPanel extends JPanel {
     switch (event) {
       case ToggleMillisecondsRequested:
         showMillisecondsAsPerPersistedState();
-      break;
+        break;
       case ToggleLedsRequested:
         showLedsAsPerPersistedState();
-      break;
+        break;
     }
   }
 

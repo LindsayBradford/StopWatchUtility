@@ -49,21 +49,23 @@ final public class JFrameFactory {
     });
   }
   
-  private static JFrame getBaseFrame(String title, int frameType) {
-    assert frameType >= BASIC && frameType <= USER_NAMEABLE : "Invalid Frame Type passed";
+  private static JFrame getBaseFrame(String pTitle, int pType) {
+    assert pType >= BASIC && pType <= USER_NAMEABLE : "Invalid Frame Type passed";
     
     JFrame returnFrame;
     
-    switch (frameType) {
-      case USER_NAMEABLE: 
-        JUserNameableFrame frame = new JUserNameableFrame(title);
+    switch (pType) {
+      case USER_NAMEABLE: {
+        JUserNameableFrame frame = new JUserNameableFrame(pTitle);
         frame.bindPopupMenu();
         returnFrame = frame;
-      break;
-      default: 
+        break;
+      }
+      default: {
         returnFrame = new JFrame();
-        returnFrame.setTitle(title);
-      break;
+        returnFrame.setTitle(pTitle);
+        break;
+      }
     }
     return returnFrame;
   }

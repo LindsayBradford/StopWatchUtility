@@ -62,4 +62,5 @@ final class UpdateStopWatchTimeCommand implements StopWatchCommand {
         StopWatchViewEvent.TimeSetRequested
     );
   }
+
 }

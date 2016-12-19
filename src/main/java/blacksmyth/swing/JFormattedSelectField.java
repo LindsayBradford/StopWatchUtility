@@ -19,17 +19,17 @@ import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class JFormattedSelectField extends JFormattedTextField {
-  protected Color normalBackground;
-  protected Color normalForeground;
+  protected Color vNormalBackground;
+  protected Color vNormalForeground;
 
-  public JFormattedSelectField(AbstractFormatter formatter) {
-    super(formatter);
+  public JFormattedSelectField(AbstractFormatter pFormatter) {
+    super(pFormatter);
 
     setDisabledTextColor(Color.BLACK);
     setFont(new Font("Monospaced", Font.PLAIN, 11));
 
-    this.normalBackground = getBackground();
-    this.normalForeground = getForeground();
+    this.vNormalBackground = getBackground();
+    this.vNormalForeground = getForeground();
   }
 
   @Override
@@ -47,12 +47,12 @@ public class JFormattedSelectField extends JFormattedTextField {
   }
   
   @Override
-  public void setEnabled(boolean enabledFlag) {
-    super.setEnabled(enabledFlag);
-    if (enabledFlag == false) {
+  public void setEnabled(boolean vEnabledFlag) {
+    super.setEnabled(vEnabledFlag);
+    if (vEnabledFlag == false) {
       setBackground(Color.LIGHT_GRAY);
     } else {
-      setBackground(this.normalBackground);
+      setBackground(this.vNormalBackground);
     }
   }
 
@@ -67,8 +67,8 @@ public class JFormattedSelectField extends JFormattedTextField {
     
     ActionListener colorChanger = 
       (actionEvent) -> {
-        setBackground(JFormattedSelectField.this.normalBackground);
-        setForeground(JFormattedSelectField.this.normalForeground);
+        setBackground(JFormattedSelectField.this.vNormalBackground);
+        setForeground(JFormattedSelectField.this.vNormalForeground);
       };
     
     Timer vTimer = new Timer(75, colorChanger);
