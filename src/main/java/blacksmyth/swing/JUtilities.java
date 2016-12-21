@@ -43,7 +43,18 @@ public class JUtilities {
         findMaxComponentSize(components)
     );    
   }
+
+  private static void resizeAllComponentsToSize(List<JComponent> components, Dimension newSize) {
+    components.stream().forEach(
+        (component) -> resize(component, newSize)
+    );
+  }
   
+  private static void resize(JComponent component, Dimension size) {
+    component.setPreferredSize(size);
+    component.setMaximumSize(size);
+    component.setMinimumSize(size);
+  }
   
   private static Dimension findMaxComponentSize(List<JComponent> components) {
     return new Dimension(
@@ -62,17 +73,5 @@ public class JUtilities {
     return components.stream()
             .max( (c1, c2) -> Integer.compare(c1.getPreferredSize().height, c2.getPreferredSize().height) )
             .get().getPreferredSize().height;
-  }
-
-  private static void resizeAllComponentsToSize(List<JComponent> components, Dimension newSize) {
-    components.stream().forEach(
-        (component) -> resize(component, newSize)
-    );
-  }
-  
-  private static void resize(JComponent component, Dimension size) {
-    component.setPreferredSize(size);
-    component.setMaximumSize(size);
-    component.setMinimumSize(size);
   }
 }
