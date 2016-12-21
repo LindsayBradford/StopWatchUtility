@@ -173,13 +173,10 @@ public class JFormattedNumField extends JFormattedSelectField {
 
 class DoubleAndPercentParser {
 
-  public static double toDouble(String textToParse) throws IllegalArgumentException {
-    String trimmedTextToParse = textToParse.trim();
+  public static double toDouble(String textToParse) {
 
-    if (trimmedTextToParse.length() == 0) {
-      throw new IllegalArgumentException("String supplied to parser is empty once trimmed.");
-    }
-
+    String trimmedTextToParse = trimAndCheck(textToParse);
+    
     boolean needToHandlePercentInText = lastCharOfFieldFormatIsPercentSymbol(trimmedTextToParse);
 
     if (needToHandlePercentInText) {
@@ -195,7 +192,16 @@ class DoubleAndPercentParser {
     return parsedValue;
   }
   
-  private static double tryToParseTextAsDouble(String textToParse) throws IllegalArgumentException {
+  private static String trimAndCheck(String textToParse) {
+    String trimmedTextToParse = textToParse.trim();
+
+    if (trimmedTextToParse.length() == 0) {
+      throw new IllegalArgumentException("String supplied to parser is empty once trimmed.");
+    }
+    return trimmedTextToParse;
+  }
+  
+  private static double tryToParseTextAsDouble(String textToParse) {
     try {
       DecimalFormat fieldFormat = new DecimalFormat();
       Number parsedValueAsNumber = fieldFormat.parse(textToParse, new ParsePosition(0));
