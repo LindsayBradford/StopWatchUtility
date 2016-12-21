@@ -10,7 +10,11 @@
 
 package blacksmyth.stopwatch.view.swing;
 
+import static blacksmyth.stopwatch.view.swing.SwingStopWatchViewEvents.ToggleMillisecondsRequested;
+
 import java.util.prefs.Preferences;
+
+
 
 /**
  * An implementation of {@link StopWatchCommand} that raises a 
@@ -37,8 +41,6 @@ final class ToggleMillisecondsCommand implements StopWatchCommand {
         !toggleState.getAsBoolean()
     );
     
-    eventRaiser.raise(
-        SwingStopWatchViewEvents.ToggleMillisecondsRequested
-    );
+    eventRaiser.raise(ToggleMillisecondsRequested);
   }
 }

@@ -208,7 +208,6 @@ final class JTimerPanel extends JPanel {
     label.setFont(getDoubleSizeFont(label.getFont()));
     return label;
   }
-
   
   static private Font getDoubleSizeFont(Font font) {
     return font.deriveFont((float) font.getSize()*3/2);

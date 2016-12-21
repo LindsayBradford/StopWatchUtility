@@ -11,7 +11,8 @@
 package blacksmyth.stopwatch.view.swing;
 
 import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
-import blacksmyth.stopwatch.view.StopWatchViewEvent;
+import static blacksmyth.stopwatch.view.StopWatchViewEvent.StopRequested;
+import static blacksmyth.stopwatch.view.StopWatchViewEvent.TimeSetRequested;
 
 /**
  * An implementation of {@link StopWatchCommand} that raises a 
@@ -44,23 +45,12 @@ final class UpdateStopWatchTimeCommand implements StopWatchCommand {
   
   @Override
   public void run() {
-    eventRaiser.raise(
-        StopWatchViewEvent.StopRequested
-    );
-    
-    dialog.setTime(
-        elapsedTimeState.getAsLong()
-    );
+    eventRaiser.raise(StopRequested);
+    dialog.setTime(elapsedTimeState.getAsLong());
     
     dialog.setVisible(true);
     
-    elapsedTimeState.putAsLong(
-        dialog.getTime()
-    );
-    
-    eventRaiser.raise(
-        StopWatchViewEvent.TimeSetRequested
-    );
+    elapsedTimeState.putAsLong(dialog.getTime());
+    eventRaiser.raise(TimeSetRequested);
   }
-
 }

@@ -10,6 +10,8 @@
 
 package blacksmyth.stopwatch.view.swing;
 
+import static blacksmyth.stopwatch.view.swing.SwingStopWatchViewEvents.ToggleLedsRequested;
+
 /**
  * An implementation of {@link StopWatchCommand} that raises a {@link SwingStopWatchViewEvents#ToggleLedsRequested}
  * event, and adjusts the supplied {@link PersistedSwingState} to remember the decisions between invocations of the 
@@ -36,8 +38,6 @@ final class ToggleLedsCommand implements StopWatchCommand {
         !toggleState.getAsBoolean()
     );
 
-    eventRaiser.raise(
-        SwingStopWatchViewEvents.ToggleLedsRequested
-    );
+    eventRaiser.raise(ToggleLedsRequested);
   }
 }
