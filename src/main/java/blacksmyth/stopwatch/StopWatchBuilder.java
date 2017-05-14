@@ -24,28 +24,44 @@ import blacksmyth.stopwatch.view.swing.SwingViewBuilder;
 
 public final class StopWatchBuilder {
   
-  private static StopWatchPresenter presenter;
+  private StopWatchModel model;
+  private StopWatchView view;
+  private StopWatchPresenter presenter;
   
   public static StopWatchView build()  {
-    buildPresenter();
-    buildAndBindModel();
-    return buildAndBindView();
+    StopWatchBuilder builder = new StopWatchBuilder();
+    builder.addPresenter().addAndBindModel().addAndBindView();
+    return builder.getView();
   }
   
-  private static void buildPresenter() {
+  private StopWatchBuilder addPresenter() {
     presenter = StopWatchPresenterBuilder.build();
+    return this;
   }
   
-  private static void buildAndBindModel() {
-    StopWatchModel model = StopWatchModelBuilder.build();
+  private StopWatchBuilder addAndBindModel() {
+    model = StopWatchModelBuilder.build();
+    bindModel();
+    return this;
+  }
+  
+  private void bindModel() {
     presenter.setModel(model);
     model.addObserver(presenter);
   }
   
-  private static StopWatchView buildAndBindView() {
-    StopWatchView view = SwingViewBuilder.build();
+  private StopWatchBuilder addAndBindView() {
+    view = SwingViewBuilder.build();
+    bindView();
+    return this;
+  }
+  
+  private void bindView() {
     presenter.setView(view);
     view.addObserver(presenter);
+  }
+  
+  public StopWatchView getView() {
     return view;
   }
 }
