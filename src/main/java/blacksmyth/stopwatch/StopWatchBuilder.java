@@ -30,19 +30,19 @@ public final class StopWatchBuilder {
   
   public static StopWatchView build()  {
     StopWatchBuilder builder = new StopWatchBuilder();
-    builder.addPresenter().addAndBindModel().addAndBindView();
+    builder.addPresenter();
+    builder.addAndBindModel();
+    builder.addAndBindView();
     return builder.getView();
   }
   
-  private StopWatchBuilder addPresenter() {
+  private void addPresenter() {
     presenter = StopWatchPresenterBuilder.build();
-    return this;
   }
   
-  private StopWatchBuilder addAndBindModel() {
+  private void addAndBindModel() {
     model = StopWatchModelBuilder.build();
     bindModel();
-    return this;
   }
   
   private void bindModel() {
@@ -50,10 +50,9 @@ public final class StopWatchBuilder {
     model.addObserver(presenter);
   }
   
-  private StopWatchBuilder addAndBindView() {
+  private void addAndBindView() {
     view = SwingViewBuilder.build();
     bindView();
-    return this;
   }
   
   private void bindView() {
