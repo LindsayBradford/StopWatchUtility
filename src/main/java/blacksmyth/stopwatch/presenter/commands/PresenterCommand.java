@@ -16,9 +16,5 @@ import blacksmyth.stopwatch.view.StopWatchView;
 public interface PresenterCommand {
   void setModelAndView(StopWatchModel model, StopWatchView view);
 
-  /**
-   * A wrapper method to {@link Runnable#run()} that ensures run is called only when 
-   * a model and view are known.
-   */
   void execute();
 }
