@@ -10,10 +10,21 @@
 
 package blacksmyth.stopwatch;
 
+import static blacksmyth.stopwatch.view.StopWatchViewEvent.DeathRequested;
+import static blacksmyth.stopwatch.view.StopWatchViewEvent.ResetRequested;
+import static blacksmyth.stopwatch.view.StopWatchViewEvent.StartRequested;
+import static blacksmyth.stopwatch.view.StopWatchViewEvent.StopRequested;
+import static blacksmyth.stopwatch.view.StopWatchViewEvent.TimeSetRequested;
+
 import blacksmyth.stopwatch.model.StopWatchModel;
 import blacksmyth.stopwatch.model.StopWatchModelBuilder;
 import blacksmyth.stopwatch.presenter.StopWatchPresenter;
 import blacksmyth.stopwatch.presenter.StopWatchPresenterBuilder;
+import blacksmyth.stopwatch.presenter.commands.DieCommand;
+import blacksmyth.stopwatch.presenter.commands.ResetCommand;
+import blacksmyth.stopwatch.presenter.commands.StartCommand;
+import blacksmyth.stopwatch.presenter.commands.StopCommand;
+import blacksmyth.stopwatch.presenter.commands.TimeSetCommand;
 import blacksmyth.stopwatch.view.StopWatchView;
 import blacksmyth.stopwatch.view.swing.SwingViewBuilder;
 
@@ -33,6 +44,7 @@ public final class StopWatchBuilder {
     builder.addPresenter();
     builder.addAndBindModel();
     builder.addAndBindView();
+    builder.addPresenterCommands();
     return builder.getView();
   }
   
@@ -58,6 +70,15 @@ public final class StopWatchBuilder {
   private void bindView() {
     presenter.setView(view);
     view.addObserver(presenter);
+  }
+  
+  
+  private void addPresenterCommands() {
+    presenter.addEventCommand(ResetRequested, new ResetCommand());
+    presenter.addEventCommand(StartRequested, new StartCommand());
+    presenter.addEventCommand(StopRequested, new StopCommand());
+    presenter.addEventCommand(TimeSetRequested, new TimeSetCommand());
+    presenter.addEventCommand(DeathRequested, new DieCommand());
   }
   
   public StopWatchView getView() {

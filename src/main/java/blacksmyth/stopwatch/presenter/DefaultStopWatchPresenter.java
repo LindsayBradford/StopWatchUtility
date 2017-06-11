@@ -12,9 +12,12 @@ package blacksmyth.stopwatch.presenter;
 
 
 import blacksmyth.stopwatch.model.StopWatchModel;
+import blacksmyth.stopwatch.presenter.commands.PresenterCommand;
 import blacksmyth.stopwatch.view.StopWatchView;
 import blacksmyth.stopwatch.view.StopWatchViewEvent;
 import static blacksmyth.stopwatch.view.StopWatchViewEvent.TimeSetRequested;
+
+import java.util.HashMap;
 
 /**
  * A simple implementation of the 'Presenter' part of the MVP pattern, allowing a 
@@ -27,6 +30,8 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
 
   private StopWatchModel model;
   private StopWatchView  view;
+  
+  private HashMap<StopWatchViewEvent, PresenterCommand> eventCommandMap = new HashMap<>();;
   
   @Override
   public void updateFromModel() {
@@ -46,10 +51,21 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
   @Override
   public void setView(StopWatchView view) {
     assert model != null;  // Set model before view so we can issue commands to model based on view state.
-    
     this.view = view;
-    
-    syncModelToCurrentTime();
+  }
+  
+  @Override
+  public void addEventCommand(StopWatchViewEvent event, PresenterCommand command) {
+    bindEventToCommand(event, command);
+    if (StopWatchViewEvent.TimeSetRequested == event) {
+      syncModelToCurrentTime();
+    }
+  }
+  
+  private void bindEventToCommand(StopWatchViewEvent event, PresenterCommand command) {
+    assert view != null && model != null;
+    command.setModelAndView(model, view);
+    eventCommandMap.put(event, command);
   }
   
   private void syncModelToCurrentTime() {
@@ -65,24 +81,16 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
   }
   
   private void processViewEvent(StopWatchViewEvent viewEvent) {
-    switch (viewEvent) {
-      case ResetRequested:
-        model.reset();
-      break;
-      case StartRequested:
-        model.start();
-      break;
-      case StopRequested:
-        model.stop();
-      break;
-      case TimeSetRequested:
-        model.setTime(
-            view.getRequestedSetTime()
-        );
-      break;
-      case DeathRequested:
-        model.die();
-      break;
+    if (canProcessEvent(viewEvent)) {
+      executeCommandForEvent(viewEvent);
     }
+  }
+  
+  private boolean canProcessEvent(StopWatchViewEvent viewEvent) {
+    return eventCommandMap.keySet().contains(viewEvent);
+  }
+  
+  private void executeCommandForEvent(StopWatchViewEvent viewEvent) {
+    eventCommandMap.get(viewEvent).execute();
   }
 }

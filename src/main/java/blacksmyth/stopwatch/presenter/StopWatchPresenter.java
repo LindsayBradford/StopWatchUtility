@@ -11,7 +11,9 @@
 package blacksmyth.stopwatch.presenter;
 
 import blacksmyth.stopwatch.model.StopWatchModel;
+import blacksmyth.stopwatch.presenter.commands.PresenterCommand;
 import blacksmyth.stopwatch.view.StopWatchView;
+import blacksmyth.stopwatch.view.StopWatchViewEvent;
 import blacksmyth.stopwatch.view.StopWatchObserver;
 
 /**
@@ -34,5 +36,13 @@ public interface StopWatchPresenter extends StopWatchObserver {
    * @param model
    */
   public void setView(StopWatchView view);
- 
+  
+  
+  /**
+   * Add a {@link PresenterCommand} to process once a {@link StopWatchViewEvent} is received. 
+   * @param event
+   * @param command
+   */
+  public void addEventCommand(StopWatchViewEvent event, PresenterCommand command);
+
 }

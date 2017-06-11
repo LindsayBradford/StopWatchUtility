@@ -20,5 +20,4 @@ public final class StopWatchPresenterBuilder {
   public static StopWatchPresenter build() {
     return new DefaultStopWatchPresenter();
   }
-
 }
