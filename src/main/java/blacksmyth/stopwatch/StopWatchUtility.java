@@ -15,13 +15,15 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import blacksmyth.stopwatch.view.StopWatchView;
 
 public final class StopWatchUtility {
+
+  private static ApplicationContext appContext;
+ 
   public static void main(String argv[]) {
-    
-    @SuppressWarnings("resource")
-    ApplicationContext ctx = new AnnotationConfigApplicationContext(StopWatchConfig.class);
-        
-    StopWatchView utility = ctx.getBean(StopWatchView.class);
-        
-    utility.show();
+    appContext = new AnnotationConfigApplicationContext(ProductionConfig.class);
+    getView().show();
+  }
+  
+  private static StopWatchView getView() {
+    return appContext.getBean(StopWatchView.class);
   }
 }

@@ -18,6 +18,7 @@ import java.util.Observer;
 /**
  * A basic implementation of a {@link StopWatchModel}, and {@link TickRecipient}.
  */
+
 public final class DefaultStopWatchModel extends Observable implements StopWatchModel {
   
   enum ModelState {

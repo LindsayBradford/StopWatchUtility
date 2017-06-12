@@ -15,6 +15,7 @@ package blacksmyth.stopwatch.model;
  * dependency injection. 
  */
 
+@Deprecated
 public final class StopWatchModelBuilder {
   
   public static StopWatchModel build() {
