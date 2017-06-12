@@ -17,7 +17,7 @@ package blacksmyth.stopwatch.model;
 public final class SleepingThreadTicker extends Thread implements Ticker {
 
   private int millisecondsBetweenTicks;
-  private TickRecipient recipient;
+  private TickRecipient tickRecipient;
   
   public SleepingThreadTicker() {
     setName("ThreadTicker");
@@ -25,29 +25,31 @@ public final class SleepingThreadTicker extends Thread implements Ticker {
 
   @Override
   public void setMillisecondsBetweenTicks(int milliseconds) {
-    this.millisecondsBetweenTicks = milliseconds;
+    millisecondsBetweenTicks = milliseconds;
   }
   
   @Override
   public void setRecipient(TickRecipient recipient) {
-    this.recipient = recipient;
+    tickRecipient = recipient;
   }
   
   @Override
   public void startTicking() {
-    this.start();
+    start();
   }
   
+  @Override
   public void run() {
-    assert recipient != null;
+    assert tickRecipient != null;
     
-    while(recipient.needsTicks()) {
+    while(tickRecipient.needsTicks()) {
       try {
         sleep(millisecondsBetweenTicks);
       } catch (Exception e) {
+        // TODO: replace with logging.
         e.printStackTrace();
       }
-      recipient.receiveTick();
+      tickRecipient.receiveTick();
     }
   }
 }

@@ -12,14 +12,16 @@ package blacksmyth.stopwatch.view;
 
 import java.util.Observer;
 
+import blacksmyth.stopwatch.presenter.StopWatchEventSource;
+
 /**
  * An interface specifying the methods required for a StopWatchView to implement.  
  *
- * The StopWatchView implementing this interface is expected to be a sub-type of an {@link java.util.Observable} 
- * object, allowing watching objects to receive stopwatch specific view events. 
- * @see StopWatchViewEvents
+ * Objects implementing this interface are expected to sub-type {@link java.util.Observable}, 
+ * allowing watching objects to receive stopwatch specific view events. 
+ * @see StopWatchViewEvent
  */
-public interface StopWatchView {
+public interface StopWatchView extends StopWatchEventSource {
   /**
    * This method instructs the view to be shown to an end-user. 
    */
@@ -40,7 +42,7 @@ public interface StopWatchView {
 
   /**
    * The StopWatchView implementing this interface is expected to be a sub-type of an Observable object, allowing
-   * other objects to receive view events (as enumerate in StopWatchViewEvents).
+   * other objects to receive view events (as enumerated in {@link StopWatchViewEvent}).
    * @param o - An observer interested in receiving notification events from the StopwatchView.
    * @see Observable, StopWatchViewEvents
    */

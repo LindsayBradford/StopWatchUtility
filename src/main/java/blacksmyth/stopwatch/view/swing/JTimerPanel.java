@@ -8,7 +8,7 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-package blacksmyth.stopwatch.view;
+package blacksmyth.stopwatch.view.swing;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,18 +18,19 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import blacksmyth.stopwatch.view.TimeExtractor;
 import blacksmyth.swing.JFormattedNumField;
 
-@SuppressWarnings("serial")
-
 /**
- * A JPanel that displays a long value of elapsed milliseconds in a
- * more human-friendly manner (hours, minutes, seconds, etc).
+ * A {@link JPanel} that displays a long value of elapsed milliseconds in a
+ * more human-friendly manner (hours, minutes, seconds, etc), and allows the user
+ * to input a different time in this format.
  */
+
+@SuppressWarnings("serial")
 final class JTimerPanel extends JPanel {
   private JFormattedNumField  hoursField;
   private JFormattedNumField  minutesField;
@@ -49,7 +50,7 @@ final class JTimerPanel extends JPanel {
 
   public JTimerPanel() {
     super();
-    setLayout(gbl);
+    setLayout(this.gbl);
     setBorder(new EmptyBorder(10,0,0,5));
     getContents();
   }
@@ -59,6 +60,7 @@ final class JTimerPanel extends JPanel {
     calculateWidgetTimes(); 
   }
 
+  @Override
   public void setForeground(Color color) {
     if (hourMinuteSeparator!= null) {
       hourMinuteSeparator.setForeground(color);
@@ -68,6 +70,7 @@ final class JTimerPanel extends JPanel {
     super.setForeground(color);
   }
 
+  @Override
   public void setBackground(Color color) {
     if (hourMinuteSeparator!= null) {
       hourMinuteSeparator.setBackground(color);
@@ -97,8 +100,8 @@ final class JTimerPanel extends JPanel {
 
     time = (long) millisecondsValue + 
            (long) secondsValue * 1000 +
-	   (long) minutesValue * 1000 * 60 + 
-	   (long) hoursValue   * 1000 * 60 * 60;
+	         (long) minutesValue * 1000 * 60 + 
+	         (long) hoursValue   * 1000 * 60 * 60;
   }
 
   private void getContents() {
@@ -122,32 +125,32 @@ final class JTimerPanel extends JPanel {
     gbc.weightx = 0;
     gbc.anchor       = GridBagConstraints.SOUTH;
 
-    add(getHoursField(),gbc);
+    add(getHoursField(), gbc);
 
     gbc.gridx        = labelCol++;
 
     hourMinuteSeparator = getTimeSeparator();
-    add(hourMinuteSeparator,gbc);
+    add(hourMinuteSeparator, gbc);
 
     gbc.gridx        = labelCol++;
 
-    add(getMinutesField(),gbc);
+    add(getMinutesField(), gbc);
 
     gbc.gridx        = labelCol++;
 
     minuteSecondSeparator = getTimeSeparator();
-    add(minuteSecondSeparator,gbc);
+    add(minuteSecondSeparator, gbc);
 
     gbc.gridx        = labelCol++;
 
-    add(getSecondsField(),gbc);
+    add(getSecondsField(), gbc);
 
     gbc.gridx        = labelCol++;
     gbc.anchor       = GridBagConstraints.NORTH;
 
     secondMillisecondSeparator = getMillisecondTimeSeparator();
 
-    add(secondMillisecondSeparator,gbc);
+    add(secondMillisecondSeparator, gbc);
 
     gbc.gridx        = labelCol++;
 
@@ -182,36 +185,35 @@ final class JTimerPanel extends JPanel {
   private JFormattedNumField getMillisecondsField() {
     millisecondsField = getField("000", 4);
     millisecondsField.setBounds(0,999);
-    millisecondsField.setHorizontalAlignment(JTextField.CENTER);
+    millisecondsField.setHorizontalAlignment(SwingConstants.CENTER);
     millisecondsField.setToolTipText(" Enter elapsed milliseconds. ");
     return millisecondsField;
   }
 
-  private JFormattedNumField getBasicField() {
+  private static JFormattedNumField getBasicField() {
     JFormattedNumField field = getField("00", 3); 
     field.setFont(getDoubleSizeFont(field.getFont()));
-    field.setHorizontalAlignment(JTextField.CENTER);
+    field.setHorizontalAlignment(SwingConstants.CENTER);
     field.setBounds(0,59);
     return field;
   }
 
-  private JFormattedNumField getField(String format, int columns) {
+  private static JFormattedNumField getField(String format, int columns) {
     JFormattedNumField field = new JFormattedNumField(format, 0, columns);
     return field;
-
   }
 
-  private JLabel getTimeSeparator() {
+  private static JLabel getTimeSeparator() {
     JLabel label = getMillisecondTimeSeparator();
     label.setFont(getDoubleSizeFont(label.getFont()));
     return label;
   }
-
-  private Font getDoubleSizeFont(Font font) {
+  
+  static private Font getDoubleSizeFont(Font font) {
     return font.deriveFont((float) font.getSize()*3/2);
   }
 
-  private JLabel getMillisecondTimeSeparator() {
+  private static JLabel getMillisecondTimeSeparator() {
     return new JLabel(timeSeparator);
   }
 }

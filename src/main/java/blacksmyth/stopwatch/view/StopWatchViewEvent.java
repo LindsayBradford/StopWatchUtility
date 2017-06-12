@@ -11,9 +11,9 @@
 package blacksmyth.stopwatch.view;
 
 /**
- * An enumeration of events that may be produced from an implementation of the StopWatchView interface.
+ * An enumeration of events that may be produced from an implementation of the {@link StopWatchView} interface.
  */
-public enum StopWatchViewEvents {
+public enum StopWatchViewEvent {
   /**
    * An event requesting that a stopwatch begin running.
    */
@@ -37,5 +37,5 @@ public enum StopWatchViewEvents {
   /**
    * An event requsting that the stopwatch die (release any running resources it has). 
    */
-  DeathRequested
+  DeathRequested;
 }

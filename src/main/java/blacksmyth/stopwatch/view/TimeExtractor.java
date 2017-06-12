@@ -11,23 +11,23 @@
 package blacksmyth.stopwatch.view;
 
 /**
- * An immutable utility class to extract time elements 9hours, minutes, etc)
- * from an elapsed time value (expressed as number of elapsed milliseconds).
+ * A simple class to extract time elements from an elapsed time value
+ * expressed as number of elapsed milliseconds. 
  */
-final class TimeExtractor {
-  public static final int getHours(long time) {
+public final class TimeExtractor {
+  public static int getHours(long time) {
     return (int) (time / 3600000) % 100;
   }
 
-  public static final int getMinutes(long time) {
-    return (int) (time / 60000) % 60;
+  public static int getMinutes(long time) {
+    return (int) (time / 60000) % 60;  
   }
 
-  public static final int getSeconds(long time) {
-    return (int) (time / 1000) % 60;
+  public static int getSeconds(long time) {
+    return (int) (time / 1000) % 60;  
   }
 
-  public static final int getMilliseconds(long time) {
-    return (int) (time % 1000);
+  public static int getMilliseconds(long time) {
+    return (int) (time % 1000);  
   }
 }

@@ -10,10 +10,11 @@
 
 package blacksmyth.stopwatch.presenter;
 
-import java.util.Observer;
-
 import blacksmyth.stopwatch.model.StopWatchModel;
+import blacksmyth.stopwatch.presenter.commands.PresenterCommand;
 import blacksmyth.stopwatch.view.StopWatchView;
+import blacksmyth.stopwatch.view.StopWatchViewEvent;
+import blacksmyth.stopwatch.view.StopWatchObserver;
 
 /**
  * An interface specifying the necessary methods required for implementations to successfully
@@ -22,7 +23,8 @@ import blacksmyth.stopwatch.view.StopWatchView;
  * @see StopWatchModel
  * @see StopWatchView
  */
-public interface StopWatchPresenter extends Observer {
+public interface StopWatchPresenter extends StopWatchObserver {
+  
   /**
    * Method specifies the model this presenter must observe for updates, and issue commands to. 
    * @param model
@@ -34,4 +36,13 @@ public interface StopWatchPresenter extends Observer {
    * @param model
    */
   public void setView(StopWatchView view);
+  
+  
+  /**
+   * Add a {@link PresenterCommand} to process once a {@link StopWatchViewEvent} is received. 
+   * @param event
+   * @param command
+   */
+  public void addEventCommand(StopWatchViewEvent event, PresenterCommand command);
+
 }

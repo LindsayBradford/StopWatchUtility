@@ -10,21 +10,23 @@
 
 package blacksmyth.swing;
 
-import javax.swing.*;
-import java.awt.event.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 @SuppressWarnings("serial")
 public class JUserNameableFrame extends JFrame {
-  private String vBaseTitle = "";
-  private String vUserTitle = "";
+  private String baseFrameTitle = "";
+  private String userExtensionToFrameTitle = "";
 
   public JUserNameableFrame() {
     super();
   }
   
-  public JUserNameableFrame(String baseFrameTitle) {
+  public JUserNameableFrame(String title) {
     super();
-    setBaseTitle(baseFrameTitle);
+    setBaseFrameTitle(title);
   }
 
   public void bindPopupMenu() {
@@ -32,61 +34,63 @@ public class JUserNameableFrame extends JFrame {
     addMouseListener(new JPopupMenuListener(vMenu));
   }
   
-  public void setBaseTitle(String pBaseTitle) {
-    vBaseTitle = pBaseTitle.trim();
-    setTitle(getUserTitle());
+  public void setBaseFrameTitle(String title) {
+    baseFrameTitle = title.trim();
+    setTitle(getUserExtensionToFrameTitle());
   }
   
   public String getBaseTitle() {
-    return vBaseTitle;
+    return baseFrameTitle;
   }
   
-  public String getUserTitle() {
-    return vUserTitle;
+  public String getUserExtensionToFrameTitle() {
+    return userExtensionToFrameTitle;
   }
   
-  public void setTitle(String pUserTitle) {
-    String vFinalTitle;
-    vUserTitle  = pUserTitle.trim();
-    if (vUserTitle.equals("")) {
-      vFinalTitle = vBaseTitle;
+  @Override
+  public void setTitle(String userExtension) {
+    userExtensionToFrameTitle = userExtension == null ? null : userExtension.trim();
+    
+    super.setTitle(
+        buildDisplayTitle()
+    );
+  }
+  
+  private String buildDisplayTitle() {
+    if (userExtensionToFrameTitle == null || userExtensionToFrameTitle.equals("")) {
+      return  baseFrameTitle;
     }
-    else {
-      vFinalTitle = vUserTitle + " - " + vBaseTitle;
-    }
-    super.setTitle(vFinalTitle);
+
+    return userExtensionToFrameTitle + " - " + baseFrameTitle;
   }
   
   public void showTitleDialog() {
-    String vNewTitle = JOptionPane.showInputDialog(this,
-                                                   "Change frame title to:",
-                                                   getUserTitle());
-    if (vNewTitle != null) {
-      setTitle(vNewTitle);
-    }
+    String userExtensionToFrameTitle = 
+        JOptionPane.showInputDialog(
+            this,
+            "Change frame title to:",
+            getUserExtensionToFrameTitle()
+        );
+    setTitle(userExtensionToFrameTitle);
   }
 }
 
 class UserNameablePopupMenuFactory {
-  public static JPopupMenu getMenu(JUserNameableFrame pFrame) {
-    final JPopupMenu vMenu = new JPopupMenu();
+  public static JPopupMenu getMenu(JUserNameableFrame frame) {
+    final JPopupMenu menu = new JPopupMenu();
     
-    vMenu.add(getSetTitleItem(pFrame));
+    menu.add(getSetTitleItem(frame));
     
-    return vMenu;
+    return menu;
   }
   
-  private static JMenuItem getSetTitleItem(final JUserNameableFrame pFrame) {
-    JMenuItem vSetTitleItem = new JMenuItem("Change Title...",'C');
+  private static JMenuItem getSetTitleItem(final JUserNameableFrame frame) {
+    JMenuItem changeTitleMenuItem = new JMenuItem("Change Title...",'C');
 
-    vSetTitleItem.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent pEvent) {
-        pFrame.showTitleDialog();
-      }
-    });
+    changeTitleMenuItem.addActionListener(
+        (actionEvent) -> frame.showTitleDialog() 
+    );
 
-//    vSetTitleItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_MASK));
-
-    return vSetTitleItem;
+    return changeTitleMenuItem;
   }
 }

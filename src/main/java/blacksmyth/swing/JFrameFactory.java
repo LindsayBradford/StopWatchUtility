@@ -10,9 +10,13 @@
 
 package blacksmyth.swing;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 final public class JFrameFactory {
 
@@ -38,29 +42,28 @@ final public class JFrameFactory {
   public static void makeSystemExitJFrame(JFrame frame) {
     makeCloseableJFrame(frame);
     frame.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent we) {
         System.exit(0);
       }
     });
   }
   
-  private static JFrame getBaseFrame(String pTitle, int pType) {
-    assert pType >= BASIC && pType <= USER_NAMEABLE : "Invalid Frame Type passed";
+  private static JFrame getBaseFrame(String title, int frameType) {
+    assert frameType >= BASIC && frameType <= USER_NAMEABLE : "Invalid Frame Type passed";
     
     JFrame returnFrame;
     
-    switch (pType) {
-      case USER_NAMEABLE: {
-        JUserNameableFrame frame = new JUserNameableFrame(pTitle);
+    switch (frameType) {
+      case USER_NAMEABLE:
+        JUserNameableFrame frame = new JUserNameableFrame(title);
         frame.bindPopupMenu();
-        returnFrame = (JFrame) frame;
-        break;
-      }
-      default: {
+        returnFrame = frame;
+      break;
+      default:
         returnFrame = new JFrame();
-        returnFrame.setTitle(pTitle);
-        break;
-      }
+        returnFrame.setTitle(title);
+      break;
     }
     return returnFrame;
   }
@@ -71,11 +74,13 @@ final public class JFrameFactory {
 
     frame.addComponentListener(
       new ComponentAdapter() {
-          public void componentResized(ComponentEvent ce) {
-            frame.setSize(Math.max(minimumSize.width,  frame.getSize().width ), 
-                          Math.max(minimumSize.height, frame.getSize().height )
-                         );
-          }
+        @Override
+        public void componentResized(ComponentEvent ce) {
+          frame.setSize(
+              Math.max(minimumSize.width,  frame.getSize().width ), 
+              Math.max(minimumSize.height, frame.getSize().height)
+          );
+        }
       }
     );
   }

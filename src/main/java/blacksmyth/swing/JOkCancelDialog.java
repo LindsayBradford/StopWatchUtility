@@ -10,10 +10,19 @@
 
 package blacksmyth.swing;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 
 @SuppressWarnings("serial")
 abstract public class JOkCancelDialog extends JDialog {
@@ -22,7 +31,7 @@ abstract public class JOkCancelDialog extends JDialog {
   private JButton cancelButton;
   private JPanel  buttonPanel;
 
-  public JOkCancelDialog(JFrame frame, String title, boolean modal) {
+  public JOkCancelDialog(JFrame frame, String title) {
     super(frame, title, true);
     setLocationRelativeTo(frame);
     setResizable(false);
@@ -32,23 +41,25 @@ abstract public class JOkCancelDialog extends JDialog {
     addComponent(component);
     pack();
   }
-
+  
+  @Override
   public void setForeground(Color color) {
-    if (okButton != null) {
+    if (this.okButton != null) {
       getContentPane().setForeground(color);
-      buttonPanel.setForeground(color);
-      okButton.setForeground(color);
-      cancelButton.setForeground(color);
+      this.buttonPanel.setForeground(color);
+      this.okButton.setForeground(color);
+      this.cancelButton.setForeground(color);
     }
     super.setForeground(color);
   }
 
+  @Override
   public void setBackground(Color color) {
-    if (okButton != null) {
+    if (this.okButton != null) {
       getContentPane().setBackground(color);
-      buttonPanel.setBackground(color);
-      okButton.setBackground(color);
-      cancelButton.setBackground(color);
+      this.buttonPanel.setBackground(color);
+      this.okButton.setBackground(color);
+      this.cancelButton.setBackground(color);
     }
     super.setBackground(color);
   }
@@ -77,8 +88,8 @@ abstract public class JOkCancelDialog extends JDialog {
     gbc.gridy++;
     gbc.weightx      = 1;
     gbc.anchor       = GridBagConstraints.EAST;
-    buttonPanel = getButtonPanel();
-    contentPane.add(buttonPanel, gbc);
+    this.buttonPanel = getButtonPanel();
+    contentPane.add(this.buttonPanel, gbc);
   }
 
   protected void doOkAction() {
@@ -115,12 +126,12 @@ abstract public class JOkCancelDialog extends JDialog {
 
     buttonPanel.add(getCancelButton(), gbc);
 
-    getRootPane().setDefaultButton(okButton);
+    getRootPane().setDefaultButton(this.okButton);
 
     Vector<JComponent> buttons = new Vector<JComponent>();
 
-    buttons.add(okButton);
-    buttons.add(cancelButton);
+    buttons.add(this.okButton);
+    buttons.add(this.cancelButton);
 
     JUtilities.equalizeComponentSizes(buttons);
 
@@ -130,24 +141,20 @@ abstract public class JOkCancelDialog extends JDialog {
   }
 
   private JButton getCancelButton() {
-    cancelButton = new JButton("Cancel");
-    cancelButton.setMnemonic(KeyEvent.VK_C);
-    cancelButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent pEvent) {
-	doCancelAction();
-      }
-    });
-    return cancelButton;
+    this.cancelButton = new JButton("Cancel");
+    this.cancelButton.setMnemonic(KeyEvent.VK_C);
+    this.cancelButton.addActionListener(
+        (actionEvent) -> doCancelAction()
+    );
+    return this.cancelButton;
   }
 
   private JButton getOkButton() {
-    okButton = new JButton("Ok");
-    okButton.setMnemonic(KeyEvent.VK_O);
-    okButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent pEvent) {
-	doOkAction();
-      }
-    });
-    return okButton;
+    this.okButton = new JButton("Ok");
+    this.okButton.setMnemonic(KeyEvent.VK_O);
+    this.okButton.addActionListener(
+        (actionEvent) -> doOkAction()
+    );
+    return this.okButton;
   }
 }

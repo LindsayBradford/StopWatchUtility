@@ -10,26 +10,26 @@
 
 package blacksmyth.utilities;
 
-import java.io.*;
-import javax.swing.*;
-import java.applet.*;
+import java.io.InputStream;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  * A utility class for retrieving resources that have been packed into 
  * an accompanying JAR/WAR.
  */
-public class ResourceLoader {
+public final class ResourceLoader {
 
   public static JLabel loadImageAsJLabel(String imageFile) {
     return new JLabel(loadImageAsIcon(imageFile));
   }
 
   public static ImageIcon loadImageAsIcon(String imageFile) {
-    try {
-      InputStream in = ResourceLoader.class.getResourceAsStream(imageFile);
-      final byte[] imageByteBuffer = loadAsByteArray(in);
-      in.close();
-      return new ImageIcon(imageByteBuffer);
+    try (InputStream resourceStream = ResourceLoader.class.getResourceAsStream(imageFile)) {
+      final byte[] imageByteArray = ByteArrayLoadManager.newInstance().loadFromStream(resourceStream);
+      return (imageByteArray == null ? null : new ImageIcon(imageByteArray));
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -40,23 +40,44 @@ public class ResourceLoader {
     return Applet.newAudioClip(ResourceLoader.class.getResource(audioClipFile));
   }
 
-  public static byte[] loadAsByteArray(final InputStream is) {
-    final int ARRAY_SIZE = 131072;
-    int read = 0;
-    int totalRead = 0;
-
-    byte[] byteArray = new byte[ARRAY_SIZE];
-
-    try {
-      while ((read = is.read(byteArray, totalRead, ARRAY_SIZE - totalRead)) >= 0) {
-        totalRead += read;
-      }
-    } catch (Exception e) {
-      return null;
+  private static final class ByteArrayLoadManager {
+    final static int MAX_ARRAY_SIZE = 131072;
+    
+    private byte[] byteArray;
+    private int    totalBytesRead;
+    
+    public static ByteArrayLoadManager newInstance() {
+      return new ByteArrayLoadManager();
+    }
+    
+    public byte[] loadFromStream(final InputStream stream) {
+      resetByteArray();
+      attemptReadFromStream(stream);
+      trimByteArrayToNumberRead();
+      return byteArray;
     }
 
-    byte[] finalByteArray = new byte[totalRead];
-    System.arraycopy(byteArray, 0, finalByteArray, 0, totalRead);
-    return finalByteArray;
+    private void resetByteArray() {
+      byteArray = new byte[MAX_ARRAY_SIZE];
+      totalBytesRead = 0;
+    }
+    
+    private void attemptReadFromStream(final InputStream streamOfBytes) {
+      try {
+        int amountRead = 0;
+        while ((amountRead = streamOfBytes.read(byteArray, totalBytesRead, MAX_ARRAY_SIZE - totalBytesRead)) >= 0) {
+          totalBytesRead += amountRead;
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+        resetByteArray();
+      }
+    }
+    
+    private void trimByteArrayToNumberRead() {
+      byte[] trimmedCopy = new byte[totalBytesRead];
+      System.arraycopy(byteArray, 0, trimmedCopy, 0, totalBytesRead);
+      byteArray = trimmedCopy;
+    }
   }
 }

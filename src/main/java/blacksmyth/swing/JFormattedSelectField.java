@@ -10,25 +10,29 @@
 
 package blacksmyth.swing;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import javax.swing.JFormattedTextField;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class JFormattedSelectField extends JFormattedTextField {
-  private Color vNormalBackground;
-  private Color vNormalForeground;
+  protected Color normalBackground;
+  protected Color normalForeground;
 
-  public JFormattedSelectField(AbstractFormatter pFormatter) {
-    super(pFormatter);
+  public JFormattedSelectField(AbstractFormatter fieldFormatter) {
+    super(fieldFormatter);
 
     setDisabledTextColor(Color.BLACK);
     setFont(new Font("Monospaced", Font.PLAIN, 11));
 
-    vNormalBackground = getBackground();
-    vNormalForeground = getForeground();
+    this.normalBackground = getBackground();
+    this.normalForeground = getForeground();
   }
 
+  @Override
   protected void processFocusEvent(FocusEvent e) {
     super.processFocusEvent(e);
     if (e.getID() == FocusEvent.FOCUS_GAINED) {
@@ -36,38 +40,37 @@ public class JFormattedSelectField extends JFormattedTextField {
     }
   }
 
+  @Override
   public void postActionEvent() {
     super.postActionEvent();
     selectAll();
   }
   
-  public void setEnabled(boolean vEnabledFlag) {
-    super.setEnabled(vEnabledFlag);
-    if (vEnabledFlag == false) {
-      setBackground(Color.LIGHT_GRAY);
+  @Override
+  public void setEnabled(boolean enableFlag) {
+    super.setEnabled(enableFlag);
+    if (enableFlag) {
+      setBackground(normalBackground);
     } else {
-      setBackground(vNormalBackground);
+      setBackground(Color.LIGHT_GRAY);
     }
   }
 
+  @Override
   protected void invalidEdit() {
-
     super.invalidEdit();
 
     setBackground(Color.RED);
     setForeground(Color.WHITE);
     
-    final JFormattedSelectField vField = this;
+    ActionListener colorChanger = 
+      (actionEvent) -> {
+        setBackground(normalBackground);
+        setForeground(normalForeground);
+      };
     
-    ActionListener vColorChanger = new ActionListener() {
-      public void actionPerformed(ActionEvent ae) {
-        vField.setBackground(vNormalBackground);
-        vField.setForeground(vNormalForeground);
-      }
-    };
-    
-    Timer vTimer = new Timer(75, vColorChanger);
-    vTimer.setRepeats(false);
-    vTimer.start();
+    Timer timer = new Timer(75, colorChanger);
+    timer.setRepeats(false);
+    timer.start();
   }
 }

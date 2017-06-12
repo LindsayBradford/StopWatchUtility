@@ -10,17 +10,21 @@
 
 package blacksmyth.swing;
 
-import javax.swing.*;
 import java.text.DecimalFormat;
-import java.text.*;
-import javax.swing.text.*;
+import java.text.ParsePosition;
+import javax.swing.JComponent;
+import javax.swing.InputVerifier;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.NumberFormatter;
 
 @SuppressWarnings("serial")
 public class JFormattedNumField extends JFormattedSelectField {
-  protected double vDoubleValue;
-  protected BoundVerifier pVerifier;
+  protected double fieldValue;
+  protected BoundVerifier boundVerifier;
 
-  public JFormattedNumField(String pFormat, double pValue, int pColumns) {
+  public JFormattedNumField(String fieldFormat, double fieldValue, int fieldColumns) {
     /*
       replace the DefaultFormatter with our own.  Inside it, we supply a
       home-grown DocumentFilter that only allows keystrokes that could
@@ -33,21 +37,23 @@ public class JFormattedNumField extends JFormattedSelectField {
       Bug in 1.4.0 ?
     */
 
-    super ((isPercentFormat(pFormat) ? (AbstractFormatter) new PercentFormatter(new DecimalFormat(pFormat)) :
-                                       (AbstractFormatter) new DecimalFormatter(new DecimalFormat(pFormat))) );
+    super(
+        isPercentFormat(fieldFormat) ? new PercentFormatter(new DecimalFormat(fieldFormat)):
+                                       new DecimalFormatter(new DecimalFormat(fieldFormat))
+    );
 
-    pVerifier = new BoundVerifier();
-    setInputVerifier(pVerifier);
+    boundVerifier = new BoundVerifier();
+    setInputVerifier(boundVerifier);
 
-    setDouble(pValue);
-    setColumns(pColumns);
+    setDouble(fieldValue);
+    setColumns(fieldColumns);
   }
 
-  public void setDouble(double pValue) {
-    setValue(new Double(pValue));
+  public void setDouble(double fieldValue) {
+    setValue(new Double(fieldValue));
   }
 
-  public double getDouble() throws NullPointerException {
+  public double getDouble() {
   /*
     Some notes: there is a subtle coupling between this and BoundVerifier.
     BoundVerifier supplies an opinion on whether the current text of the
@@ -61,202 +67,210 @@ public class JFormattedNumField extends JFormattedSelectField {
        updated the Double Object containing the underlying value. BUT...
        they should only fire if BoundVerifier is happy.
      * Especially for formats that round the decimal input to a displayed
-       integer or number of decimal palces, the field's text contains the
+       integer or number of decimal places, the field's text contains the
        actual value the user would expect to be used, not the Double value
        input.
   */
-    double vValue;
     try {
-      vValue = DoubleParser.toDouble(getText());
-    } catch (NullPointerException npe) {
+      return getFieldValueAsDouble();
+    } catch (Exception e) {
       return 0;
     }
-    return vValue;
+  }
+  
+  private double getFieldValueAsDouble() {
+    return DoubleAndPercentParser.toDouble(getText());
   }
 
-  public void setLowerBound(double pLowerBound) {
-    pVerifier.setLowerBound(pLowerBound);
+  public void setLowerBound(double loweBound) {
+    boundVerifier.setLowerBound(loweBound);
   }
 
-  public void setUpperBound(double pUpperBound) {
-    pVerifier.setUpperBound(pUpperBound);
+  public void setUpperBound(double upperBound) {
+    boundVerifier.setUpperBound(upperBound);
   }
 
-  public void setBounds(double pLowerBound, double pUpperBound) {
-    pVerifier.setBounds(pLowerBound, pUpperBound);
+  public void setBounds(double lowerBound, double upperBound) {
+    boundVerifier.setBounds(lowerBound, upperBound);
   }
 
-  public static final boolean isPercentFormat(String pFormat) {
-    String vString = pFormat.trim();
-    if (vString.charAt(vString.length() - 1) == '%') {
+  public static boolean isPercentFormat(String fieldFormat) {
+    String trimmedFieldFormat = fieldFormat.trim();
+    if (lastCharOfFieldFormatIsPercentSymbol(trimmedFieldFormat)) {
       return true;
     }
     return false;
   }
+  
+  private static boolean lastCharOfFieldFormatIsPercentSymbol(String text) {
+    return (text.charAt(text.length() - 1) == '%');
+  }
 
   class BoundVerifier extends InputVerifier {
-    protected double vLowerBound;
-    protected double vUpperBound;
+    protected double lowerBound;
+    protected double upperBound;
 
     public BoundVerifier() {
       super();
       setBounds(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
     }
 
-    public BoundVerifier(double pLowerBound, double pUpperBound) {
+    public BoundVerifier(double lowerBound, double upperBound) {
       super();
-      setBounds(pLowerBound, pUpperBound);
+      setBounds(lowerBound, upperBound);
     }
+    
+    @Override
+    public boolean verify(JComponent componentToVerify) {
+      assert componentToVerify instanceof JFormattedNumField;
 
-    public boolean verify(JComponent pComponent) {
-      // pre: pComponent of type JFormattedNumField
-      double vValue;
-
-      assert pComponent instanceof JFormattedNumField;
-
-      JFormattedNumField vField = (JFormattedNumField) pComponent;
-
-      String vValueAsText;
+      JFormattedNumField fieldToVerify = (JFormattedNumField) componentToVerify;
 
       try {
-         vValueAsText = vField.getText();
-         vValue = DoubleParser.toDouble(vValueAsText);
-       } catch (NullPointerException npe) {
-           return false;
-       }
-       return verifyBounds(vValue);
-    }
-
-    protected boolean verifyBounds(double pNumber) {
-      if (pNumber < vLowerBound) {
+        String fieldValueAsText = fieldToVerify.getText();
+        double value = DoubleAndPercentParser.toDouble(fieldValueAsText);
+        return verifyBounds(value);
+      } catch (IllegalArgumentException e) {
         return false;
       }
-      if (pNumber > vUpperBound) {
+    }
+
+    protected boolean verifyBounds(double number) {
+      if (number < lowerBound) {
+        return false;
+      }
+      if (number > upperBound) {
         return false;
       }
       return true;
     }
 
-    public boolean shouldYieldFocus(JComponent pComponent) {
-      boolean vValid = verify(pComponent);
-      if (vValid == false) {
-        JFormattedNumField vField = (JFormattedNumField) pComponent;
-        vField.invalidEdit();
+    @Override
+    public boolean shouldYieldFocus(JComponent component) {
+      boolean componentIsVerified = verify(component);
+      if (componentIsVerified == false) {
+        JFormattedNumField componentAsField = (JFormattedNumField) component;
+        componentAsField.invalidEdit();
       }
-      return vValid;
+      return componentIsVerified;
     }
 
-    public void setLowerBound(double pLowerBound) {
-      vLowerBound = pLowerBound;
+    public void setLowerBound(double lowerBound) {
+      this.lowerBound = lowerBound;
     }
 
-    public void setUpperBound(double pUpperBound) {
-      vUpperBound = pUpperBound;
+    public void setUpperBound(double upperBound) {
+      this.upperBound = upperBound;
     }
 
-    public void setBounds(double pLowerBound, double pUpperBound) {
-      setLowerBound(pLowerBound);
-      setUpperBound(pUpperBound);
+    public void setBounds(double lowerBound, double upperBound) {
+      setLowerBound(lowerBound);
+      setUpperBound(upperBound);
     }
   }
 }
 
 
-class DoubleParser {
-/*
-  This is a down and dirty hack around DecimalFormat to correctly parse
-  perentage strings to their double equivalent + the standard parsing for
-  double strings that typically works very well. Left to its own devices
-  DecimalFormat.parse() ignores the percentage sign, effectively
-  multiplying the number returned by 100.
-*/
+class DoubleAndPercentParser {
 
-  public static double toDouble(String pText) throws NullPointerException {
-    String vText = pText;
-    vText = vText.trim();
+  public static double toDouble(String textToParse) {
 
-    if (vText.length() == 0) {
-      throw new NullPointerException();
+    String trimmedTextToParse = trimAndCheck(textToParse);
+    
+    boolean needToHandlePercentInText = lastCharOfFieldFormatIsPercentSymbol(trimmedTextToParse);
+
+    if (needToHandlePercentInText) {
+      trimmedTextToParse = trimmedTextToParse.replace('%',' ').trim();
     }
 
-    boolean isPercentString = false;
+    double parsedValue = tryToParseTextAsDouble(trimmedTextToParse);
 
-    if (vText.charAt(vText.length() - 1) == '%') {
-      isPercentString = true;
-      vText = vText.replace('%',' ');
-      vText = vText.trim();
+    if (needToHandlePercentInText) {
+      parsedValue = parsedValue / 100;
     }
 
-    DecimalFormat vFormat = new DecimalFormat();
+    return parsedValue;
+  }
+  
+  private static String trimAndCheck(String textToParse) {
+    String trimmedTextToParse = textToParse.trim();
 
-    Number vValueObj = vFormat.parse(vText, new ParsePosition(0));
-
-    double vValue = vValueObj.doubleValue();
-
-    if (isPercentString == true) {
-      vValue = vValue / 100;
+    if (trimmedTextToParse.length() == 0) {
+      throw new IllegalArgumentException("String supplied to parser is empty once trimmed.");
     }
-    return vValue;
+    return trimmedTextToParse;
+  }
+  
+  private static double tryToParseTextAsDouble(String textToParse) {
+    try {
+      DecimalFormat fieldFormat = new DecimalFormat();
+      Number parsedValueAsNumber = fieldFormat.parse(textToParse, new ParsePosition(0));
+      return parsedValueAsNumber.doubleValue();
+    } catch (Exception e) {
+      throw new IllegalArgumentException("Failed to parse string [" + textToParse + "] to double.", e);
+    }
+  }
+  
+  private static boolean lastCharOfFieldFormatIsPercentSymbol(String text) {
+    return (text.charAt(text.length() - 1) == '%');
   }
 }
 
 @SuppressWarnings("serial")
 class DecimalFormatter extends NumberFormatter {
-  private DecimalFilter vFilter;
+  private DecimalFilter fieldFilter;
 
-  public DecimalFormatter(DecimalFormat pFormat) {
-    super(pFormat);
-    vFilter = new DecimalFilter();
+  public DecimalFormatter(DecimalFormat fieldFormat) {
+    super(fieldFormat);
+    fieldFilter = new DecimalFilter();
   }
 
+  @Override
   protected DocumentFilter getDocumentFilter() {
-    return  vFilter;
+    return  fieldFilter;
   }
 }
 
 class DecimalFilter extends DocumentFilter {
 
-  public void replace(DocumentFilter.FilterBypass pBypass,
-                      int pOffset,
-                      int pLength,
-                      String pString,
-                      AttributeSet pAttribs) throws BadLocationException {
-    if (isValidText(pString))
-      super.replace(pBypass,pOffset,pLength,pString,pAttribs);
-  }
-
-  protected boolean isValidText(String pString) {
-    return validateText("-0123456789,.", pString);
-  }
-
-  protected boolean validateText(String pValidChars, String pString) {
-    // separated into another method so I can switch in a new one for differing
-    // valid character sets.
-    for (int i = 0; i < pString.length(); i++) {
-      if (pValidChars.indexOf(pString.charAt(i)) == -1) {
-        return false;
-      }
+  @Override
+  public void replace(DocumentFilter.FilterBypass bypass, int offset, int length, 
+                      String text, AttributeSet attributes) throws BadLocationException {
+    if (isValidText(text)) {
+      super.replace(bypass,offset,length,text,attributes);
     }
-    return true;
+  }
+
+  @SuppressWarnings("static-method")
+  protected boolean isValidText(String textToValidate) {
+    return validateText("-0123456789,.", textToValidate);
+  } 
+
+  protected static boolean validateText(String validCharSet, String textToValidate) {
+    return textToValidate.chars().noneMatch(
+      (c) -> validCharSet.indexOf(c) == -1     
+    );
   }
 }
 
 @SuppressWarnings("serial")
 class PercentFormatter extends NumberFormatter {
-  private PercentFilter vFilter;
+  private PercentFilter fieldFilter;
 
-  public PercentFormatter(DecimalFormat pFormat) {
-    super(pFormat);
-    vFilter = new PercentFilter();
+  public PercentFormatter(DecimalFormat fieldFormat) {
+    super(fieldFormat);
+    fieldFilter = new PercentFilter();
   }
 
+  @Override
   protected DocumentFilter getDocumentFilter() {
-    return  vFilter;
+    return fieldFilter;
   }
 }
 
 class PercentFilter extends DecimalFilter {
-  protected boolean isValidText(String pString) {
-    return validateText("-0123456789,.%", pString);
+  @Override
+  protected boolean isValidText(String textToValidate) {
+    return validateText("-0123456789,.%", textToValidate);
   }
 }
