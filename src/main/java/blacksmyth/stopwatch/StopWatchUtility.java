@@ -19,7 +19,7 @@ public final class StopWatchUtility {
   private static ApplicationContext appContext;
  
   public static void main(String argv[]) {
-    appContext = new AnnotationConfigApplicationContext(ProductionConfig.class);
+    appContext = new AnnotationConfigApplicationContext(DefaultConfig.class);
     getView().show();
   }
   

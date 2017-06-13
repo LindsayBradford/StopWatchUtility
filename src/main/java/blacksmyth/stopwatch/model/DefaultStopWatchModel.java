@@ -15,10 +15,13 @@ import static blacksmyth.stopwatch.model.DefaultStopWatchModel.ModelState.*;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.springframework.stereotype.Component;
+
 /**
  * A basic implementation of a {@link StopWatchModel}, and {@link TickRecipient}.
  */
 
+@Component
 public final class DefaultStopWatchModel extends Observable implements StopWatchModel {
   
   enum ModelState {
