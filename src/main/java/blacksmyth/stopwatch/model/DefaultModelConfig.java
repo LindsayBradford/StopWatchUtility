@@ -10,7 +10,9 @@
 
 package blacksmyth.stopwatch.model;
 
-import org.springframework.context.annotation.Bean;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,21 +20,16 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("blacksmyth.stopwatch.model")
 public class DefaultModelConfig {
   
-  @Bean
-  public StopWatchModel model() {
-    return new DefaultStopWatchModel();
-  }
+  @Resource
+  StopWatchModel model;
   
-  @Bean
-  public Ticker ticker() {
-    final int MILLISECONDS_BETWEEN_TICKS = 50;
+  @Resource
+  Ticker ticker;
 
-    Ticker ticker = new SleepingThreadTicker();
-    ticker.setMillisecondsBetweenTicks(MILLISECONDS_BETWEEN_TICKS);
-    
-    ticker.setRecipient(model());
+  @PostConstruct
+  public void postConstruction() {
+    ticker.setMillisecondsBetweenTicks(50);
+    ticker.setRecipient(model);
     ticker.startTicking();
-    
-    return ticker;
   }
 }

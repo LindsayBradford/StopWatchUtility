@@ -14,8 +14,8 @@ import org.springframework.context.annotation.*;
 
 import blacksmyth.stopwatch.model.DefaultModelConfig;
 import blacksmyth.stopwatch.model.StopWatchModel;
-import blacksmyth.stopwatch.view.DefaultViewConfig;
 import blacksmyth.stopwatch.view.StopWatchView;
+import blacksmyth.stopwatch.view.swing.SwingViewConfig;
 import blacksmyth.stopwatch.presenter.DefaultPresenterConfig;
 import blacksmyth.stopwatch.presenter.StopWatchPresenter;
 
@@ -28,8 +28,7 @@ import javax.annotation.Resource;
  */
 
 @Configuration
-@ComponentScan("blacksmyth.stopwatch")
-@Import({ DefaultModelConfig.class, DefaultViewConfig.class, DefaultPresenterConfig.class})
+@Import({ DefaultModelConfig.class, SwingViewConfig.class, DefaultPresenterConfig.class})
 public class DefaultConfig {
   
   @Resource

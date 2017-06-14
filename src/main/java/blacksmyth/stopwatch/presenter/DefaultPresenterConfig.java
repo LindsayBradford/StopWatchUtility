@@ -13,25 +13,24 @@ import blacksmyth.stopwatch.presenter.commands.StopCommand;
 import blacksmyth.stopwatch.presenter.commands.TimeSetCommand;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("blacksmyth.stopwatch.presenter")
 public class DefaultPresenterConfig {
-  @Bean
-  public StopWatchPresenter presenter() {
-    return new DefaultStopWatchPresenter();
-  }
+  
+  @Resource
+  StopWatchPresenter presenter;
   
   @PostConstruct
   public void bindCommands() {
-    presenter().addEventCommand(ResetRequested, new ResetCommand());
-    presenter().addEventCommand(StartRequested, new StartCommand());
-    presenter().addEventCommand(StopRequested, new StopCommand());
-    presenter().addEventCommand(TimeSetRequested, new TimeSetCommand());
-    presenter().addEventCommand(DeathRequested, new DieCommand());
+    presenter.addEventCommand(ResetRequested, new ResetCommand());
+    presenter.addEventCommand(StartRequested, new StartCommand());
+    presenter.addEventCommand(StopRequested, new StopCommand());
+    presenter.addEventCommand(TimeSetRequested, new TimeSetCommand());
+    presenter.addEventCommand(DeathRequested, new DieCommand());
   }
 }

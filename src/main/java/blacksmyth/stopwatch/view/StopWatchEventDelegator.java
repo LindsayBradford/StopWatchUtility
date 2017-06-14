@@ -10,6 +10,8 @@
 
 package blacksmyth.stopwatch.view;
 
+import org.springframework.stereotype.Component;
+
 /**
  *  An implementation of {@link StopWatchEventRaiser} that forwards the raising of an 
  *  {@link StopWatchViewEvent} to a specified delegate.
@@ -18,6 +20,7 @@ package blacksmyth.stopwatch.view;
  *  different event source reference.
  */
 
+@Component
 public class StopWatchEventDelegator implements StopWatchViewEventRaiser {
   
   private StopWatchViewEventRaiser eventDelegate;

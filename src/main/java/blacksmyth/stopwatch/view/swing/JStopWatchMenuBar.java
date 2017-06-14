@@ -16,6 +16,8 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import org.springframework.stereotype.Component;
 /**
  *  A sub-class of {@link JMenuBar} that builds a Swing-specific memu-bar. The processing of actions as a result
  *  of the user selecting a menu item are delegated to a number of externally supplied 
@@ -23,6 +25,7 @@ import javax.swing.JMenuItem;
  *  of the supply of a menu.
  */
 @SuppressWarnings("serial")
+@Component
 final class JStopWatchMenuBar extends JMenuBar {
 
   StopWatchCommand updateTitleCommand;

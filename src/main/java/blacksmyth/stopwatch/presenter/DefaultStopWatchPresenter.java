@@ -82,7 +82,6 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
     eventCommandMap.put(event, command);
   }
   
-
   private void processModelTimeUpdateEvent() {
     if (view == null) return;
     

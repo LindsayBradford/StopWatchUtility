@@ -14,16 +14,18 @@ import java.util.Observable;
 
 import javax.swing.JFrame;
 
+import org.springframework.stereotype.Component;
+
 import blacksmyth.stopwatch.view.StopWatchView;
 import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
 import blacksmyth.stopwatch.view.StopWatchViewEvent;
 
+@Component
 public class SwingStopWatchView extends Observable implements 
     StopWatchView, StopWatchViewEventRaiser, SwingStopWatchViewEventRaiser  {
   
   private JFrame frame;
   private PersistedNvpState elapsedTimeState;
-  private JStopWatchControlPanel controlPanel;
 
   public void setFrame(JFrame frame) {
     this.frame = frame;
@@ -33,8 +35,8 @@ public class SwingStopWatchView extends Observable implements
     this.elapsedTimeState = elapsedTimeState;
   }
 
-  public void setControlPanel(JStopWatchControlPanel controlPanel) {
-    this.controlPanel = controlPanel;
+  public JStopWatchControlPanel getControlPanel() {
+    return (JStopWatchControlPanel) frame.getContentPane().getComponent(0);
   }
 
   @Override
@@ -45,7 +47,7 @@ public class SwingStopWatchView extends Observable implements
   @Override
   public void setTime(long time) {
     elapsedTimeState.putAsLong(time);
-    controlPanel.setTime(time);
+    getControlPanel().setTime(time);
   }
 
   @Override
@@ -61,11 +63,11 @@ public class SwingStopWatchView extends Observable implements
   }
   
   private void processStopWatchEvent(StopWatchViewEvent event) {
-    controlPanel.processStopWatchEvent(event);
+    getControlPanel().processStopWatchEvent(event);
   }
 
   @Override
   public void raise(SwingStopWatchViewEvents event) {
-    controlPanel.processSwingEvent(event);
+    getControlPanel().processSwingEvent(event);
   }
 }
