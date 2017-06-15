@@ -32,13 +32,13 @@ import javax.annotation.Resource;
 public class DefaultConfig {
   
   @Resource
-  StopWatchModel model;
+  private StopWatchModel model;
   
   @Resource
-  StopWatchView view;
+  private StopWatchView view;
 
   @Resource
-  StopWatchPresenter presenter;
+  private StopWatchPresenter presenter;
   
   @PostConstruct
   public void bindModelViewAndPresenter() {

@@ -25,8 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.springframework.stereotype.Component;
-
 import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
 import blacksmyth.stopwatch.view.StopWatchViewEvent;
 import blacksmyth.stopwatch.view.swing.JStopWatchPanel;
@@ -40,7 +38,6 @@ import blacksmyth.utilities.ResourceLoader;
  */
 
 @SuppressWarnings("serial")
-@Component
 final class JStopWatchControlPanel extends JPanel {
 
   private JPanel controlPanel;

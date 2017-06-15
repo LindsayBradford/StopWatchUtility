@@ -21,10 +21,9 @@ import org.springframework.context.annotation.Configuration;
 public class DefaultModelConfig {
   
   @Resource
-  StopWatchModel model;
+  private StopWatchModel model;
   
-  @Resource
-  Ticker ticker;
+  private Ticker ticker = new SleepingThreadTicker();;
 
   @PostConstruct
   public void postConstruction() {

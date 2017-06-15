@@ -16,8 +16,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.prefs.Preferences;
 
-import org.springframework.stereotype.Component;
-
 import blacksmyth.stopwatch.view.StopWatchViewEventRaiser;
 import blacksmyth.stopwatch.view.StopWatchViewEvent;
 import blacksmyth.swing.JUserNameableFrame;
@@ -31,12 +29,11 @@ import blacksmyth.swing.JUserNameableFrame;
  */
 
 @SuppressWarnings("serial")
-@Component
 final class JStopWatchFrame extends JUserNameableFrame {
   
-  PersistedNvpState framePosX;
-  PersistedNvpState framePosY;
-  PersistedNvpState frameTitle;
+  private PersistedNvpState framePosX;
+  private PersistedNvpState framePosY;
+  private PersistedNvpState frameTitle;
   
   public JStopWatchFrame() {
     super();  

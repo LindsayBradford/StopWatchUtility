@@ -10,7 +10,6 @@
 
 package blacksmyth.stopwatch.view;
 
-import org.springframework.stereotype.Component;
 
 /**
  *  An implementation of {@link StopWatchEventRaiser} that forwards the raising of an 
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
  *  different event source reference.
  */
 
-@Component
 public class StopWatchEventDelegator implements StopWatchViewEventRaiser {
   
   private StopWatchViewEventRaiser eventDelegate;

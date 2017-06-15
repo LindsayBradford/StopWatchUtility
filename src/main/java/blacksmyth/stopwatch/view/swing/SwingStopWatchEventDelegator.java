@@ -10,8 +10,6 @@
 
 package blacksmyth.stopwatch.view.swing;
 
-import org.springframework.stereotype.Component;
-
 /**
  *  An implementation of {@link SwingStopWatchEventRaiser} that forwards the raising of an 
  *  {@link SwingStopWatchViewEvent} to a specified delegate.
@@ -20,8 +18,7 @@ import org.springframework.stereotype.Component;
  *  different event source reference.
  */
 
-@Component
-public final class SwingStopWatchEventDelegator implements SwingStopWatchViewEventRaiser {
+final class SwingStopWatchEventDelegator implements SwingStopWatchViewEventRaiser {
   
   private SwingStopWatchViewEventRaiser delegate;
   

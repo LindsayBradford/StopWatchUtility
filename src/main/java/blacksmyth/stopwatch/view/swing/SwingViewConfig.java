@@ -20,22 +20,17 @@ import blacksmyth.utilities.ResourceLoader;
 public class SwingViewConfig {
   
   @Resource
-  SwingStopWatchView view;
+  private SwingStopWatchView view;
   
-  @Resource
-  StopWatchEventDelegator eventDelegator;
+  private StopWatchEventDelegator eventDelegator = new StopWatchEventDelegator();
   
-  @Resource
-  SwingStopWatchEventDelegator swingEventDelegator;
+  private SwingStopWatchEventDelegator swingEventDelegator = new SwingStopWatchEventDelegator();
   
-  @Resource
-  JStopWatchFrame frame;
+  private JStopWatchFrame frame = new JStopWatchFrame();
   
-  @Resource
-  JStopWatchControlPanel controlPanel;
+  private JStopWatchControlPanel controlPanel = new JStopWatchControlPanel();
   
-  @Resource
-  JStopWatchMenuBar menu;
+  private JStopWatchMenuBar menu = new JStopWatchMenuBar();
   
   @PostConstruct
   public void postConstruct() {

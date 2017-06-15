@@ -10,14 +10,11 @@
 
 package blacksmyth.stopwatch.model;
 
-import org.springframework.stereotype.Component;
-
 /**
  * An implementation of the {@link Ticker} interface that is essentially 
  * a thread, configured to sleep between ticks.
  */
 
-@Component
 public final class SleepingThreadTicker extends Thread implements Ticker {
 
   private int millisecondsBetweenTicks;
