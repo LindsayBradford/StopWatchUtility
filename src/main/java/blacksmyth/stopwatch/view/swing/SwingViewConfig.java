@@ -33,7 +33,7 @@ public class SwingViewConfig {
   private JStopWatchMenuBar menu = new JStopWatchMenuBar();
   
   @PostConstruct
-  public void postConstruct() {
+  private void postConstruct() {
     assignLookAndFeel();
     view.setPersistedElapsedTime(ELAPSED_TIME);
     bindEventDelegates();
@@ -55,7 +55,7 @@ public class SwingViewConfig {
     }
   }
   
-  public void configureSubComponents() {
+  private void configureSubComponents() {
     configureFrame();
     view.setFrame(frame);
   }

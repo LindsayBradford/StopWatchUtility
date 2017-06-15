@@ -41,7 +41,7 @@ public class DefaultConfig {
   private StopWatchPresenter presenter;
   
   @PostConstruct
-  public void bindModelViewAndPresenter() {
+  private void bindModelViewAndPresenter() {
     presenter.setModel(model);
     presenter.setView(view);
   }

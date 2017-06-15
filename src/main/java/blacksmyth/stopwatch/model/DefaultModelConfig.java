@@ -23,10 +23,10 @@ public class DefaultModelConfig {
   @Resource
   private StopWatchModel model;
   
-  private Ticker ticker = new SleepingThreadTicker();;
+  private Ticker ticker = new SleepingThreadTicker();
 
   @PostConstruct
-  public void postConstruction() {
+  private void postConstruction() {
     ticker.setMillisecondsBetweenTicks(50);
     ticker.setRecipient(model);
     ticker.startTicking();

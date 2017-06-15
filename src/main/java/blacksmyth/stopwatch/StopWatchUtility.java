@@ -9,7 +9,7 @@
  */
 package blacksmyth.stopwatch;
 
-import org.springframework.context.*;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import blacksmyth.stopwatch.view.StopWatchView;

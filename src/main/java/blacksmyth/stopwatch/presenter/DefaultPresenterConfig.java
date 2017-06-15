@@ -23,10 +23,10 @@ import org.springframework.context.annotation.Configuration;
 public class DefaultPresenterConfig {
   
   @Resource
-  StopWatchPresenter presenter;
+  private StopWatchPresenter presenter;
   
   @PostConstruct
-  public void bindCommands() {
+  private void bindCommands() {
     presenter.addEventCommand(ResetRequested, new ResetCommand());
     presenter.addEventCommand(StartRequested, new StartCommand());
     presenter.addEventCommand(StopRequested, new StopCommand());
