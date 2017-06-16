@@ -46,12 +46,27 @@ public final class DefaultStopWatchPresenter implements StopWatchPresenter {
   @Override
   public void setModel(StopWatchModel model) {
     this.model = model;
+    model.addObserver(this);
+    bindCommandsIfPossible();
   }
 
   @Override
   public void setView(StopWatchView view) {
-    assert model != null;  // Set model before view so we can issue commands to model based on view state.
     this.view = view;
+    view.addObserver(this);
+    bindCommandsIfPossible();
+  }
+  
+  private void bindCommandsIfPossible() {
+    if (canBindCommands()) {
+      for(PresenterCommand command: eventCommandMap.values()) {
+        command.setModelAndView(model, view);
+      }
+    }
+  }
+  
+  private boolean canBindCommands() {
+    return (model !=null && view != null);
   }
   
   @Override

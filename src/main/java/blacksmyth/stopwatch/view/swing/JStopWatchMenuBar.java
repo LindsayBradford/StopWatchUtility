@@ -25,10 +25,10 @@ import javax.swing.JMenuItem;
 @SuppressWarnings("serial")
 final class JStopWatchMenuBar extends JMenuBar {
 
-  StopWatchCommand updateTitleCommand;
-  StopWatchCommand updateTimeCommand;
-  StopWatchCommand toggleShowMillisecondsCommand;
-  StopWatchCommand toggleShowLedsCommand;
+  private StopWatchCommand updateTitleCommand;
+  private StopWatchCommand updateTimeCommand;
+  private StopWatchCommand toggleShowMillisecondsCommand;
+  private StopWatchCommand toggleShowLedsCommand;
   
   private JCheckBoxMenuItem showMillisecondsItem;
   private JCheckBoxMenuItem showLedsItem;

@@ -31,9 +31,9 @@ import blacksmyth.swing.JUserNameableFrame;
 @SuppressWarnings("serial")
 final class JStopWatchFrame extends JUserNameableFrame {
   
-  PersistedNvpState framePosX;
-  PersistedNvpState framePosY;
-  PersistedNvpState frameTitle;
+  private PersistedNvpState framePosX;
+  private PersistedNvpState framePosY;
+  private PersistedNvpState frameTitle;
   
   public JStopWatchFrame() {
     super();  

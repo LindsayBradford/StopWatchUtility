@@ -17,29 +17,17 @@ package blacksmyth.stopwatch.model;
 
 public final class StopWatchModelBuilder {
   
+  private static final StopWatchModel model = new DefaultStopWatchModel();
+  
   public static StopWatchModel build() {
-    return bind(
-    		buildStopWatchModel(),
-    		buildTicker()
-    );
+    buildTicker();
+    return model;
   }
-
-  private static StopWatchModel buildStopWatchModel() {
-    return new DefaultStopWatchModel();
-  }	    
   
-  private static Ticker buildTicker() {
-    final int millisecondsBetweenTicks = 50;
-
+  private static void buildTicker() {
     Ticker ticker = new SleepingThreadTicker();
-    ticker.setMillisecondsBetweenTicks(millisecondsBetweenTicks);
-    return ticker;	
-  }
-  
-  private static StopWatchModel bind(StopWatchModel model, Ticker ticker) {
+    ticker.setMillisecondsBetweenTicks(50);
     ticker.setRecipient(model);
     ticker.startTicking();
-	  
-    return model;
   }
 }

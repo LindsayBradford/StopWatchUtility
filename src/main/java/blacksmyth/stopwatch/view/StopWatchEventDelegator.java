@@ -18,7 +18,7 @@ package blacksmyth.stopwatch.view;
  *  different event source reference.
  */
 
-public class StopWatchEventDelegator implements StopWatchViewEventRaiser {
+public final class StopWatchEventDelegator implements StopWatchViewEventRaiser {
   
   private StopWatchViewEventRaiser eventDelegate;
   
