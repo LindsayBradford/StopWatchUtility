@@ -40,6 +40,17 @@ public final class ResourceLoader {
     return Applet.newAudioClip(ResourceLoader.class.getResource(audioClipFile));
   }
 
+  
+  public static String loadText(String textFile) {
+    try (InputStream resourceStream = ResourceLoader.class.getResourceAsStream(textFile)) {
+      final byte[] textByteArray = ByteArrayLoadManager.newInstance().loadFromStream(resourceStream);
+      return new String(textByteArray);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+  
   private static final class ByteArrayLoadManager {
     final static int MAX_ARRAY_SIZE = 131072;
     
@@ -56,7 +67,7 @@ public final class ResourceLoader {
       trimByteArrayToNumberRead();
       return byteArray;
     }
-
+    
     private void resetByteArray() {
       byteArray = new byte[MAX_ARRAY_SIZE];
       totalBytesRead = 0;

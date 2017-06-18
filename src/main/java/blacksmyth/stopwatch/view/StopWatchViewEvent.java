@@ -14,28 +14,39 @@ package blacksmyth.stopwatch.view;
  * An enumeration of events that may be produced from an implementation of the {@link StopWatchView} interface.
  */
 public enum StopWatchViewEvent {
+  
   /**
    * An event requesting that a stopwatch begin running.
    */
-  StartRequested,
+  StartRequested ("Start Requested"),
   
   /**
    * An event requesting that a stopwatch stop running (pause).
    */
-  StopRequested,
+  StopRequested("Stop Requested"),
   
   /**
    * An event requesting that a stopwatch stop, and haver its timer reset.
    */
-  ResetRequested,
+  ResetRequested("Reset Request"),
   
   /**
    * An event requesting that a stopwatch update its time to match one held by the view.
    */
-  TimeSetRequested,
+  TimeSetRequested("Time Set Requested"),
   
   /**
    * An event requsting that the stopwatch die (release any running resources it has). 
    */
-  DeathRequested;
+  DeathRequested("Death Requested");
+
+  private String description;
+
+  StopWatchViewEvent(String description) {
+    this.description = description;
+  }
+  
+  public String getDescription() {
+    return description;
+  }
 }
